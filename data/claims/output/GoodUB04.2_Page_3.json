@@ -1,0 +1,110 @@
+{
+  "filename": "GoodUB04.2_Page_3.tiff",
+  "timestamp": "2025-02-28T13:47:11.368785",
+  "ocr_results": {
+    "method_used": "google_vision",
+    "confidence": 84.93261154907853,
+    "all_results": {
+      "tesseract": {
+        "text": "THOMAS IEREERESON UNTV ROS SHOMAS JERESRSON UNITY Hee SX rh\" JEFFERSON UNIV HOS\u201d = 16 it's aH STREET. 3 Aa J Sa orem mee TaD RRR CTS OORT = ae 3 allt a RAR a as OCCT OCCT AAAS IAPS AAI A FS bee F BBE\u2019 ea ny x, x x x x x x x x, x x x x x, x x, x x es . x x x x + + x x x x x x x x, x x x x s x x x. x x x x x x x EYE yyy gy yy AA npn Sy eee eee eee: Tae Cys SSE SEES 8 $ PERS SE ay SRR SEES Se See Bag dd, ons! NE at ~ SRE era sana ane \u201cf $22 AS AALS IAL AS IDs z 7",
+        "confidence": 25.60431654676259
+      },
+      "google_vision": {
+        "text": "\u2611\n*\n\u2611\nX\n*\n\u2611\nTHOMAS JEFFERSON UNIV HOS THOMAS JEFFERSON UNIV HOS\n111 S 11TH STREET\nPO BOX 85009895\nPHILADELPHIA PA 191074824 PHILADELPHIA\nH5983736900.\n405113009\nPA19178EU TAS NO\n1232829095 122322 010323\n2159551042\nQCG120407124001\n\u2022 5225 GREENE STREET, UNIT 2\nGARDNER VERNON G\nPHILADELPHIA\nPA 19144\n02131967 M 122322 23 1 4 1962\nA1 021367\nKEYSTONE HEALTH PLAN EAST\nPO BOX 211184\nEAGAN, MN 55121\n3308\n0740 EEG (ELECTROENCEPHALOGRA\na 0001 PAGE 2\n30 11\nA3\n22399287\nCREATION DATE 1011323 TOTALS\nSIMS & THRUSS IS\n000\nA KEYSTONE HEALTH PLAN EA 17002503\n52\n\u2611\nMAYSON\nTRAPETA\nPEATMENT AND\nCASE-15614427\n01QC6120407124001\n6\n604900\n22399287\n0111\n000\n000\nAS EST SCUNS DUE\n22399287 Sy\n1215916002\nS4 DOCUMENT CONTROL NIMSER\nIOS EMPLOYER NAME\n62 (NSURANCE GROUP NO\n10331834\nCOMMAR INC. ACTIVE\n20713\n0713\n00870ZZ 122922\nYG935 Y6936\nVG8191 YR569 N\n025\n1922134394\nFARRELL\nCHRISTOPHER\n1922134394\nFARRELL\nCHRISTOPHER\nE\n\"\n83282N00000X\n\u00d7 \u2611",
+        "confidence": 84.93261154907853
+      },
+      "llm": {
+        "text": "THOMAS JEFFERSON UNIV HOS THOMAS JEFFERSON UNIV HOS H5983736900\n111 S 11TH STREET PO BOX 8590895 4095113809 0111\nPHILADELPHIA PA 191074824 PHILADELPHIA PA19178 23282995 1232322 010323\n2159551042 223299287\nPATIENT NAME QCG120467124001 PATIENT ADDRESS 5225 GREENE STREET, UNIT 2\nGARNER VERNON G PHILADELPHIA PA 191414\n02131967 M 123232 22 1 4 19 62\nA1 021367\nKEYSTONE HEALTH PLAN EAST\nPO BOX 211184\nEAGAN, MN 55121\n80 11 A3 22399287\n0740 EEG (ELECTROENCEPHALOGRA\n6 604900 000\n0001 PAGE 2 OF 2 CREATION DATE 011323 TOTALS 22399287 000\nSUBSCRIBER NAME KEYSTONE HEALTH PLAN EA 7002503 Y Y 000 22399287\n1215916002\nMAYSON, TRAPETA 01QCG120467124001 10331834\nCASE-15614427\nCOMHAR INC. ACTIVE\nC713 YG935 YG936 YG8191 YR569 N\nC713 025\n0087627 1229222 FARRELL CHRISTOPHER\n1922134394 FARRELL CHRISTOPHER\nB3B28N00000X\nUB-04 CMS-1450",
+        "confidence": 75.0
+      }
+    }
+  },
+  "raw_text": "\u2611\n*\n\u2611\nX\n*\n\u2611\nTHOMAS JEFFERSON UNIV HOS THOMAS JEFFERSON UNIV HOS\n111 S 11TH STREET\nPO BOX 85009895\nPHILADELPHIA PA 191074824 PHILADELPHIA\nH5983736900.\n405113009\nPA19178EU TAS NO\n1232829095 122322 010323\n2159551042\nQCG120407124001\n\u2022 5225 GREENE STREET, UNIT 2\nGARDNER VERNON G\nPHILADELPHIA\nPA 19144\n02131967 M 122322 23 1 4 1962\nA1 021367\nKEYSTONE HEALTH PLAN EAST\nPO BOX 211184\nEAGAN, MN 55121\n3308\n0740 EEG (ELECTROENCEPHALOGRA\na 0001 PAGE 2\n30 11\nA3\n22399287\nCREATION DATE 1011323 TOTALS\nSIMS & THRUSS IS\n000\nA KEYSTONE HEALTH PLAN EA 17002503\n52\n\u2611\nMAYSON\nTRAPETA\nPEATMENT AND\nCASE-15614427\n01QC6120407124001\n6\n604900\n22399287\n0111\n000\n000\nAS EST SCUNS DUE\n22399287 Sy\n1215916002\nS4 DOCUMENT CONTROL NIMSER\nIOS EMPLOYER NAME\n62 (NSURANCE GROUP NO\n10331834\nCOMMAR INC. ACTIVE\n20713\n0713\n00870ZZ 122922\nYG935 Y6936\nVG8191 YR569 N\n025\n1922134394\nFARRELL\nCHRISTOPHER\n1922134394\nFARRELL\nCHRISTOPHER\nE\n\"\n83282N00000X\n\u00d7 \u2611",
+  "document_type": {
+    "type": "insurance_card",
+    "confidence": 100.0,
+    "method": "google_vision",
+    "all_attempts": [
+      {
+        "method": "google_vision",
+        "doc_type": "insurance_card",
+        "confidence": 100.0
+      },
+      {
+        "method": "vision_model",
+        "doc_type": "claim_form",
+        "confidence": 86.95665001869202
+      },
+      {
+        "method": "ml_text",
+        "doc_type": "unknown",
+        "confidence": 0.0
+      },
+      {
+        "method": "rule_based",
+        "doc_type": "insurance_card",
+        "confidence": 100.0
+      },
+      {
+        "method": "llm_vision",
+        "doc_type": "invoice",
+        "confidence": 95.0
+      }
+    ]
+  },
+  "layout_features": {
+    "height_width_ratio": 1.2941176470588236,
+    "text_block_count": 0,
+    "has_tables": true,
+    "has_logo": false
+  },
+  "structured_data": {
+    "provider_name": "THOMAS JEFFERSON UNIV HOS",
+    "provider_address": "111 S 11TH STREET, PHILADELPHIA, PA 191074824",
+    "patient_name": "GARNER VERNON G",
+    "patient_address": "5225 GREENE STREET, UNIT 2, PHILADELPHIA, PA 191414",
+    "patient_id": "QCG120467124001",
+    "insurance_provider": "KEYSTONE HEALTH PLAN EAST",
+    "insurance_address": "PO BOX 211184, EAGAN, MN 55121",
+    "insurance_id": "7002503",
+    "service_code": "0740",
+    "service_description": "EEG (ELECTROENCEPHALOGRA",
+    "service_units": "6",
+    "total_charges": "604900",
+    "creation_date": "011323",
+    "employer_name": "COMHAR INC. ACTIVE",
+    "subscriber_name": "MAYSON, TRAPETA",
+    "subscriber_id": "01QCG120467124001",
+    "group_number": "10331834"
+  },
+  "primary_extraction_method": "llm_vision",
+  "all_extraction_results": {
+    "rule_based": {
+      "common": {
+        "patient_name": null,
+        "service_date": null,
+        "provider_name": null
+      },
+      "document_specific": {}
+    },
+    "llm_vision": {
+      "provider_name": "THOMAS JEFFERSON UNIV HOS",
+      "provider_address": "111 S 11TH STREET, PHILADELPHIA, PA 191074824",
+      "patient_name": "GARNER VERNON G",
+      "patient_address": "5225 GREENE STREET, UNIT 2, PHILADELPHIA, PA 191414",
+      "patient_id": "QCG120467124001",
+      "insurance_provider": "KEYSTONE HEALTH PLAN EAST",
+      "insurance_address": "PO BOX 211184, EAGAN, MN 55121",
+      "insurance_id": "7002503",
+      "service_code": "0740",
+      "service_description": "EEG (ELECTROENCEPHALOGRA",
+      "service_units": "6",
+      "total_charges": "604900",
+      "creation_date": "011323",
+      "employer_name": "COMHAR INC. ACTIVE",
+      "subscriber_name": "MAYSON, TRAPETA",
+      "subscriber_id": "01QCG120467124001",
+      "group_number": "10331834"
+    }
+  }
+}

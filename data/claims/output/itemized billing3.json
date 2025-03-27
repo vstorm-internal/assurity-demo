@@ -1,0 +1,118 @@
+{
+  "filename": "itemized billing3.tif",
+  "timestamp": "2025-02-28T13:55:08.395374",
+  "ocr_results": {
+    "method_used": "google_vision",
+    "confidence": 87.09804679338748,
+    "all_results": {
+      "tesseract": {
+        "text": "Apr/1/2021 10:07:08 AM Abbotsford Elementary School 7777777777 Te a a SP Medford Pharmacy 210 S. Main Street Medford, Wi 54451 118-748-4877 USTOMER ORDER NO, a PHONE, All clalma and retymed goode MUST be accompanied by. thig.bitt,",
+        "confidence": 72.5
+      },
+      "google_vision": {
+        "text": "Apr/1/2021 10:07:08 AM\nAbbotsford Elementary School 7777777777\n4/15\nMedford Pharmacy\n210 S. Main Street\nMedford, WI 54451\n715-748-4477\nCUSTOMER ORDER.NO.\nPHONE\nDATE\n3/19/21\nNAME\nWith Boniske\nADDRESS\nCASH\n\u2611\n1\n245178 State Michwa 97 Athe\nC.O.D. CHARGE ON ACCT- MOSE RET'D PAID OUT\nWalker\n\u0f22\u0f3d\u0f56\u0f66\n\u0160OTEL PARETEPOLEPKEK144)\n49:95\n1055\n6050\nSOLD BY\nRECEIVED BY\nTAX\n3152\nTOTAL GY OF\nThank You\nAll claims and returned goods MUST be accompanied by this bill.",
+        "confidence": 87.09804679338748
+      },
+      "llm": {
+        "text": "Medford Pharmacy\n210 S. Main Street\nMedford, WI 54451\n715-748-4477\n\nCUSTOMER ORDER NO. PHONE DATE 3/17/21\nNAME Ruth Brueske\nADDRESS 215017X State Highway 97, Athens, WI\n\nCASH C.O.D. CHARGE ON ACCT. MDSE RETD PAID OUT\n1 Walker 49.95\n1 Headice 10.55\n6.50\n\nTAX 3.15\nTOTAL 70.10\n\nSOLD BY RECEIVED BY\n\nAll claims and returned goods MUST be accompanied by this bill. Thank You",
+        "confidence": 75.0
+      }
+    }
+  },
+  "raw_text": "Apr/1/2021 10:07:08 AM\nAbbotsford Elementary School 7777777777\n4/15\nMedford Pharmacy\n210 S. Main Street\nMedford, WI 54451\n715-748-4477\nCUSTOMER ORDER.NO.\nPHONE\nDATE\n3/19/21\nNAME\nWith Boniske\nADDRESS\nCASH\n\u2611\n1\n245178 State Michwa 97 Athe\nC.O.D. CHARGE ON ACCT- MOSE RET'D PAID OUT\nWalker\n\u0f22\u0f3d\u0f56\u0f66\n\u0160OTEL PARETEPOLEPKEK144)\n49:95\n1055\n6050\nSOLD BY\nRECEIVED BY\nTAX\n3152\nTOTAL GY OF\nThank You\nAll claims and returned goods MUST be accompanied by this bill.",
+  "document_type": {
+    "type": "invoice",
+    "confidence": 95.0,
+    "method": "llm_vision",
+    "all_attempts": [
+      {
+        "method": "google_vision",
+        "doc_type": "invoice",
+        "confidence": 66.66666666666666
+      },
+      {
+        "method": "vision_model",
+        "doc_type": "invoice",
+        "confidence": 89.53877091407776
+      },
+      {
+        "method": "ml_text",
+        "doc_type": "unknown",
+        "confidence": 0.0
+      },
+      {
+        "method": "rule_based",
+        "doc_type": "invoice",
+        "confidence": 66.66666666666666
+      },
+      {
+        "method": "llm_vision",
+        "doc_type": "invoice",
+        "confidence": 95.0
+      }
+    ]
+  },
+  "layout_features": {
+    "height_width_ratio": 1.2941176470588236,
+    "text_block_count": 51,
+    "has_tables": true,
+    "has_logo": true
+  },
+  "structured_data": {
+    "pharmacy_name": "Medford Pharmacy",
+    "address": "210 S. Main Street, Medford, WI 54451",
+    "phone": "715-748-4477",
+    "date": "3/17/21",
+    "customer_name": "Ruth Brueske",
+    "customer_address": "215017X State Highway 97, Athens, WI",
+    "items": [
+      {
+        "description": "Walker",
+        "price": 49.95
+      },
+      {
+        "description": "Headice",
+        "price": 10.55
+      }
+    ],
+    "tax": 3.15,
+    "total": 70.1
+  },
+  "primary_extraction_method": "llm_vision",
+  "all_extraction_results": {
+    "rule_based": {
+      "common": {
+        "patient_name": null,
+        "service_date": "3/19/21",
+        "provider_name": null
+      },
+      "document_specific": {
+        "total_amount": null,
+        "invoice_number": null,
+        "service_items": [],
+        "insurance_paid": null,
+        "patient_responsibility": null
+      }
+    },
+    "llm_vision": {
+      "pharmacy_name": "Medford Pharmacy",
+      "address": "210 S. Main Street, Medford, WI 54451",
+      "phone": "715-748-4477",
+      "date": "3/17/21",
+      "customer_name": "Ruth Brueske",
+      "customer_address": "215017X State Highway 97, Athens, WI",
+      "items": [
+        {
+          "description": "Walker",
+          "price": 49.95
+        },
+        {
+          "description": "Headice",
+          "price": 10.55
+        }
+      ],
+      "tax": 3.15,
+      "total": 70.1
+    }
+  }
+}

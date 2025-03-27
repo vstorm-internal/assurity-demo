@@ -1,0 +1,136 @@
+{
+  "filename": "HCFA.4.tif",
+  "timestamp": "2025-02-28T13:55:43.611369",
+  "ocr_results": {
+    "method_used": "google_vision",
+    "confidence": 70.62557096664722,
+    "all_results": {
+      "tesseract": {
+        "text": "y de zoe \u2014 See A Sy es STW ROTI SMS 38 ae tna NS VSR. \u2018ats Sy g Kae ae AO, are Nps aes Seen is ORG, HEEL. Aang, Ghose awe gee sys fa Pow PR sy PES bona dd Send \u2018 AY 3 i ESN NG. TAY SS: tt OF ANN \u201c x SAAR! . Anessa nena ne = & Wars NASTY GAS GE NSA NUNS 2785 MOOT INRA RSS SAN Yoas : ve ane. bt, - 2 GAS iG Nong SOS AY NN Ney SS SS. . Soy ys AO ORAS abet SEE SIG 55 St BUY VE & aa nen Ana SNA Sah AD ie 28 ERS Si GNANURE \u00a7 SAAR eee CRA ene: WEST i SSR, te Sune 2 3 . \u201cpe wan ps os : 6 RL : LA Oy iS LER Se & SS: SESS rer \u00ab SAAR ARERR eee Seen g : | rae 3 SES SOS AN SRS 35 \u201ceae ee : 3 i Ys : x . 3s x ~ g > Ly Loh * IS <x RAN SY . WOO@S8xus aN WAS ESS \u2018Ss Po tan HE TEER TEOMA REEL NMSA, sos IR ; . : os && 5898 98 SX . see eee ee Ree we Bane cae a, 45 3 \u00a7 oe S 34 Se woe can, SER, Ron. Ae ees RUG \u2018 woes i& : iN io : \u201cNS = : . : . : ee \u201c: te eis . AN ee ere eat ow . g nen awn SOSA AR AT SENG ECU Pt, : \u00e9 a a. x AD LF ACEEM CRASS EL QAR ARO yon} : \" . Ye. x a8 AS IS LCA RR TAY QRAG ONDA BONS EOUNDATTON HOSPITAL ICARLE PRYSICEAN: \u201cGROUP SARK SF IPO BOX <O0g Aa yy y SN 3 SS 4 sw voce \u00abCHAMPAIGN Th 61625-4006 1 Gere eR & = 8 ad ASS gs ed nc Rand\u2019 PT is RL ASN CEST BE MAES. ag \u201c \u2014 : . a aw 7",
+        "confidence": 34.734328358208955
+      },
+      "google_vision": {
+        "text": "2\nHealth Insurance Claim Form\n\u0700\u0700\u0700\nBLUE CROSS BLUE SHEELO BAS\nDALLAS, TX 75266-0093\n:\nS\n3\nPAXTON, SARA, S\n*\nDANVILLE\n\u0700\u0700\nM65871\n\u0700\u0700\u0700\u0700\n\u0700\u0700\n88% &*\nJACOS AFFEINS\nXXX\n*\nMas\n\u0f0b\u0f0b\u0f0b\u0f0b\u0f0b\u0f44\u0f0b\u0f53\nRC1303897039\nYPS\n* 6 1 7 6 7 M @ @\nWaney at any elesge a\nCROSS BLUE SHIELD SCPS\nNot for Submission\nAN AC\nA\nwy tanquese awy y de wyd\nSAGVED SIGNATURE ON FILE\nAXANS\nARAN\nW\nMAY ARRCMS\nN\n2\n22\n6090.00 1\nAP: 18317529$$\n22\n27698\nRT 51\n6610.00 1\n1831752955\n22\n29898\n48\n_6570.00 1\n183175295$\n* ACCEPT ANSIGH&SLOT?\n5846446128\nCARLE FOUNDATION HOSPITAL\n\u00a1URBANA IL $1801-2500.\n121 2024 1013071653*\nAS TOTNY OMARY\n$\n19278.00 *\nCARLE PHYSICIAN GROUP\n960 X08 Od)\nCHAMPAIGN\nIL 61824-4806\n1154653947 \u25ba\nW\nPHYSOMN AND WHOLDER COCHAN YOU",
+        "confidence": 70.62557096664722
+      },
+      "llm": {
+        "text": "Health Insurance Claim Form\nBLUE CROSS BLUE SHIELD BCBS\nPO BOX 660083\nDALLAS, TX 75266-0083\nPAXTON, SARA\n198 N BLARD ST\nDANVILLE\nIL\n61832\n217-938-8708\nRC138397938\n03 31 1981\nSAME\nBC37670687\nBLUE CROSS BLUE SHIELD BCBS\nSIGNATURE ON FILE\n08 02 24\n08 02 24\n08 02 24\n22\n27634\nRT\nAB\n6090.00\n1\n1831752955\n22\n27598\nRT 51\nAB\n6610.00\n1\n1831752955\n22\n29898\nRT 53\nAB\n6579.00\n1\n1831752955\n08 02 24\n19270.00\n0.00\nJACOB PERKINS\n10 21 2024\n584546120\nCARLE FOUNDATION HOSPITAL\n611 W PARK ST\nURBANA IL 61801-2500\n2013701635\nCARLE PHYSICIAN GROUP\nPO BOX 4066\nCHAMPAIGN IL 61824-4066\n1154653947",
+        "confidence": 75.0
+      }
+    }
+  },
+  "raw_text": "Health Insurance Claim Form\nBLUE CROSS BLUE SHIELD BCBS\nPO BOX 660083\nDALLAS, TX 75266-0083\nPAXTON, SARA\n198 N BLARD ST\nDANVILLE\nIL\n61832\n217-938-8708\nRC138397938\n03 31 1981\nSAME\nBC37670687\nBLUE CROSS BLUE SHIELD BCBS\nSIGNATURE ON FILE\n08 02 24\n08 02 24\n08 02 24\n22\n27634\nRT\nAB\n6090.00\n1\n1831752955\n22\n27598\nRT 51\nAB\n6610.00\n1\n1831752955\n22\n29898\nRT 53\nAB\n6579.00\n1\n1831752955\n08 02 24\n19270.00\n0.00\nJACOB PERKINS\n10 21 2024\n584546120\nCARLE FOUNDATION HOSPITAL\n611 W PARK ST\nURBANA IL 61801-2500\n2013701635\nCARLE PHYSICIAN GROUP\nPO BOX 4066\nCHAMPAIGN IL 61824-4066\n1154653947",
+  "document_type": {
+    "type": "insurance_card",
+    "confidence": 100.0,
+    "method": "google_vision",
+    "all_attempts": [
+      {
+        "method": "google_vision",
+        "doc_type": "insurance_card",
+        "confidence": 100.0
+      },
+      {
+        "method": "vision_model",
+        "doc_type": "invoice",
+        "confidence": 49.52032268047333
+      },
+      {
+        "method": "ml_text",
+        "doc_type": "unknown",
+        "confidence": 0.0
+      },
+      {
+        "method": "rule_based",
+        "doc_type": "insurance_card",
+        "confidence": 100.0
+      },
+      {
+        "method": "llm_vision",
+        "doc_type": "insurance_claim_form",
+        "confidence": 95.0
+      }
+    ]
+  },
+  "layout_features": {
+    "height_width_ratio": 1.2941176470588236,
+    "text_block_count": 0,
+    "has_tables": true,
+    "has_logo": false
+  },
+  "structured_data": {
+    "patient_name": "Sara Paxton",
+    "patient_address": "198 N Blard St, Danville, IL 61832",
+    "patient_phone": "217-938-8708",
+    "insurance_id": "RC138397938",
+    "date_of_birth": "03/31/1981",
+    "policy_number": "BC37670687",
+    "provider_name": "Blue Cross Blue Shield BCBS",
+    "service_dates": [
+      "08/02/24",
+      "08/02/24",
+      "08/02/24"
+    ],
+    "procedure_codes": [
+      "27634",
+      "27598",
+      "29898"
+    ],
+    "charges": [
+      6090.0,
+      6610.0,
+      6579.0
+    ],
+    "total_charge": 19270.0,
+    "amount_paid": 0.0,
+    "provider_facility": "Carle Foundation Hospital",
+    "facility_address": "611 W Park St, Urbana, IL 61801-2500",
+    "facility_phone": "2013701635",
+    "billing_provider": "Carle Physician Group",
+    "billing_address": "PO Box 4066, Champaign, IL 61824-4066",
+    "billing_provider_id": "1154653947"
+  },
+  "primary_extraction_method": "llm_vision",
+  "all_extraction_results": {
+    "rule_based": {
+      "common": {
+        "patient_name": null,
+        "service_date": null,
+        "provider_name": "GROUP"
+      },
+      "document_specific": {}
+    },
+    "llm_vision": {
+      "patient_name": "Sara Paxton",
+      "patient_address": "198 N Blard St, Danville, IL 61832",
+      "patient_phone": "217-938-8708",
+      "insurance_id": "RC138397938",
+      "date_of_birth": "03/31/1981",
+      "policy_number": "BC37670687",
+      "provider_name": "Blue Cross Blue Shield BCBS",
+      "service_dates": [
+        "08/02/24",
+        "08/02/24",
+        "08/02/24"
+      ],
+      "procedure_codes": [
+        "27634",
+        "27598",
+        "29898"
+      ],
+      "charges": [
+        6090.0,
+        6610.0,
+        6579.0
+      ],
+      "total_charge": 19270.0,
+      "amount_paid": 0.0,
+      "provider_facility": "Carle Foundation Hospital",
+      "facility_address": "611 W Park St, Urbana, IL 61801-2500",
+      "facility_phone": "2013701635",
+      "billing_provider": "Carle Physician Group",
+      "billing_address": "PO Box 4066, Champaign, IL 61824-4066",
+      "billing_provider_id": "1154653947"
+    }
+  }
+}

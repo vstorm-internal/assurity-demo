@@ -1,0 +1,164 @@
+{
+  "filename": "GoodUB04.1_Page_1.tiff",
+  "timestamp": "2025-02-28T13:47:28.155607",
+  "ocr_results": {
+    "method_used": "google_vision",
+    "confidence": 85.79023866688163,
+    "all_results": {
+      "tesseract": {
+        "text": "1 CHI~HEACTHLAKESTD '16901\" LAKESIDE \u2018KHILLS~CT \u201cOMAHA\u2122 \u00a9 \u20184027174380 ee 2 as = [eae oy poe ee Te a A Tee NT Ties (ae Ce BODE One 0250 PHARMACY 0272 SUPPLY 0300 FABORATORY OR LAB 0370 ANESTHESIA i i CREATION DATE [ay vy reams nm SRF a ere Unqus 1D feud ae tS ak x BOX- 981106\" FEL\u2019 PASO~TX>799982006\"-\u2014",
+        "confidence": 44.41379310344828
+      },
+      "google_vision": {
+        "text": "7\n11\n15\nF1\nB\n\u2191 CHI HEALTH LAKESTDE\n16901 LAKESIDE HILLS CT\nOMAHA\n*4027174380'\n6 PATIENT NAME\n\"NE 681302318\nIT\u00dcREK, RACHEL\n10 BIRTHDATE\n090288\nADMISSION\n[CHI HEALTH LAKESIDE\"\nPO\u00af\u00afBOX776203\nCHICAGO \u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\n|38 PAT.| 26192397203\nCNTL\nMED 000478046\nREC.\n5 FED. TAX NO.\n|\u00af47-0757164\nSTATEMENT COVERS PERIOD\nTHROUGH\n110819\n[6]\nFROM\n110519\nIL60677\n15418 CAMDEN AVE\nPATIENT ADDRESS\nOMAHA\nb\n13 HR 14 TYPE 15 SRC 16 DHR 17 STAT\n18\n7\nb\nC\nd\n\"NE\" 68116\n11 SEX\n12 DATE\n18\n19\n20\n21\nCONDITION CODES\n22\n23\n24\n29\n20\n27\n28\n29 ACDT 30\nSTATE\n110519\n11 OT DI\nDATE\n32 [OCCURRENCE\nCODE\nIDATE\n33 OCCURRENCE\nCODE\n| 34\nOCCURRENCE\nDATE\nCODE\nIDATE\n35\nCODE\nOCCURRENCE SPAN\nFROM\n38\nOCCURRENCE SPAN\n37\nTHROUGH\nCODE\nFROM\nTHROUGH\n31 OCCURRENCE\nCODE\n38\n42 REV.CO.\n43 DESCRIPTION\n0112-08/PVT\n0250 PHARMACY\n0272 $TERILE SUPPLY\n0300 LABORATORY OR LAB\n0370 ANESTHESIA\n0720 DELIVEROOM/LABOR\n-0001\nPAGE\nOF\n51 HEALTH PLAN ID\n50 PAYER NAME\n|AETNA HEALTH INSURANCE\n58 INSURED'S NAME\nTUREK, RACHEL\n63 TREATMENT AUTHORIZATION CODES\n44 HCPCS/RATE/HIPPS CODE\nB\nb\n4 TYPE\nOF BILL\n0117\n30\nCODE\nVALUE CODES\nAMOUNT\n102'\n[40\nICODE\n80\nVALUE CODES\nAMOUNT\n41\nCODE\n:00 A3\nVALUE CODES\nAMOUNT\n10363.15\nC\na\n45 SERV.DATE\n48 SERV. UNITS\n47 TOTAL CHARGES\n\"BENEFITS ASSIGNMENTS\nNOT FOR INSURANCE BILLING PURPOSES\"\n539\n3681.00\n1411.15\n129.00\n147.00\n996.00\n2\n3999.00\n48 NON-COVERED CHARGES\n40\nCREATION DATE\n012323-\nTOTALS]\n$63.15\nL\n[183 ABOU\n|1649355132\n54 PRIOR PAYMENTS\n55 EST. AMOUNT DUE\n58 NPI\nRIFO\n57\nSOP.REL 80 INSURED'S UNIQUE ID\n18 W246413662\n81 GROUP NAME\n64 DOCUMENT CONTROL, NUMBER\nECACFGVN800\n65 EMPLOYER NAME\nOTHER\nPRV 10\n62 INSURANCE GROUP NO.\n010959101000001\nHDXX\n099344\nYZ370\nki\n69 ADMIT 099344\nDX\n74\n70 PATIENT\nREASON DX\nDATE\nPRINCIPAL PROCEDURE\n|\u201310E0XZZ-\n110619\nTOTHER PROCEDURE OF\nCODER\n007C722\nDATE\nN10619\nFOTHER PROCEDURE\nCODER\nFOKQMOZZ 1110619\nd.\n| 109072\u20ac\nOTHER PROCEDURE\n1106)\nBIC83\nDATE\n\u2212282N00000X-\n+\nb\n\"CORRECTED CLAT\u1e40=L/C\u00af\n80 REMARKS\nPO BOX-981106\"\n\"EL PASO TX-799981006\n-23A39-\n-F419-\nY0701-\nN2881\n-2882-\n[68\n\u00a6\n71 PPS\n807\n72\n-\n73\n**\nh\nDATE\nCODE\nOTHER PROCEDURE\n11069\n\u22121205980893-\nDATE\n78 ATTENDING\nLAST\nNPI\nQUAL\n-SIMMONS\nGEMA\nFIRST\nOTHER PROCEDURE\nDATE\n110519\n1811041304\n77 OPERATING\nNPI\nQUAL\nBOSSERT\n-ROBERT\nLAST\nFIRST\n78 OTHER\nNA\nQUAL\nLAST\nFIRST\nC\n79 OTHER\nNA\nQUAL\n-L\nd\nLAST\nFIRST\nUB-04 CMS-1450\nAPPROVED OMB-0938-0997\nTHE CERTIFICATIONS ON THE REVERSE APPLY TO THIS BILL AND ARE MADE A PART HEREOF.\nNUBC LIC3810506\nA",
+        "confidence": 85.79023866688163
+      },
+      "llm": {
+        "text": "CHT HEALTH LAKESIDE\n16901 LAKESIDE HILLS CT\nOMAHA NE 681302318\n4027174380\nCHT HEALTH LAKESIDE\nPO BOX 776203\nCHICAGO IL 60677\nSTATEMENT COVERS PERIOD\nFROM 110591\nTHROUGH 110891\nPATIENT NAME\nTURREK, RACHEL\nPATIENT ADDRESS\n15418 CARDEN AVE\nOMAHA NE 68116\nBIRTHDATE\n090288\nSEX\nF\nADMISSION\n110591\nTYPE\n15\nSRC\n1\nHR\n17\nSTAY\n18\n19\n20\n21\nCONDITION CODES\n24\n25\n26\n27\n28\n29\nOCCURRENCE\nFROM\nTHROUGH\nOCCURRENCE\nFROM\nTHROUGH\nOCCURRENCE SPAN\nFROM\nTHROUGH\nVALUE CODES\nCODE\nAMOUNT\nVALUE CODES\nCODE\nAMOUNT\nVALUE CODES\nCODE\nAMOUNT\n80\nA3\n10363.19\nREVENUE CODE\nDESCRIPTION\n0120 OB/PVT\n0250 PHARMACY\n0270 STERILE SUPPLY\n0300 LABORATORY OR LAB\n0370 ANESTHESIA\n0720 DELIVROOM/LABOR\nHCPCS / RATE / HIPPS CODE\nSERV. DATE\nSERV. UNITS\nTOTAL CHARGES\nNON-COVERED CHARGES\n3681.00\n1411.15\n129.00\n147.00\n996.00\n3999.00\nBENEFITS ASSIGNMENTS\nNOT FOR INSURANCE BILLING PURPOSES\nPAGE 1 OF 1\nCREATION DATE 012323\nTOTALS 10363.19\nPAYER NAME\nAETNA HEALTH INSURANCE\nHEALTH PLAN ID\nINSURER'S NAME\nTURREK, RACHEL\nINSURER'S UNIQUE ID\nW246413662\nGROUP NAME\nINSURANCE GROUP NO.\n010959101000001\nTREATMENT AUTHORIZATION CODES\nDOCUMENT CONTROL NUMBER\nCACPGVN8U0\nEMPLOYER NAME\n099344 Y2370 Z3A39 P419 Y0701 NZ881 2882\nPATIENT CONTROL NO.\n099344\nTYPE\n1\nSOURCE\n1\nADMIT\n110591\nHR\n17\nDISCHARGE\n110891\nHR\n17\nATTENDING\nSIMMONS\nGEMMA\nOPERATING\nBOSSERT\nROBERT\nOTHER\nAP\nOTHER\nAP\nOTHER\nAP\nOTHER\nAP\nREMARKS\nCORRECTED CLAIM / TC\nPO BOX 981106\nEL PASO TX 799981006\nUB-04 CMS-1450\nAPPROVED OMB-0938-0997\nNUBC LIC3810505\nTHE CERTIFICATIONS ON THE REVERSE APPLY TO THIS BILL AND ARE MADE A PART HEREOF.",
+        "confidence": 75.0
+      }
+    }
+  },
+  "raw_text": "7\n11\n15\nF1\nB\n\u2191 CHI HEALTH LAKESTDE\n16901 LAKESIDE HILLS CT\nOMAHA\n*4027174380'\n6 PATIENT NAME\n\"NE 681302318\nIT\u00dcREK, RACHEL\n10 BIRTHDATE\n090288\nADMISSION\n[CHI HEALTH LAKESIDE\"\nPO\u00af\u00afBOX776203\nCHICAGO \u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\n|38 PAT.| 26192397203\nCNTL\nMED 000478046\nREC.\n5 FED. TAX NO.\n|\u00af47-0757164\nSTATEMENT COVERS PERIOD\nTHROUGH\n110819\n[6]\nFROM\n110519\nIL60677\n15418 CAMDEN AVE\nPATIENT ADDRESS\nOMAHA\nb\n13 HR 14 TYPE 15 SRC 16 DHR 17 STAT\n18\n7\nb\nC\nd\n\"NE\" 68116\n11 SEX\n12 DATE\n18\n19\n20\n21\nCONDITION CODES\n22\n23\n24\n29\n20\n27\n28\n29 ACDT 30\nSTATE\n110519\n11 OT DI\nDATE\n32 [OCCURRENCE\nCODE\nIDATE\n33 OCCURRENCE\nCODE\n| 34\nOCCURRENCE\nDATE\nCODE\nIDATE\n35\nCODE\nOCCURRENCE SPAN\nFROM\n38\nOCCURRENCE SPAN\n37\nTHROUGH\nCODE\nFROM\nTHROUGH\n31 OCCURRENCE\nCODE\n38\n42 REV.CO.\n43 DESCRIPTION\n0112-08/PVT\n0250 PHARMACY\n0272 $TERILE SUPPLY\n0300 LABORATORY OR LAB\n0370 ANESTHESIA\n0720 DELIVEROOM/LABOR\n-0001\nPAGE\nOF\n51 HEALTH PLAN ID\n50 PAYER NAME\n|AETNA HEALTH INSURANCE\n58 INSURED'S NAME\nTUREK, RACHEL\n63 TREATMENT AUTHORIZATION CODES\n44 HCPCS/RATE/HIPPS CODE\nB\nb\n4 TYPE\nOF BILL\n0117\n30\nCODE\nVALUE CODES\nAMOUNT\n102'\n[40\nICODE\n80\nVALUE CODES\nAMOUNT\n41\nCODE\n:00 A3\nVALUE CODES\nAMOUNT\n10363.15\nC\na\n45 SERV.DATE\n48 SERV. UNITS\n47 TOTAL CHARGES\n\"BENEFITS ASSIGNMENTS\nNOT FOR INSURANCE BILLING PURPOSES\"\n539\n3681.00\n1411.15\n129.00\n147.00\n996.00\n2\n3999.00\n48 NON-COVERED CHARGES\n40\nCREATION DATE\n012323-\nTOTALS]\n$63.15\nL\n[183 ABOU\n|1649355132\n54 PRIOR PAYMENTS\n55 EST. AMOUNT DUE\n58 NPI\nRIFO\n57\nSOP.REL 80 INSURED'S UNIQUE ID\n18 W246413662\n81 GROUP NAME\n64 DOCUMENT CONTROL, NUMBER\nECACFGVN800\n65 EMPLOYER NAME\nOTHER\nPRV 10\n62 INSURANCE GROUP NO.\n010959101000001\nHDXX\n099344\nYZ370\nki\n69 ADMIT 099344\nDX\n74\n70 PATIENT\nREASON DX\nDATE\nPRINCIPAL PROCEDURE\n|\u201310E0XZZ-\n110619\nTOTHER PROCEDURE OF\nCODER\n007C722\nDATE\nN10619\nFOTHER PROCEDURE\nCODER\nFOKQMOZZ 1110619\nd.\n| 109072\u20ac\nOTHER PROCEDURE\n1106)\nBIC83\nDATE\n\u2212282N00000X-\n+\nb\n\"CORRECTED CLAT\u1e40=L/C\u00af\n80 REMARKS\nPO BOX-981106\"\n\"EL PASO TX-799981006\n-23A39-\n-F419-\nY0701-\nN2881\n-2882-\n[68\n\u00a6\n71 PPS\n807\n72\n-\n73\n**\nh\nDATE\nCODE\nOTHER PROCEDURE\n11069\n\u22121205980893-\nDATE\n78 ATTENDING\nLAST\nNPI\nQUAL\n-SIMMONS\nGEMA\nFIRST\nOTHER PROCEDURE\nDATE\n110519\n1811041304\n77 OPERATING\nNPI\nQUAL\nBOSSERT\n-ROBERT\nLAST\nFIRST\n78 OTHER\nNA\nQUAL\nLAST\nFIRST\nC\n79 OTHER\nNA\nQUAL\n-L\nd\nLAST\nFIRST\nUB-04 CMS-1450\nAPPROVED OMB-0938-0997\nTHE CERTIFICATIONS ON THE REVERSE APPLY TO THIS BILL AND ARE MADE A PART HEREOF.\nNUBC LIC3810506\nA",
+  "document_type": {
+    "type": "invoice",
+    "confidence": 95.0,
+    "method": "llm_vision",
+    "all_attempts": [
+      {
+        "method": "google_vision",
+        "doc_type": "invoice",
+        "confidence": 44.44444444444444
+      },
+      {
+        "method": "vision_model",
+        "doc_type": "invoice",
+        "confidence": 85.83511114120483
+      },
+      {
+        "method": "ml_text",
+        "doc_type": "unknown",
+        "confidence": 0.0
+      },
+      {
+        "method": "rule_based",
+        "doc_type": "invoice",
+        "confidence": 44.44444444444444
+      },
+      {
+        "method": "llm_vision",
+        "doc_type": "invoice",
+        "confidence": 95.0
+      }
+    ]
+  },
+  "layout_features": {
+    "height_width_ratio": 1.2937390286717378,
+    "text_block_count": 113,
+    "has_tables": true,
+    "has_logo": true
+  },
+  "structured_data": {
+    "patient_name": "Rachel Turrek",
+    "patient_address": "15418 Carden Ave, Omaha, NE 68116",
+    "birthdate": "090288",
+    "admission_date": "110591",
+    "discharge_date": "110891",
+    "payer_name": "Aetna Health Insurance",
+    "insurer_unique_id": "W246413662",
+    "insurance_group_no": "010959101000001",
+    "total_charges": 10363.19,
+    "service_details": [
+      {
+        "revenue_code": "0120",
+        "description": "OB/PVT",
+        "total_charges": 3681.0
+      },
+      {
+        "revenue_code": "0250",
+        "description": "Pharmacy",
+        "total_charges": 1411.15
+      },
+      {
+        "revenue_code": "0270",
+        "description": "Sterile Supply",
+        "total_charges": 129.0
+      },
+      {
+        "revenue_code": "0300",
+        "description": "Laboratory or Lab",
+        "total_charges": 147.0
+      },
+      {
+        "revenue_code": "0370",
+        "description": "Anesthesia",
+        "total_charges": 996.0
+      },
+      {
+        "revenue_code": "0720",
+        "description": "Delivroom/Labor",
+        "total_charges": 3999.0
+      }
+    ]
+  },
+  "primary_extraction_method": "llm_vision",
+  "all_extraction_results": {
+    "rule_based": {
+      "common": {
+        "patient_name": "NAME",
+        "service_date": null,
+        "provider_name": null
+      },
+      "document_specific": {
+        "total_amount": "58",
+        "invoice_number": null,
+        "service_items": [],
+        "insurance_paid": null,
+        "patient_responsibility": null
+      }
+    },
+    "llm_vision": {
+      "patient_name": "Rachel Turrek",
+      "patient_address": "15418 Carden Ave, Omaha, NE 68116",
+      "birthdate": "090288",
+      "admission_date": "110591",
+      "discharge_date": "110891",
+      "payer_name": "Aetna Health Insurance",
+      "insurer_unique_id": "W246413662",
+      "insurance_group_no": "010959101000001",
+      "total_charges": 10363.19,
+      "service_details": [
+        {
+          "revenue_code": "0120",
+          "description": "OB/PVT",
+          "total_charges": 3681.0
+        },
+        {
+          "revenue_code": "0250",
+          "description": "Pharmacy",
+          "total_charges": 1411.15
+        },
+        {
+          "revenue_code": "0270",
+          "description": "Sterile Supply",
+          "total_charges": 129.0
+        },
+        {
+          "revenue_code": "0300",
+          "description": "Laboratory or Lab",
+          "total_charges": 147.0
+        },
+        {
+          "revenue_code": "0370",
+          "description": "Anesthesia",
+          "total_charges": 996.0
+        },
+        {
+          "revenue_code": "0720",
+          "description": "Delivroom/Labor",
+          "total_charges": 3999.0
+        }
+      ]
+    }
+  }
+}

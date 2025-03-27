@@ -1,0 +1,370 @@
+{
+  "filename": "GoodUB04.2_Page_2.tiff",
+  "timestamp": "2025-02-28T13:48:33.745319",
+  "ocr_results": {
+    "method_used": "google_vision",
+    "confidence": 85.31588858972161,
+    "all_results": {
+      "tesseract": {
+        "text": "Rave eR a ey 3 3 ta ny EAS < $ < ft < $ < < x < $ $3 <3 \u2018 < < Ne st N 3 See eee uses SRA AANA AANA AANA erereee: See eee eS eee ee eee ee Yerecebeecec\u00e9rceece:",
+        "confidence": 23.355555555555554
+      },
+      "google_vision": {
+        "text": "THOMAS JEFFERSON UNIV HOS THOMAS JEFFERSON UNIV HOS\n11 S 11TH STREET\nPO BOX 85009895\nPHILADELPHIA PA 191074824 PHILADELPHIA\nPA19178 EDTAX NO\n[12159551042\nH5983736900\n405113009\n1232829095 122322 010323\nQCG120407124001\n\u2022 5225 GREENE STREET, UNIT 2\n> GARDNER\nVERNON G\nPHILADELPHIA\nPA 19144\n02131967 M 122322 22 1 4\n1962\n\u2714\n\u0ab8\u0ac7\n\u2611\nA1 021367\nKEYSTONE HEALTH PLAN EAST\nPO BOX 211184\nEAGAN, MN 55121\n0201 INTENSIVE CARE-SURGICAL\n0206 INTENSIVE CARE-INTERMEDI\n0214 CORONARY CARE-INTERMEDIA\n+0250 PHARMACY-GENERAL\n10255 (PHARMACY-DRUGS INCIDENT\n*0258 PHARMACY-IV SOLUTIONS\n0270 MEDICAL/SURGICAL SUPPLIE\n*0272 MEDICAL/SURGICAL SUPPLIE\n* 8278 MEDICAL/SURGICAL SUPPLIE\n0300 LABORATORY-GENERAL\n0301 LABORATORY-CHEMISTRY\n0306 LABORATORY-BACTERIOLOGY\n0310 LABORATORY PATHOLOGY-GEN\n0351 CT SCAN-HEAD SCAN\n0360 OPERATING ROOM SERVICES\n* 0378 ANESTHESIA-GENERAL\n\u00bb 0420 (PHYSICAL THERAPY-GENERAL\n* 0424 PHYSICAL THERAPY-EVALUAT\n\u00bb 0430 (OCCUPATIONAL THERAPY-GEN\n0434 OCCUPATIONAL THERAPY-EVA\nax 0611 MAGNETIC RESONANCE TECHN\n0730 (EKG/ECG (ELECTROCARDIOGR\nPAGE 1 OF 2\nKEYSTONE HEALTH PLAN EA 17002503\n>>>\n.00\nSO INSURED'S NAME\nMAYSON, TRAPETA\n\u2611\n\u2611\n183 TRESTSMENT AUTHORIZATION CODES\nCASE-15614427\nIT 08\nA3\n22399287\n0111\n1\n9\n1\nTOTAL CHARGES\n1002200\n8083800\n000\n000\n000\n1830\n537035\n\u0aae\u0aa8\u0ac7 \u0a86 \u0a9c\u0ac0\n000\n002\n85440\n2108\n/\n23875\n000\n6\n330764\n000\n26\n32\n12\n25\nJONNNNN wing\nSC\n$29151\n585619\n000\n274300\n000\n000\n25600\n000\n604000\n000\n186001\n6385000\n000\n000\n917500\n127800\n000\n000\n1\n32400\n000\n85200\n000\nPAN\n55500\n1049802\n53700\n000\n000\n1215916002\n1\nCREATION DATE.\n011323 (TOTALS\nST HEALTH PLAN Q\n000\n22399287\nINSURED'S UNIQUE\n01QCG128407124001\n$4 DOC{{{IENT CONTROL NERABER\n161 GROUP NAME\nGO INSURANCE GROUP NO\n10331834\n165 EMPLOYER NAME\n\\COMMAR INC. ACTIVE\n0713\nYG935\nYG936\nYG8191 YR569\nN\nC713\n00B70ZZ 122922\n025\nOTHER PROOND\n1922134394\nLAST FARRELL\nCHRISTOPHER\n* 1922134394\nFARRELL\nCHRISTOPHER\n08-94 CMS-1490\n6\nB3282N00000X\nLAST\nIness",
+        "confidence": 85.31588858972161
+      },
+      "llm": {
+        "text": "THOMAS JEFFERSON UNIV HOS THOMAS JEFFERSON UNIV HOS H5983736900\n111 S 11TH STREET PO BOX 8509895 405113099 E111\nPHILADELPHIA PA 191074824 PHILADELPHIA PA19178 23289995 12322 010323\n2159551042 23289995\nPATIENT NAME 5225 GREENE STREET, UNIT 2\nGARDNER VERNON G PHILADELPHIA PA 19144\n02131967 M 12322 22 1 4 19 62\nA1 021367\nKEYSTONE HEALTH PLAN EAST\nPO BOX 211184\n80 11 A3 22399287\nEAGAN, MN 55121\nREV. CD. DESCRIPTION 48 HPCS/RATE/ SUPPS CODE 50 SERV. DATE 46 SERV. UNITS 47 TOTAL CHARGES INSURANCE COVERED AMOUNT\n0201 INTENSIVE CARE-SURGICAL 1 1082200 000\n0206 INTENSIVE CARE-INTERMEDI 9 8683800 000\n0214 CORONARY CARE-INTERMEDIA 1 675700 000\n0255 PHARMACY-GENERAL 1836 573735 000\n0255 PHARMACY-DRUGS INCIDENT 200 85440 000\n0258 PHARMACY-IV SOLUTIONS 2108 23875 000\n0270 MEDICAL/SURGICAL SUPPLIE 6 330764 000\n0272 MEDICAL/SURGICAL SUPPLIE 5 529151 000\n0278 MEDICAL/SURGICAL SUPPLIE 26 585619 000\n0300 LABORATORY-GENERAL 22 274300 000\n0301 LABORATORY-CHEMISTRY 7 144800 000\n0308 LABORATORY-BACTERIOLOGY 2 25600 000\n0318 LABORATORY PATHOLOGY-GE 1 25000 000\n0351 CT SCAN-HEAD SCAN 2 186001 000\n0360 OPERATING ROOM SERVICES- 25 6385000 000\n0370 ANESTHESIA-GENERAL 25 917850 000\n0420 PHYSICAL THERAPY-GENERAL 9 172800 000\n0424 PHYSICAL THERAPY-EVALUAT 1 32400 000\n0430 OCCUPATIONAL THERAPY-GEN 6 85200 000\n0434 OCCUPATIONAL THERAPY-EV 2 55500 000\n0611 MAGNETIC RESONANCE TECHN 4 1049802 000\n0730 EKG/ECG (ELECTROCARDIOGR 1 53700 000\nPAGE 1 OF 2 CREATION DATE 011323 TOTALS\n50 PAYER NAME 51 HEALTH PLAN ID 54 PRIOR PAYMENTS 55 EST. AMOUNT DUE 56 NPI 1215916002\nKEYSTONE HEALTH PLAN EA 7002503 Y Y 000 22399287\n57 SEC\n58 INSURER'S NAME 59 INSURER'S UNIQUE ID 60 GROUP NAME 61 INSURANCE GROUP NO.\nMAYSON, TRAPETA 010GC124047124001 10331834\n62 TREATMENT AUTHORIZATION CODES 63 DOCUMENT CONTROL NUMBER 64 EMPLOYER NAME\nCASE-15614427 COMHAR INC. ACTIVE\nC713 YG935 YG936 YG819 YR569 N\nC713 025\n007207 12322 STAFF NPI 1922134394\nSTAFF FARRELL CHRISTOPHER\nSTAFF NPI 1922134394\nSTAFF FARRELL CHRISTOPHER\nB3282N00000X\nUB-04 CMS-1450",
+        "confidence": 75.0
+      }
+    }
+  },
+  "raw_text": "THOMAS JEFFERSON UNIV HOS THOMAS JEFFERSON UNIV HOS\n11 S 11TH STREET\nPO BOX 85009895\nPHILADELPHIA PA 191074824 PHILADELPHIA\nPA19178 EDTAX NO\n[12159551042\nH5983736900\n405113009\n1232829095 122322 010323\nQCG120407124001\n\u2022 5225 GREENE STREET, UNIT 2\n> GARDNER\nVERNON G\nPHILADELPHIA\nPA 19144\n02131967 M 122322 22 1 4\n1962\n\u2714\n\u0ab8\u0ac7\n\u2611\nA1 021367\nKEYSTONE HEALTH PLAN EAST\nPO BOX 211184\nEAGAN, MN 55121\n0201 INTENSIVE CARE-SURGICAL\n0206 INTENSIVE CARE-INTERMEDI\n0214 CORONARY CARE-INTERMEDIA\n+0250 PHARMACY-GENERAL\n10255 (PHARMACY-DRUGS INCIDENT\n*0258 PHARMACY-IV SOLUTIONS\n0270 MEDICAL/SURGICAL SUPPLIE\n*0272 MEDICAL/SURGICAL SUPPLIE\n* 8278 MEDICAL/SURGICAL SUPPLIE\n0300 LABORATORY-GENERAL\n0301 LABORATORY-CHEMISTRY\n0306 LABORATORY-BACTERIOLOGY\n0310 LABORATORY PATHOLOGY-GEN\n0351 CT SCAN-HEAD SCAN\n0360 OPERATING ROOM SERVICES\n* 0378 ANESTHESIA-GENERAL\n\u00bb 0420 (PHYSICAL THERAPY-GENERAL\n* 0424 PHYSICAL THERAPY-EVALUAT\n\u00bb 0430 (OCCUPATIONAL THERAPY-GEN\n0434 OCCUPATIONAL THERAPY-EVA\nax 0611 MAGNETIC RESONANCE TECHN\n0730 (EKG/ECG (ELECTROCARDIOGR\nPAGE 1 OF 2\nKEYSTONE HEALTH PLAN EA 17002503\n>>>\n.00\nSO INSURED'S NAME\nMAYSON, TRAPETA\n\u2611\n\u2611\n183 TRESTSMENT AUTHORIZATION CODES\nCASE-15614427\nIT 08\nA3\n22399287\n0111\n1\n9\n1\nTOTAL CHARGES\n1002200\n8083800\n000\n000\n000\n1830\n537035\n\u0aae\u0aa8\u0ac7 \u0a86 \u0a9c\u0ac0\n000\n002\n85440\n2108\n/\n23875\n000\n6\n330764\n000\n26\n32\n12\n25\nJONNNNN wing\nSC\n$29151\n585619\n000\n274300\n000\n000\n25600\n000\n604000\n000\n186001\n6385000\n000\n000\n917500\n127800\n000\n000\n1\n32400\n000\n85200\n000\nPAN\n55500\n1049802\n53700\n000\n000\n1215916002\n1\nCREATION DATE.\n011323 (TOTALS\nST HEALTH PLAN Q\n000\n22399287\nINSURED'S UNIQUE\n01QCG128407124001\n$4 DOC{{{IENT CONTROL NERABER\n161 GROUP NAME\nGO INSURANCE GROUP NO\n10331834\n165 EMPLOYER NAME\n\\COMMAR INC. ACTIVE\n0713\nYG935\nYG936\nYG8191 YR569\nN\nC713\n00B70ZZ 122922\n025\nOTHER PROOND\n1922134394\nLAST FARRELL\nCHRISTOPHER\n* 1922134394\nFARRELL\nCHRISTOPHER\n08-94 CMS-1490\n6\nB3282N00000X\nLAST\nIness",
+  "document_type": {
+    "type": "invoice",
+    "confidence": 95.0,
+    "method": "llm_vision",
+    "all_attempts": [
+      {
+        "method": "google_vision",
+        "doc_type": "insurance_card",
+        "confidence": 40.0
+      },
+      {
+        "method": "vision_model",
+        "doc_type": "claim_form",
+        "confidence": 87.91496157646179
+      },
+      {
+        "method": "ml_text",
+        "doc_type": "unknown",
+        "confidence": 0.0
+      },
+      {
+        "method": "rule_based",
+        "doc_type": "insurance_card",
+        "confidence": 40.0
+      },
+      {
+        "method": "llm_vision",
+        "doc_type": "invoice",
+        "confidence": 95.0
+      }
+    ]
+  },
+  "layout_features": {
+    "height_width_ratio": 1.2941176470588236,
+    "text_block_count": 3,
+    "has_tables": true,
+    "has_logo": false
+  },
+  "structured_data": {
+    "patient_name": "GARDNER VERNON G",
+    "patient_address": "5225 GREENE STREET, UNIT 2, PHILADELPHIA, PA 19144",
+    "patient_dob": "02131967",
+    "insurance_provider": "KEYSTONE HEALTH PLAN EAST",
+    "insurance_id": "7002503",
+    "total_charges": "22399287",
+    "service_details": [
+      {
+        "code": "0201",
+        "description": "INTENSIVE CARE-SURGICAL",
+        "units": "1",
+        "charges": "1082200"
+      },
+      {
+        "code": "0206",
+        "description": "INTENSIVE CARE-INTERMEDI",
+        "units": "9",
+        "charges": "8683800"
+      },
+      {
+        "code": "0214",
+        "description": "CORONARY CARE-INTERMEDIA",
+        "units": "1",
+        "charges": "675700"
+      },
+      {
+        "code": "0255",
+        "description": "PHARMACY-GENERAL",
+        "units": "1836",
+        "charges": "573735"
+      },
+      {
+        "code": "0255",
+        "description": "PHARMACY-DRUGS INCIDENT",
+        "units": "200",
+        "charges": "85440"
+      },
+      {
+        "code": "0258",
+        "description": "PHARMACY-IV SOLUTIONS",
+        "units": "2108",
+        "charges": "23875"
+      },
+      {
+        "code": "0270",
+        "description": "MEDICAL/SURGICAL SUPPLIE",
+        "units": "6",
+        "charges": "330764"
+      },
+      {
+        "code": "0272",
+        "description": "MEDICAL/SURGICAL SUPPLIE",
+        "units": "5",
+        "charges": "529151"
+      },
+      {
+        "code": "0278",
+        "description": "MEDICAL/SURGICAL SUPPLIE",
+        "units": "26",
+        "charges": "585619"
+      },
+      {
+        "code": "0300",
+        "description": "LABORATORY-GENERAL",
+        "units": "22",
+        "charges": "274300"
+      },
+      {
+        "code": "0301",
+        "description": "LABORATORY-CHEMISTRY",
+        "units": "7",
+        "charges": "144800"
+      },
+      {
+        "code": "0308",
+        "description": "LABORATORY-BACTERIOLOGY",
+        "units": "2",
+        "charges": "25600"
+      },
+      {
+        "code": "0318",
+        "description": "LABORATORY PATHOLOGY-GE",
+        "units": "1",
+        "charges": "25000"
+      },
+      {
+        "code": "0351",
+        "description": "CT SCAN-HEAD SCAN",
+        "units": "2",
+        "charges": "186001"
+      },
+      {
+        "code": "0360",
+        "description": "OPERATING ROOM SERVICES-",
+        "units": "25",
+        "charges": "6385000"
+      },
+      {
+        "code": "0370",
+        "description": "ANESTHESIA-GENERAL",
+        "units": "25",
+        "charges": "917850"
+      },
+      {
+        "code": "0420",
+        "description": "PHYSICAL THERAPY-GENERAL",
+        "units": "9",
+        "charges": "172800"
+      },
+      {
+        "code": "0424",
+        "description": "PHYSICAL THERAPY-EVALUAT",
+        "units": "1",
+        "charges": "32400"
+      },
+      {
+        "code": "0430",
+        "description": "OCCUPATIONAL THERAPY-GEN",
+        "units": "6",
+        "charges": "85200"
+      },
+      {
+        "code": "0434",
+        "description": "OCCUPATIONAL THERAPY-EV",
+        "units": "2",
+        "charges": "55500"
+      },
+      {
+        "code": "0611",
+        "description": "MAGNETIC RESONANCE TECHN",
+        "units": "4",
+        "charges": "1049802"
+      },
+      {
+        "code": "0730",
+        "description": "EKG/ECG (ELECTROCARDIOGR",
+        "units": "1",
+        "charges": "53700"
+      }
+    ],
+    "creation_date": "011323",
+    "staff": [
+      {
+        "npi": "1922134394",
+        "name": "FARRELL CHRISTOPHER"
+      }
+    ]
+  },
+  "primary_extraction_method": "llm_vision",
+  "all_extraction_results": {
+    "rule_based": {
+      "common": {
+        "patient_name": null,
+        "service_date": null,
+        "provider_name": null
+      },
+      "document_specific": {}
+    },
+    "llm_vision": {
+      "patient_name": "GARDNER VERNON G",
+      "patient_address": "5225 GREENE STREET, UNIT 2, PHILADELPHIA, PA 19144",
+      "patient_dob": "02131967",
+      "insurance_provider": "KEYSTONE HEALTH PLAN EAST",
+      "insurance_id": "7002503",
+      "total_charges": "22399287",
+      "service_details": [
+        {
+          "code": "0201",
+          "description": "INTENSIVE CARE-SURGICAL",
+          "units": "1",
+          "charges": "1082200"
+        },
+        {
+          "code": "0206",
+          "description": "INTENSIVE CARE-INTERMEDI",
+          "units": "9",
+          "charges": "8683800"
+        },
+        {
+          "code": "0214",
+          "description": "CORONARY CARE-INTERMEDIA",
+          "units": "1",
+          "charges": "675700"
+        },
+        {
+          "code": "0255",
+          "description": "PHARMACY-GENERAL",
+          "units": "1836",
+          "charges": "573735"
+        },
+        {
+          "code": "0255",
+          "description": "PHARMACY-DRUGS INCIDENT",
+          "units": "200",
+          "charges": "85440"
+        },
+        {
+          "code": "0258",
+          "description": "PHARMACY-IV SOLUTIONS",
+          "units": "2108",
+          "charges": "23875"
+        },
+        {
+          "code": "0270",
+          "description": "MEDICAL/SURGICAL SUPPLIE",
+          "units": "6",
+          "charges": "330764"
+        },
+        {
+          "code": "0272",
+          "description": "MEDICAL/SURGICAL SUPPLIE",
+          "units": "5",
+          "charges": "529151"
+        },
+        {
+          "code": "0278",
+          "description": "MEDICAL/SURGICAL SUPPLIE",
+          "units": "26",
+          "charges": "585619"
+        },
+        {
+          "code": "0300",
+          "description": "LABORATORY-GENERAL",
+          "units": "22",
+          "charges": "274300"
+        },
+        {
+          "code": "0301",
+          "description": "LABORATORY-CHEMISTRY",
+          "units": "7",
+          "charges": "144800"
+        },
+        {
+          "code": "0308",
+          "description": "LABORATORY-BACTERIOLOGY",
+          "units": "2",
+          "charges": "25600"
+        },
+        {
+          "code": "0318",
+          "description": "LABORATORY PATHOLOGY-GE",
+          "units": "1",
+          "charges": "25000"
+        },
+        {
+          "code": "0351",
+          "description": "CT SCAN-HEAD SCAN",
+          "units": "2",
+          "charges": "186001"
+        },
+        {
+          "code": "0360",
+          "description": "OPERATING ROOM SERVICES-",
+          "units": "25",
+          "charges": "6385000"
+        },
+        {
+          "code": "0370",
+          "description": "ANESTHESIA-GENERAL",
+          "units": "25",
+          "charges": "917850"
+        },
+        {
+          "code": "0420",
+          "description": "PHYSICAL THERAPY-GENERAL",
+          "units": "9",
+          "charges": "172800"
+        },
+        {
+          "code": "0424",
+          "description": "PHYSICAL THERAPY-EVALUAT",
+          "units": "1",
+          "charges": "32400"
+        },
+        {
+          "code": "0430",
+          "description": "OCCUPATIONAL THERAPY-GEN",
+          "units": "6",
+          "charges": "85200"
+        },
+        {
+          "code": "0434",
+          "description": "OCCUPATIONAL THERAPY-EV",
+          "units": "2",
+          "charges": "55500"
+        },
+        {
+          "code": "0611",
+          "description": "MAGNETIC RESONANCE TECHN",
+          "units": "4",
+          "charges": "1049802"
+        },
+        {
+          "code": "0730",
+          "description": "EKG/ECG (ELECTROCARDIOGR",
+          "units": "1",
+          "charges": "53700"
+        }
+      ],
+      "creation_date": "011323",
+      "staff": [
+        {
+          "npi": "1922134394",
+          "name": "FARRELL CHRISTOPHER"
+        }
+      ]
+    }
+  }
+}

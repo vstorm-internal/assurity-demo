@@ -1,0 +1,356 @@
+{
+  "filename": "GoodUB04.3_Page_1.tiff",
+  "timestamp": "2025-02-28T13:47:55.488487",
+  "ocr_results": {
+    "method_used": "google_vision",
+    "confidence": 86.50234448177189,
+    "all_results": {
+      "tesseract": {
+        "text": "Page: 04 of 24 2023-02-07 01:08:00 GMT 16362460297 From: To: Policy Service 3147549317 pum. 02~03~\u20142023 4/24 SNIL Ss eal we =e Oe a am ee ad ee es weet boa anne mat annie Pah Nees yee mae. OMe TEA EN OU ANE ESA BER HE 2 SF SS HOODS MILT BORD OS BOX 36860 sen A mae pete re rot enn hon Led a NL Teck Bk een whats, CHESTERFIELD 7SALT TAKE\u201d CITY \"UT S411 Qeramen iii 43\u20140652680 131992 oe 3145768100 ~\u2014 | eT epee FOLGER AVE BARNES, __ ENG eles 1222230 Goa BBARNES, LESLIE OC 1123 FOLGER AVE ISATINT LOUTS 1 0250 | PHARMACY 4g NON-COVSREO [4p : 1S gILe AMT ARE MAGE A PAR HE CERTIFICATIONS ON THE REVERSE APPLY 1D 7 MAT SOP RAT PENOING : BF Henrl tote",
+        "confidence": 46.00757575757576
+      },
+      "google_vision": {
+        "text": "To: Policy Service\n3147549317\nPage: 04 of 24\n232 S WOODS MILL ROAD\n[PO BOX 3686\n2023-02-07 01:08:00 GMT\nONYL\n\u0627\u0644\u064a\u0627\n16362460297\nFrom:\n03:00:31 p.m.\n02-03-2023\n4/24,\n0131\nREC 235565\nCHESTERFIELD MO 630173417SALT LAKE CITY UT 841105 FED. TAX NO.\n3145768100\nI PATIENT NAME\nWBARNES,\n10 BIRTHDATE\nLESLIE\n11 SEX\nDATE\nATEMENT COVERS\n43-0652680121922 122022\n3. PARENT ADDRESS 1123 FOLGER AVE\nSAINT LOUIS\nADMISSION\n18 OHR 17 STAT\nSRC\n18 06\n106061954 F 12192207\n41\nCODE:\n11 121922 17 122022 29 121922 35 121922\n44 122022 A1 060654\nBARNES, LESLIE C\n1123 FOLGER AVE\nSAINT LOUIS\nMO 63122-1230\n36\n\u2611\n#\u0254\nCONDITION COCES.\nVALUE CODES\nAMOUNT\nHROUGH:\n| MO 631221230\nOCCURRENCE SPA\nCOUGH.\nVALUE CODES\nAMOUNT\nVALUE CODES\n42 REV. CD +3 DESCRIPTION\n10250 PHARMACY\n10250 PHARMACY\n10250 PHARMACY\n+10250 PHARMACY\n10250 PHARMACY\n0250 PHARMACY\n0250 PHARMACY\n110250 PHARMACY\n0250 PHARMACY\n44 HORDS/RAT\u00cb: \u00bfHIP PS CODE\n45 SEAM DATE\n* SERV. UR\n47 TAAL CHARGES\n4 NON-COVERED CHABER\n-1997\n121922\n121922\n4\n121922\n1\n121922\n3\n121922\n3\n121922\n3\n121922\n1\n121922\n121922\n1\n0250 PHARMACY\n121922\n0250 PHARMACY\n121922\n0250 PHARMACY\n122022\n0250 PHARMACY\n122022\n1\n+40250 PHARMACY\n122022\n#0250 PHARMACY\n0250 PHARMACY\n0250 PHARMACY\n0250 PHARMACY\n#0250 PHARMACY\n0250 PHARMACY\n#0250 PHARMACY\n#0250 PHARMACY\nPAGE 1 OF 3.\nSO PAYER NAME\n* UNITED HEALTHCARE\n122022\n122022 O\n122022\n122022\n122022\n122022\n122022\n122022\nwara NN HPPPPPPPPWWWH HD\n3185\n5554\n1205\n1308\n101\n472\nE\n23447\n1965\n4:36\n685\n20\n7961\n[**\n6037\n\u2611\n436\n1199\n050\n436\n1708\n2180\n3408\n202\n472\n121\n685\nCREATION DATE\n61. HEALTH PLAN ID\n5020231\nY\nY\nSA PRIDA PAYMENTS\nTOTALS\nEST AMOUNT QUE\n123\nSSNPI 1346251543\n57\nSE INSURED'S NAME.\nPREL GO INSUREDS UNIQUE ID\nBARNES, LESLIE\n18 (931319867\n49 TREATMENT AUTHORIZATION CODES\nA177518638\n64 DOCUMENT CONTROL NUMBER:\nOTHER\nPRV 10\n61 GROUP NAME\n52 INSURANCE GROUP NO\n13U1489\n56 EMPLOYER NAME\nA W HEALTHCARE\nM1712\n0K219\nI10\nK760\n$70.PATIENT:\nM1712\nE1165\n1252\nM1712\nBE039\n7881\nM1712\nE669\n2955\nZ6839\nZ86718\nCODE\nROCEDURE\nDAF\nPROCEDURE:\nDATE\nOTHER PROCE\u00a9UR@\nOTHER\nOTHEA PACC\u00a4Duf\u00a4\nDATE\n\u30fbDATE\n#O REMARKS\n282N00000X\nI2510 E782\nZ7901 Z882\n176 ATTENDING:\nF419\n27982\nM1447296181\nLASTSPITZFADEN\n77 OPERATING 1447296181\nSPITZFADEN\n76 OTHER:\nLAST\nFIRST ANDREW\nFIRST ANDREW\nQUAL\nFIRST\n79 OTHER\nLAST\n\u2610\nQUAL\nFIRST\n08-04 CDS-1450\n2005 NUBC\n\"ORE APPROVAL PENDING\nRTIFICATIONS ON THE REVERSE\nTHIS BILL AND ARE MADE I\nNUBCLC3213257",
+        "confidence": 86.50234448177189
+      },
+      "llm": {
+        "text": "3147549317\n232 S WOODS MILL ROAD PO BOX 3686\nCHESTERFIELD MO 630173411 SALT LAKE CITY UT 84116\n3145768100 43-065268 121922 122022\nBARNES, LESLIE SAINT LOUIS MO 631221230\n1123 FOLGER AVE\n06 11954 17 122022 29 121922 35 121922\n44 122022 A1 066654\nBARNES, LESLIE C\n1123 FOLGER AVE\nSAINT LOUIS MO 63122-1230\n0250 PHARMACY 121922 3 3185\n0250 PHARMACY 121922 5 5554\n0250 PHARMACY 121922 1 1205\n0250 PHARMACY 121922 3 1308\n0250 PHARMACY 121922 3 101\n0250 PHARMACY 121922 2 2347\n0250 PHARMACY 121922 1 965\n0250 PHARMACY 121922 4 685\n0250 PHARMACY 121922 2 7961\n0250 PHARMACY 122022 1 6037\n0250 PHARMACY 122022 1 436\n0250 PHARMACY 122022 1 50\n0250 PHARMACY 122022 2 1708\n0250 PHARMACY 122022 5 2188\n0250 PHARMACY 122022 1 3408\n0250 PHARMACY 122022 6 202\n0250 PHARMACY 122022 3 472\n0250 PHARMACY 122022 3 685\nPAGE 1 OF 3 TOTALS\n51 PAYEE NAME 51 HEALTH PLAN ID 51 PRIOR PAYMENTS 51 AMOUNT DUE 51 NPI 1346251543\nUNITED HEALTHCARE 5020231 Y Y Y\nOTHER\n51 INSURER'S NAME 51 INSURER'S UNIQUE ID 51 GROUP NAME 51 INSURANCE GROUP NO\nBARNES, LESLIE 18 931319967 3U1489\n51 PAYMENT AUTHORIZATION CODES 51 DOCUMENT CONTROL NUMBER 51 EMPLOYER NAME\nA177518638 A W HEALTHCARE\nM1712 T100 E1165 E3039 E669 Z6839 I2510 E782 F419\n0K219 K760 T252 Z2881 Z2955 Z86718 Z7901 Z882 Z7982\nM1712 M1712 M1712\n51 ATTENDING 51 OPERATING\nLAST SPITZFADEN FIRST ANDREW\nLAST SPITZFADEN FIRST ANDREW\n51 OTHER PROCEDURE\n51 REMARKS\n38282N00000X\n",
+        "confidence": 75.0
+      }
+    }
+  },
+  "raw_text": "To: Policy Service\n3147549317\nPage: 04 of 24\n232 S WOODS MILL ROAD\n[PO BOX 3686\n2023-02-07 01:08:00 GMT\nONYL\n\u0627\u0644\u064a\u0627\n16362460297\nFrom:\n03:00:31 p.m.\n02-03-2023\n4/24,\n0131\nREC 235565\nCHESTERFIELD MO 630173417SALT LAKE CITY UT 841105 FED. TAX NO.\n3145768100\nI PATIENT NAME\nWBARNES,\n10 BIRTHDATE\nLESLIE\n11 SEX\nDATE\nATEMENT COVERS\n43-0652680121922 122022\n3. PARENT ADDRESS 1123 FOLGER AVE\nSAINT LOUIS\nADMISSION\n18 OHR 17 STAT\nSRC\n18 06\n106061954 F 12192207\n41\nCODE:\n11 121922 17 122022 29 121922 35 121922\n44 122022 A1 060654\nBARNES, LESLIE C\n1123 FOLGER AVE\nSAINT LOUIS\nMO 63122-1230\n36\n\u2611\n#\u0254\nCONDITION COCES.\nVALUE CODES\nAMOUNT\nHROUGH:\n| MO 631221230\nOCCURRENCE SPA\nCOUGH.\nVALUE CODES\nAMOUNT\nVALUE CODES\n42 REV. CD +3 DESCRIPTION\n10250 PHARMACY\n10250 PHARMACY\n10250 PHARMACY\n+10250 PHARMACY\n10250 PHARMACY\n0250 PHARMACY\n0250 PHARMACY\n110250 PHARMACY\n0250 PHARMACY\n44 HORDS/RAT\u00cb: \u00bfHIP PS CODE\n45 SEAM DATE\n* SERV. UR\n47 TAAL CHARGES\n4 NON-COVERED CHABER\n-1997\n121922\n121922\n4\n121922\n1\n121922\n3\n121922\n3\n121922\n3\n121922\n1\n121922\n121922\n1\n0250 PHARMACY\n121922\n0250 PHARMACY\n121922\n0250 PHARMACY\n122022\n0250 PHARMACY\n122022\n1\n+40250 PHARMACY\n122022\n#0250 PHARMACY\n0250 PHARMACY\n0250 PHARMACY\n0250 PHARMACY\n#0250 PHARMACY\n0250 PHARMACY\n#0250 PHARMACY\n#0250 PHARMACY\nPAGE 1 OF 3.\nSO PAYER NAME\n* UNITED HEALTHCARE\n122022\n122022 O\n122022\n122022\n122022\n122022\n122022\n122022\nwara NN HPPPPPPPPWWWH HD\n3185\n5554\n1205\n1308\n101\n472\nE\n23447\n1965\n4:36\n685\n20\n7961\n[**\n6037\n\u2611\n436\n1199\n050\n436\n1708\n2180\n3408\n202\n472\n121\n685\nCREATION DATE\n61. HEALTH PLAN ID\n5020231\nY\nY\nSA PRIDA PAYMENTS\nTOTALS\nEST AMOUNT QUE\n123\nSSNPI 1346251543\n57\nSE INSURED'S NAME.\nPREL GO INSUREDS UNIQUE ID\nBARNES, LESLIE\n18 (931319867\n49 TREATMENT AUTHORIZATION CODES\nA177518638\n64 DOCUMENT CONTROL NUMBER:\nOTHER\nPRV 10\n61 GROUP NAME\n52 INSURANCE GROUP NO\n13U1489\n56 EMPLOYER NAME\nA W HEALTHCARE\nM1712\n0K219\nI10\nK760\n$70.PATIENT:\nM1712\nE1165\n1252\nM1712\nBE039\n7881\nM1712\nE669\n2955\nZ6839\nZ86718\nCODE\nROCEDURE\nDAF\nPROCEDURE:\nDATE\nOTHER PROCE\u00a9UR@\nOTHER\nOTHEA PACC\u00a4Duf\u00a4\nDATE\n\u30fbDATE\n#O REMARKS\n282N00000X\nI2510 E782\nZ7901 Z882\n176 ATTENDING:\nF419\n27982\nM1447296181\nLASTSPITZFADEN\n77 OPERATING 1447296181\nSPITZFADEN\n76 OTHER:\nLAST\nFIRST ANDREW\nFIRST ANDREW\nQUAL\nFIRST\n79 OTHER\nLAST\n\u2610\nQUAL\nFIRST\n08-04 CDS-1450\n2005 NUBC\n\"ORE APPROVAL PENDING\nRTIFICATIONS ON THE REVERSE\nTHIS BILL AND ARE MADE I\nNUBCLC3213257",
+  "document_type": {
+    "type": "insurance_claim",
+    "confidence": 95.0,
+    "method": "llm_vision",
+    "all_attempts": [
+      {
+        "method": "google_vision",
+        "doc_type": "invoice",
+        "confidence": 50.0
+      },
+      {
+        "method": "vision_model",
+        "doc_type": "invoice",
+        "confidence": 89.55315351486206
+      },
+      {
+        "method": "ml_text",
+        "doc_type": "unknown",
+        "confidence": 0.0
+      },
+      {
+        "method": "rule_based",
+        "doc_type": "invoice",
+        "confidence": 50.0
+      },
+      {
+        "method": "llm_vision",
+        "doc_type": "insurance_claim",
+        "confidence": 95.0
+      }
+    ]
+  },
+  "layout_features": {
+    "height_width_ratio": 1.2941176470588236,
+    "text_block_count": 23,
+    "has_tables": true,
+    "has_logo": false
+  },
+  "structured_data": {
+    "claim_number": "3147549317",
+    "patient_name": "BARNES, LESLIE",
+    "patient_address": "1123 FOLGER AVE, SAINT LOUIS, MO 63122-1230",
+    "payer_name": "UNITED HEALTHCARE",
+    "payer_id": "5020231",
+    "insurance_id": "931319967",
+    "insurance_group_no": "3U1489",
+    "employer_name": "A W HEALTHCARE",
+    "document_control_number": "A177518638",
+    "service_dates": [
+      {
+        "date": "121922",
+        "services": [
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 3,
+            "charge": 3185
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 5,
+            "charge": 5554
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 1,
+            "charge": 1205
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 3,
+            "charge": 1308
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 3,
+            "charge": 101
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 2,
+            "charge": 2347
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 1,
+            "charge": 965
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 4,
+            "charge": 685
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 2,
+            "charge": 7961
+          }
+        ]
+      },
+      {
+        "date": "122022",
+        "services": [
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 1,
+            "charge": 6037
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 1,
+            "charge": 436
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 1,
+            "charge": 50
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 2,
+            "charge": 1708
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 5,
+            "charge": 2188
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 1,
+            "charge": 3408
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 6,
+            "charge": 202
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 3,
+            "charge": 472
+          },
+          {
+            "code": "0250",
+            "description": "PHARMACY",
+            "quantity": 3,
+            "charge": 685
+          }
+        ]
+      }
+    ],
+    "attending_physician": {
+      "last_name": "SPITZFADEN",
+      "first_name": "ANDREW"
+    },
+    "operating_physician": {
+      "last_name": "SPITZFADEN",
+      "first_name": "ANDREW"
+    }
+  },
+  "primary_extraction_method": "llm_vision",
+  "all_extraction_results": {
+    "rule_based": {
+      "common": {
+        "patient_name": "WBARNES",
+        "service_date": null,
+        "provider_name": null
+      },
+      "document_specific": {
+        "total_amount": null,
+        "invoice_number": null,
+        "service_items": [],
+        "insurance_paid": null,
+        "patient_responsibility": null
+      }
+    },
+    "llm_vision": {
+      "claim_number": "3147549317",
+      "patient_name": "BARNES, LESLIE",
+      "patient_address": "1123 FOLGER AVE, SAINT LOUIS, MO 63122-1230",
+      "payer_name": "UNITED HEALTHCARE",
+      "payer_id": "5020231",
+      "insurance_id": "931319967",
+      "insurance_group_no": "3U1489",
+      "employer_name": "A W HEALTHCARE",
+      "document_control_number": "A177518638",
+      "service_dates": [
+        {
+          "date": "121922",
+          "services": [
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 3,
+              "charge": 3185
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 5,
+              "charge": 5554
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 1,
+              "charge": 1205
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 3,
+              "charge": 1308
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 3,
+              "charge": 101
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 2,
+              "charge": 2347
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 1,
+              "charge": 965
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 4,
+              "charge": 685
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 2,
+              "charge": 7961
+            }
+          ]
+        },
+        {
+          "date": "122022",
+          "services": [
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 1,
+              "charge": 6037
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 1,
+              "charge": 436
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 1,
+              "charge": 50
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 2,
+              "charge": 1708
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 5,
+              "charge": 2188
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 1,
+              "charge": 3408
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 6,
+              "charge": 202
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 3,
+              "charge": 472
+            },
+            {
+              "code": "0250",
+              "description": "PHARMACY",
+              "quantity": 3,
+              "charge": 685
+            }
+          ]
+        }
+      ],
+      "attending_physician": {
+        "last_name": "SPITZFADEN",
+        "first_name": "ANDREW"
+      },
+      "operating_physician": {
+        "last_name": "SPITZFADEN",
+        "first_name": "ANDREW"
+      }
+    }
+  }
+}

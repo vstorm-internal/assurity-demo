@@ -1,0 +1,25 @@
+filename,vision_model_doc_type,vision_model_confidence,ml_text_doc_type,ml_text_confidence,rule_based_doc_type,rule_based_confidence,llm_vision_doc_type,llm_vision_confidence,donut_model_doc_type,donut_model_confidence
+Perfect UB04.tiff,invoice,89.74,unknown,0.00,invoice,57.14,medical_report,95.00,unknown,100.00
+GoodUB04.3_Page_2.tiff,invoice,82.18,unknown,0.00,invoice,42.86,medical_report,95.00,unknown,100.00
+GoodUB04.1_Page_3.tiff,invoice,89.60,unknown,0.00,invoice,44.44,insurance_claim,95.00,unknown,100.00
+GoodUB04.2_Page_4.tiff,invoice,67.64,unknown,0.00,invoice,50.00,insurance_claim,95.00,unknown,100.00
+GoodUB04.3_Page_3.tiff,invoice,90.58,unknown,0.00,invoice,50.00,medical_report,95.00,unknown,100.00
+GoodUB04.2_Page_3.tiff,claim_form,86.96,unknown,0.00,insurance_card,100.00,medical_report,95.00,unknown,100.00
+GoodUB04.1_Page_1.tiff,invoice,85.84,unknown,0.00,invoice,44.44,medical_report,95.00,unknown,100.00
+GoodUB04.3_Page_1.tiff,invoice,89.55,unknown,0.00,invoice,50.00,unknown,0.00,unknown,100.00
+GoodUB04.2_Page_2.tiff,claim_form,87.91,unknown,0.00,unknown,0.00,insurance_claim,95.00,unknown,100.00
+HCFA.2.tiff,claim_form,77.78,unknown,0.00,insurance_card,100.00,insurance_claim_form,95.00,unknown,100.00
+GoodUB04.2_Page_1.tiff,claim_form,47.14,unknown,0.00,insurance_card,40.00,medical_report,95.00,unknown,99.97
+HCFA.1.tiff,claim_form,85.80,unknown,0.00,insurance_card,100.00,insurance_claim_form,95.00,unknown,100.00
+HCFA.3.tif,claim_form,50.48,unknown,0.00,insurance_card,57.14,insurance_claim_form,95.00,unknown,100.00
+Burris 1500 forms.tif,invoice,48.41,unknown,0.00,invoice,100.00,invoice,95.00,unknown,100.00
+itemized billing1.tif,invoice,90.79,unknown,0.00,invoice,50.00,invoice,95.00,unknown,99.99
+HCFA.5.tif,claim_form,74.91,unknown,0.00,unknown,0.00,insurance_claim_form,95.00,unknown,100.00
+itemized billing2.tif,invoice,88.76,unknown,0.00,invoice,50.00,medical_report,95.00,unknown,99.98
+Wilson 1500 form.tif,financial_statement,82.41,unknown,0.00,invoice,42.86,insurance_claim_form,95.00,unknown,100.00
+UB04 Matlock.tif,invoice,81.70,unknown,0.00,prescription,50.00,invoice,95.00,unknown,100.00
+UB04 Forconi 2023.tif,invoice,87.48,unknown,0.00,invoice,50.00,medical_report,95.00,unknown,100.00
+itemized billing3.tif,invoice,89.54,unknown,0.00,invoice,66.67,invoice,95.00,unknown,100.00
+UB04 Morrison.tif,invoice,87.57,unknown,0.00,invoice,40.00,invoice,95.00,unknown,100.00
+HCFA.4.tif,invoice,49.52,unknown,0.00,insurance_card,100.00,insurance_claim_form,95.00,unknown,100.00
+UB04 Hill not great quality.tif,claim_form,46.80,unknown,0.00,invoice,50.00,invoice,95.00,unknown,100.00
