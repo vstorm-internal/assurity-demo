@@ -1,54 +1,79 @@
-## GPT-4o Vision Integration
+# Insurance Claims OCR Pipeline
 
-The system now includes direct image processing using OpenAI's GPT-4o vision capabilities through LangChain.
-Instead of relying solely on Tesseract OCR, the system can now:
+A Python package for extracting and structuring information from insurance claim forms using OCR and LLMs.
 
-1. Send document images directly to GPT-4o
-2. Have the model perform OCR, classification, and data extraction in one step
-3. Use this approach as a fallback when traditional methods have low confidence
+## Features
 
-To enable this feature:
+- Extracts text from insurance claim form images using LlamaParse with GPT-4 Vision
+- Structures extracted data into standardized formats for UB04 and HCFA1500 claims
+- Uses LangChain with GPT-4 for intelligent text analysis and data extraction
+- Handles patient info, provider details, claim information, and insurance data
+- Robust error handling and validation
 
-1. Install additional dependencies:
-   ```bash
-   poetry add langchain langchain-openai
-   ```
+## Prerequisites
 
-2. Create a `.env` file in the project root with your OpenAI API key:
-   ```
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
+- Python 3.11 or higher
+- Poetry for dependency management
+- OpenAI API key
+- LlamaParse API key
 
-3. Ensure your OpenAI account has access to GPT-4o
+## Installation
 
-## Donut Document Understanding Model
-
-The system now incorporates ClovaAI's Donut (Document Understanding Transformer) model for document classification and information extraction. Donut is specifically designed for document understanding tasks and can directly process document images without requiring separate OCR.
-
-### Features:
-
-1. **End-to-end document understanding**: Processes document images directly
-2. **Document classification**: Identifies document types (invoices, forms, etc.)
-3. **Information extraction**: Extracts structured data based on document type
-4. **Complementary to OCR**: Can operate alongside or as a fallback for traditional OCR
-
-### Installation
-
+1. Clone the repository:
 ```bash
-poetry add transformers timm sentencepiece
+git clone https://github.com/your-org/insurance-claims-ocr.git
+cd insurance-claims-ocr
 ```
 
-### Usage
-
-The pipeline automatically attempts to use Donut:
-- After vision-based classification but before OCR for document type identification
-- As a fallback for information extraction when other methods have mediocre confidence
-- Before resorting to more expensive LLM-based methods
-
-### Evaluation
-
-You can evaluate the Donut model on your documents:
-
+2. Install dependencies using Poetry:
 ```bash
-python evaluate_donut.py --dir path/to/documents --output results.json
+poetry install
+```
+
+3. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Add your OpenAI API key and LlamaParse API key to the `.env` file
+
+## Usage
+
+1. Activate the Poetry environment:
+```bash
+poetry shell
+```
+
+2. Run the script:
+```bash
+python src/insurance_claims_ocr/main.py
+```
+
+## Project Structure
+
+```
+.
+├── src/                    # Source code
+├── resources/              # Sample data and test images
+├── notebooks/              # Jupyter notebooks for development
+├── pyproject.toml          # Project dependencies and configuration
+├── poetry.lock             # Locked dependencies
+└── .env                    # Environment variables
+```
+
+## TIFF to PDF Conversion
+To convert TIFF files to PDF, run the following command:
+```bash
+poetry run python src/insurance_claims_ocr/utils.py <TIFF_FILES_ROOT_DIR>
+```
+where `<TIFF_FILES_ROOT_DIR>` is the path to the directory containing the TIFF files.
+It can be directory of directories, and it will convert all TIFF files in the directory and its subdirectories.
+
+## Development
+
+- Install development dependencies:
+```bash
+poetry install --with dev
+```
+
+- Run pre-commit hooks:
+```bash
+pre-commit install
 ```

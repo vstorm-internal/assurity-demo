@@ -2,39 +2,41 @@
 name = "insurance-claims-ocr"
 version = "0.1.0"
 description = "An automated pipeline for OCR processing of insurance claims documents"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["bartosz.roguski@bluelabellabs.com"]
 readme = "README.md"
+packages = [{include = "insurance_claims_ocr", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 opencv-python = "^4.7.0"
-pytesseract = "^0.3.10"
-pillow = "^9.5.0"
-numpy = "^1.24.0"
-pdf2image = "^1.17.0"
-scikit-learn = "^1.2.2"
-joblib = "^1.2.0"
-transformers = "^4.28.1"
-torch = "^2.0.0"
-pandas = "^2.2.3"
+pillow = "^10.0.0"
 openai = "^1.1.0"
 python-dotenv = "^1.0.0"
-langchain = "^0.1.0"
-langchain-openai = "^0.0.5"
-# Added for Donut model
-timm = "^0.9.2"
-sentencepiece = "^0.1.99"
-protobuf = "^3.20.2"
-google-cloud-vision = "^3.10.0"
 streamlit = "^1.44.1"
+langchain = "^0.3.23"
+langchain-openai = "^0.3.12"
+llama-parse = "^0.6.4.post1"
+dynaconf = "^3.2.10"
+pydantic-settings = "^2.8.1"
+levenshtein = "^0.27.1"
+sentence-transformers = "^4.0.2"
+scikit-learn = "^1.6.1"
+torch = "^2.6.0"
+fire = "^0.7.0"
+logzero = "^1.7.0"
+scikit-image = "^0.25.2"
+imagehash = "^4.3.2"
+pypdf2 = "^3.0.1"
+pdf2image = "^1.17.0"
+tqdm = "^4.67.1"
+seaborn = "^0.13.2"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.3.1"
-black = "^23.3.0"
-isort = "^5.12.0"
-flake8 = "^6.0.0"
 ipython = "^9.0.2"
 pre-commit = "^4.2.0"
+ruff = "^0.11.4"
+jupyter = "^1.1.1"
+ipykernel = "^6.29.5"
 
 [build-system]
 requires = ["poetry-core"]
