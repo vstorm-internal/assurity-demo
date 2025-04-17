@@ -3,18 +3,17 @@ from pathlib import Path
 from typing import Iterator
 
 import fire
-import numpy as np
 import torch
 from Levenshtein import ratio
 from logzero import logger
+from pdf2image import convert_from_path
 from PIL import Image, ImageSequence
 from PyPDF2 import PdfReader, PdfWriter
-from pdf2image import convert_from_path
 from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from insurance_claims_ocr.config import get_settings
+from assurity_poc.config import get_settings
 
 settings = get_settings()
 
@@ -183,6 +182,7 @@ def split_pdf_into_pages(pdf_path: Path) -> Iterator[Path]:
         with open(output_path, "wb") as output_file:
             writer.write(output_file)
         yield output_path
+
 
 def convert_pdf_to_image(pdf_path: Path) -> Image.Image:
     """Convert a PDF file to an image"""

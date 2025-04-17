@@ -21,8 +21,8 @@ A Python package for extracting and structuring information from insurance claim
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-org/insurance-claims-ocr.git
-cd insurance-claims-ocr
+git clone https://github.com/your-org/assurity-poc.git
+cd assurity-poc
 ```
 
 2. Install dependencies using Poetry:
@@ -48,14 +48,15 @@ python src/insurance_claims_ocr/main.py
 
 ## Project Structure
 
-```
+```sh
 .
-├── src/                    # Source code
-├── resources/              # Sample data and test images
-├── notebooks/              # Jupyter notebooks for development
-├── pyproject.toml          # Project dependencies and configuration
-├── poetry.lock             # Locked dependencies
-└── .env                    # Environment variables
+├── src/insurance_claims_ocr/   # Source code
+├── res/                        # Sample data and test images
+├── benchmarks/                 # Benchmarking scripts
+├── notebooks/                  # Jupyter notebooks for development
+├── pyproject.toml              # Project dependencies and configuration
+├── poetry.lock                 # Locked dependencies
+└── .env                        # Environment variables
 ```
 
 ## TIFF to PDF Conversion

@@ -1,5 +1,5 @@
-import os
 import asyncio
+import os
 
 import nest_asyncio
 from dotenv import load_dotenv
@@ -9,8 +9,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from llama_parse import LlamaParse
 
-from insurance_claims_ocr.models import Output
-from insurance_claims_ocr.utils import compute_text_similarity, preprocess_text
+from assurity_poc.models.claim import Output
+from assurity_poc.utils import compute_text_similarity, preprocess_text
 
 # Load environment variables
 load_dotenv()
@@ -19,7 +19,7 @@ load_dotenv()
 nest_asyncio.apply()
 
 
-class OCRPipeline:
+class OCRProcessor:
     def __init__(self):
         # Initialize LlamaParse with Gemini
         self.gemini_parser = LlamaParse(
@@ -113,15 +113,14 @@ class OCRPipeline:
         """Process an image through the complete OCR pipeline asynchronously."""
         # Create and run both extractions in parallel
         gpt_text, gemini_text = await asyncio.gather(
-            self.extract_text_gpt(image_path),
-            self.extract_text_gemini(image_path)
+            self.extract_text_gpt(image_path), self.extract_text_gemini(image_path)
         )
-        
+
         # Preprocess the texts (only if they're not None)
         if gpt_text and gemini_text:
             gpt_text = preprocess_text(gpt_text)
             gemini_text = preprocess_text(gemini_text)
-            
+
             # Calculate similarity between the texts
             similarity = self.calculate_similarity(gpt_text, gemini_text)
         else:
@@ -130,9 +129,9 @@ class OCRPipeline:
                 "jaccard": 0.0,
                 "tfidf": 0.0,
                 "embedding": 0.0,
-                "overall": 0.0
+                "overall": 0.0,
             }
-        
+
         return {
             "gpt_text": gpt_text,
             "gemini_text": gemini_text,

@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     # Image matching
     ssim_threshold: float = Field(description="Threshold for SSIM", default=0.8)
     psnr_threshold: float = Field(description="Threshold for PSNR", default=30)
-    hash_threshold: float = Field(description="Threshold for hash", default=10)
+    hash_threshold: float = Field(description="Threshold for hash", default=22.5)
 
 
 @lru_cache

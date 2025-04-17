@@ -1,15 +1,20 @@
 import re
 
+import torch
 from PIL import Image
 from transformers import DonutProcessor, VisionEncoderDecoderModel
-import torch
 
-from insurance_claims_ocr.utils import convert_pdf_to_image
+from assurity_poc.utils import convert_pdf_to_image
+
 
 class DonutClassifier:
     def __init__(self):
-        self.processor = DonutProcessor.from_pretrained("naver-clova-ix/donut-base-finetuned-rvlcdip")
-        self.model = VisionEncoderDecoderModel.from_pretrained("naver-clova-ix/donut-base-finetuned-rvlcdip")
+        self.processor = DonutProcessor.from_pretrained(
+            "naver-clova-ix/donut-base-finetuned-rvlcdip"
+        )
+        self.model = VisionEncoderDecoderModel.from_pretrained(
+            "naver-clova-ix/donut-base-finetuned-rvlcdip"
+        )
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model.to(self.device)
@@ -23,7 +28,9 @@ class DonutClassifier:
 
         # prepare decoder inputs
         task_prompt = "<s_rvlcdip>"
-        decoder_input_ids = self.processor.tokenizer(task_prompt, add_special_tokens=False, return_tensors="pt").input_ids
+        decoder_input_ids = self.processor.tokenizer(
+            task_prompt, add_special_tokens=False, return_tensors="pt"
+        ).input_ids
 
         pixel_values = self.processor(image, return_tensors="pt").pixel_values
 
@@ -39,6 +46,10 @@ class DonutClassifier:
         )
 
         sequence = self.processor.batch_decode(outputs.sequences)[0]
-        sequence = sequence.replace(self.processor.tokenizer.eos_token, "").replace(self.processor.tokenizer.pad_token, "")
-        sequence = re.sub(r"<.*?>", "", sequence, count=1).strip()  # remove first task start token
+        sequence = sequence.replace(self.processor.tokenizer.eos_token, "").replace(
+            self.processor.tokenizer.pad_token, ""
+        )
+        sequence = re.sub(
+            r"<.*?>", "", sequence, count=1
+        ).strip()  # remove first task start token
         return self.processor.token2json(sequence)

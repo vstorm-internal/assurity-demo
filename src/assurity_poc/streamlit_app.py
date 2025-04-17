@@ -1,7 +1,8 @@
-import streamlit as st
 import json
 from pathlib import Path
+
 import pandas as pd
+import streamlit as st
 
 
 def load_ocr_results():
