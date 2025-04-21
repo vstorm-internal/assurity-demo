@@ -27,7 +27,6 @@ def convert_tiff_to_pdf(tiff_path: Path, split_pages: bool = False) -> None:
         logger.warning(f"{tiff_path} is not a valid TIFF file.")
         raise ValueError(f"{tiff_path} is not a valid TIFF file.")
     else:
-        # pdf_path = tiff_path.absolute().with_suffix(".pdf")
         output_dir = settings.data_dir / "converted" / tiff_path.stem
         output_dir.mkdir(parents=True, exist_ok=True)
         pdf_path = output_dir / Path(tiff_path.stem).with_suffix(".pdf")

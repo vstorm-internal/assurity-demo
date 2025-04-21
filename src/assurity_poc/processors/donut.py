@@ -4,7 +4,7 @@ import torch
 from PIL import Image
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 
-from assurity_poc.utils import convert_pdf_to_image
+from src.assurity_poc.utils.helpers import convert_pdf_to_image
 
 
 class DonutClassifier:

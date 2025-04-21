@@ -1,10 +1,15 @@
 import os
-from functools import lru_cache
+from enum import Enum
 from pathlib import Path
 
 from dotenv import load_dotenv
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class AllowedModels(str, Enum):
+    GPT = "gpt-4o"
+    GEMINI = "gemini"
 
 
 class Settings(BaseSettings):
@@ -19,13 +24,17 @@ class Settings(BaseSettings):
     openai_api_key: str = Field(description="API key for OpenAI")
     gemini_api_key: str = Field(description="API key for Gemini")
 
+    similarity_threshold: float = Field(
+        description="Threshold for similarity", default=0.75
+    )
+
     # Image matching
     ssim_threshold: float = Field(description="Threshold for SSIM", default=0.8)
     psnr_threshold: float = Field(description="Threshold for PSNR", default=30)
     hash_threshold: float = Field(description="Threshold for hash", default=22.5)
 
 
-@lru_cache
+# @lru_cache
 def get_settings() -> Settings:
     """Get cached settings"""
     load_dotenv()
