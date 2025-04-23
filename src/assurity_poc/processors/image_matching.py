@@ -9,7 +9,7 @@ from PIL import Image
 from skimage.metrics import structural_similarity as ssim
 
 from assurity_poc.config import get_settings
-from src.assurity_poc.utils.helpers import convert_pdf_to_image
+from assurity_poc.utils.file import convert_pdf_to_image
 
 PIL.Image.MAX_IMAGE_PIXELS = 9e99
 

@@ -24,7 +24,7 @@ class Person(BaseModel):
     full_name: str | None = Field(
         alias="fullName", default=None, description="Complete name of the person"
     )
-    date_of_birth: date = Field(
+    date_of_birth: date | str | None = Field(
         alias="dateOfBirth", description="Person's date of birth"
     )
     emails: list[str] | None = Field(

@@ -5,10 +5,10 @@ import pandas as pd
 import PIL
 from tqdm import tqdm
 
-from insurance_claims_ocr.processors.dit import DITClassifier
-from insurance_claims_ocr.processors.donut import DonutClassifier
-from insurance_claims_ocr.processors.image_matching import ImageMatcher
-from insurance_claims_ocr.utils import iterate_over_files
+from assurity_poc.processors.dit import DITClassifier
+from assurity_poc.processors.donut import DonutClassifier
+from assurity_poc.processors.image_matching import ImageMatcher
+from assurity_poc.utils import iterate_over_files
 
 PIL.Image.MAX_IMAGE_PIXELS = 9e99
 

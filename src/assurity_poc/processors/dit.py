@@ -2,7 +2,7 @@ import torch
 from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
-from src.assurity_poc.utils.helpers import convert_pdf_to_image
+from src.assurity_poc.utils.file import convert_pdf_to_image
 
 
 class DITClassifier:

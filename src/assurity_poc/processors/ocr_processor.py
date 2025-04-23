@@ -2,10 +2,9 @@ import asyncio
 
 import nest_asyncio
 from llama_parse import LlamaParse
-from PIL import Image
 
 from assurity_poc.config import get_settings
-from assurity_poc.utils.helpers import compute_text_similarity, preprocess_text
+from assurity_poc.utils.text import compute_text_similarity, preprocess_text
 
 # Apply nest_asyncio for async operations
 nest_asyncio.apply()
@@ -41,9 +40,10 @@ class OCRProcessor:
             vendor_multimodal_model_name="openai-gpt4o",
         )
 
-    def split_pages(self, image_path: str) -> list[str]:
-        """Split an image into pages."""
-        image = Image.open(image_path)
+    # TODO: split pages
+    # def split_pages(self, image_path: str) -> list[str]:
+    #     """Split an image into pages."""
+    #     image = Image.open(image_path)
 
     async def extract_text_gemini(self, image_path: str) -> str:
         """Extract text using LlamaParse with Gemini."""

@@ -47,7 +47,7 @@ class ClaimBase(BaseModel):
         alias="providerAddress", description="Facility's address"
     )
     # Clinical
-    principal_diagnosis: str = Field(
+    principal_diagnosis: str | None = Field(
         alias="principalDiagnosis", description="Primary ICD-10 diagnosis code"
     )
     service_lines: list[ServiceLine] = Field(
