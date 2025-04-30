@@ -20,7 +20,6 @@ class OCRProcessor:
             verbose=True,
             language="en",
             take_screenshot=True,
-            # premium_mode=True,
             auto_mode_trigger_on_table_in_page=True,
             use_vendor_multimodal_model=True,
             vendor_multimodal_api_key=settings.gemini_api_key,
@@ -32,12 +31,13 @@ class OCRProcessor:
             result_type="text",
             verbose=True,
             language="en",
-            # premium_mode=True,
             take_screenshot=True,
             auto_mode_trigger_on_table_in_page=True,
             use_vendor_multimodal_model=True,
-            vendor_multimodal_api_key=settings.openai_api_key,
-            vendor_multimodal_model_name="openai-gpt4o",
+            azure_openai_deployment_name=settings.azure_openai_deployment_name,
+            azure_openai_endpoint=settings.azure_openai_endpoint,
+            azure_openai_api_version=settings.azure_openai_api_version,
+            azure_openai_key=settings.azure_openai_api_key,
         )
 
     # TODO: split pages
@@ -65,11 +65,13 @@ class OCRProcessor:
             print(f"Error in GPT extraction: {str(e)}")
             return ""
 
-    def calculate_similarity(self, text1: str, text2: str) -> float:
+    def calculate_similarity(self, text1: str, text2: str) -> dict[str, float]:
         """Calculate the similarity between two texts."""
         return compute_text_similarity(text1, text2)
 
-    async def process_image_async(self, image_path: str) -> dict:
+    async def process_image_async(
+        self, image_path: str
+    ) -> dict[str, str | dict[str, float]]:
         """Process an image through the complete OCR pipeline asynchronously."""
         # Create and run both extractions in parallel
         gpt_text, gemini_text = await asyncio.gather(

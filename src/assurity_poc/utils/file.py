@@ -7,7 +7,6 @@ from pdf2image import convert_from_path
 from PIL import Image, ImageSequence
 from PyPDF2 import PdfReader, PdfWriter
 
-
 from assurity_poc.config import get_settings
 
 settings = get_settings()
@@ -38,16 +37,18 @@ def convert_tiff_to_pdf(tiff_path: Path, split_pages: bool = False) -> None:
         logger.debug("OK")
 
 
-def split_and_save(image: Image.Image, pdf_path: Path) -> None:
+def split_and_save(image: Image.Image, pdf_path: Path | str) -> None:
     """Split the image into pages and save each page as a separate PDF file"""
+    pdf_path = Path(pdf_path)
     for i, page in enumerate(ImageSequence.Iterator(image)):
         page = page.convert("RGB")
         page.save(pdf_path.with_name(f"{pdf_path.stem}_page_{i + 1}.pdf"))
         logger.debug(f"Saved page {i + 1} of {pdf_path.name}")
 
 
-def save_no_split(image: Image.Image, pdf_path: Path) -> None:
+def save_no_split(image: Image.Image, pdf_path: Path | str) -> None:
     """Save the image as a PDF file without splitting it into pages"""
+    pdf_path = Path(pdf_path)
     images = []
     for i, page in enumerate(ImageSequence.Iterator(image)):
         page = page.convert("RGB")
@@ -59,7 +60,8 @@ def save_no_split(image: Image.Image, pdf_path: Path) -> None:
     logger.debug(f"Saved {pdf_path.name}")
 
 
-def convert_tiff_to_jpeg(tiff_path: Path) -> None:
+def convert_tiff_to_jpeg(tiff_path: Path | str) -> None:
+    tiff_path = Path(tiff_path)
     jpeg_path = settings.output_dir / Path(tiff_path.stem).with_suffix(".jpeg")
 
     print(f"{tiff_path.name} -> {jpeg_path.name}")
@@ -73,8 +75,9 @@ def convert_tiff_to_jpeg(tiff_path: Path) -> None:
     print("OK")
 
 
-def iterate_over_files(dir_path: Path) -> Iterator[Path]:
+def iterate_over_files(dir_path: Path | str) -> Iterator[Path]:
     """Iterate over all files in the directory"""
+    dir_path = Path(dir_path)
     for file_path in dir_path.iterdir():
         if file_path.is_file():
             yield file_path
@@ -82,7 +85,7 @@ def iterate_over_files(dir_path: Path) -> Iterator[Path]:
             yield from iterate_over_files(file_path)
 
 
-def convert_all_tiff_to_pdf(dir_path: Path, split_pages: bool = False) -> None:
+def convert_all_tiff_to_pdf(dir_path: Path | str, split_pages: bool = False) -> None:
     """Convert all TIFF files to PDF files"""
     for file_path in iterate_over_files(dir_path):
         try:
@@ -91,10 +94,11 @@ def convert_all_tiff_to_pdf(dir_path: Path, split_pages: bool = False) -> None:
             logger.error(f"Error converting {file_path}: {e}")
 
 
-def split_pdf_into_pages(pdf_path: Path) -> Iterator[Path]:
+def split_pdf_into_pages(pdf_path: Path | str) -> Iterator[Path]:
     """Split a PDF file into individual pages and save them as separate PDFs"""
+    pdf_path = Path(pdf_path)
     # Create output directory next to original PDF
-    output_dir = pdf_path.parent / pdf_path.stem + "_pages"
+    output_dir = pdf_path.parent / f"{pdf_path.stem}_pages"
     output_dir.mkdir(exist_ok=True)
 
     # Open PDF and split into pages
@@ -109,7 +113,7 @@ def split_pdf_into_pages(pdf_path: Path) -> Iterator[Path]:
         yield output_path
 
 
-def convert_pdf_to_image(pdf_path: Path) -> Image.Image:
+def convert_pdf_to_image(pdf_path: Path | str) -> Image.Image:
     """Convert a PDF file to an image"""
     logger.debug(f"Converting {pdf_path} to image")
     pdf_path = Path(pdf_path)

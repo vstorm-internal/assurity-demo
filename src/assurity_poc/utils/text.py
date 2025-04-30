@@ -1,10 +1,10 @@
 import re
-from sentence_transformers import SentenceTransformer
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 import torch
 from Levenshtein import ratio
+from sentence_transformers import SentenceTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 def preprocess_text(text):
@@ -56,7 +56,7 @@ def overall_score(levenshtein: float, jaccard: float, tfidf: float, embedding: f
     return (levenshtein + jaccard + tfidf + normalized_embedding) / 4
 
 
-def compute_text_similarity(text1: str, text2: str):
+def compute_text_similarity(text1: str, text2: str) -> dict[str, float]:
     levenshtein = compute_levenshtein_ratio(text1, text2)
     jaccard = jaccard_similarity(text1, text2)
     tfidf = tfidf_cosine(text1, text2)

@@ -1,34 +1,26 @@
 from datetime import date
-from enum import Enum
 
 from pydantic import BaseModel, Field
 
-from assurity_poc.models.base import Person
+from assurity_poc.models.common import Person
 
 
-class PolicyType(str, Enum):
-    """Type of insurance coverage provided by the policy."""
+class Exclusion(BaseModel):
+    """Exclusion instance, ie. a condition and/or event that is not covered by the policy."""
 
-    LIFE = "LIFE"
-    DISABILITY = "DISABILITY"
-    ACCIDENT = "ACCIDENT"
-    HEALTH = "HEALTH"
+    text: str = Field(description="Exclusion text")
 
 
-class PolicyStatus(str, Enum):
-    """Current state of an insurance policy."""
+class Exclusions(BaseModel):
+    """
+    List of ALL exclusions present in the policy. Look for the „EXCLUSIONS“ section.
+    The section text usually contains a list of items, each of which is an exclusion.
+    It's crucial that this list includes all exclusions found in the policy document.
+    """
 
-    ACTIVE = "ACTIVE"
-    INACTIVE = "INACTIVE"
-    CANCELLED = "CANCELLED"
-
-
-class PremiumMode(str, Enum):
-    """Frequency at which policy premiums are paid."""
-
-    MONTHLY = "MONTHLY"
-    QUARTERLY = "QUARTERLY"
-    ANNUAL = "ANNUAL"
+    exclusions: list[Exclusion] = Field(
+        description="List of ALL exclusions present in the policy document."
+    )
 
 
 class Policy(BaseModel):
@@ -39,24 +31,10 @@ class Policy(BaseModel):
     company_code: str = Field(
         alias="companyCode", description="Code identifying the insurance company"
     )
-    # type: PolicyType = Field(description="Type of insurance coverage")
-    # status: PolicyStatus = Field(description="Current status of the policy")
 
     # People
     owner: Person = Field(description="Information about the policy owner")
     insured: Person = Field(description="Information about the primary insured")
-    # beneficiary: Person | None = Field(
-    #     default=None, description="Information about the beneficiary"
-    # )
-
-    # Financial
-    # premium: float = Field(description="Premium amount in USD")
-    # premium_mode: PremiumMode = Field(
-    #     alias="premiumMode", description="Frequency of premium payments"
-    # )
-    # face_amount: float = Field(
-    #     alias="faceAmount", description="Face value of the policy in USD"
-    # )
 
     # Coverage dates
     issue_date: date = Field(
@@ -69,10 +47,7 @@ class Policy(BaseModel):
     expiration_date: date | None = Field(
         default=None, alias="expirationDate", description="Date when coverage ends"
     )
-
-
-class PolicyOutput(BaseModel):
-    raw_text: str = Field(
-        description="Original text extracted from the policy document"
+    exclusions: Exclusions = Field(
+        alias="exclusions",
+        description="List of ALL exclusions in the policy document. Look for the „EXCLUSIONS“ section. The section text usually contains a list of items, each of which is an exclusion. It's crucial that this list includes all exclusions found in the policy document.",
     )
-    policy: Policy | None = Field(description="Parsed policy data")

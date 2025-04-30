@@ -1,4 +1,3 @@
-from .claim_parser import ClaimParser
-from .policy_parser import PolicyParser
+from .document_parser import DocumentParser
 
-__all__ = ["ClaimParser", "PolicyParser"]
+__all__ = ["DocumentParser"]

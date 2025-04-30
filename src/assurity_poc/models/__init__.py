@@ -1,11 +1,8 @@
-from .claim import ClaimBase, ClaimOutput, HCFA1500Claim, UB04Claim
-from .policy import Policy, PolicyOutput
+from .output import Document, Input, Output, ParsedOutput
 
 __all__ = [
-    "ClaimBase",
-    "ClaimOutput",
-    "HCFA1500Claim",
-    "UB04Claim",
-    "Policy",
-    "PolicyOutput",
+    "Document",
+    "ParsedOutput",
+    "Output",
+    "Input",
 ]

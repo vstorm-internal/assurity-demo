@@ -1,6 +1,6 @@
 from datetime import date
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 
 
 class Person(BaseModel):
@@ -31,14 +31,15 @@ class Person(BaseModel):
         default=None, description="List of email addresses associated with the person"
     )
 
-    @validator("date_of_birth", pre=True)
-    def parse_date(cls, v):
-        if isinstance(v, str):
-            try:
-                return date.fromisoformat(v.split("T")[0])
-            except (ValueError, IndexError):
-                return None
-        return v
+    # #TODO: comment this out for now to avoid validation errors
+    # @field_validator("date_of_birth", mode="before")
+    # def parse_date(cls, v):
+    #     if isinstance(v, str):
+    #         try:
+    #             return date.fromisoformat(v.split("T")[0])
+    #         except (ValueError, IndexError):
+    #             return None
+    #     return v
 
 
 class Address(BaseModel):
