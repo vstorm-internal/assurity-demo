@@ -1,16 +1,19 @@
 import json
+
+from typing import Any
 from datetime import datetime
 
-from langchain_core.language_models import BaseChatModel  # Fixed import path
-from langchain_core.output_parsers import PydanticOutputParser
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_openai import AzureChatOpenAI
 from logzero import logger
+from pydantic import BaseModel
 from promptlayer import PromptLayer
+from langchain_openai import AzureChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.output_parsers import PydanticOutputParser
+from langchain_core.language_models import BaseChatModel  # Fixed import path
 
 from assurity_poc.config import AllowedModels, get_settings
-from assurity_poc.models import Input, Output, ParsedOutput
-from src.assurity_poc.callbacks.promptlayer_callback import PromptLayerCallbackHandler
+from assurity_poc.models import AllBenefits
+from assurity_poc.callbacks.promptlayer_callback import PromptLayerCallbackHandler
 
 settings = get_settings()
 
@@ -20,10 +23,9 @@ class ClaimProcessor:
         if isinstance(llm_name, str):
             llm_name = AllowedModels(llm_name)
         self.llm = self._create_llm(llm_name)
-        self.output_parser = PydanticOutputParser(pydantic_object=Output)
-        self.pl_client = PromptLayer(
-            api_key=settings.promptlayer_api_key, enable_tracing=True
-        )
+        # self.output_parser = PydanticOutputParser(pydantic_object=Output)
+        self.pl_client = PromptLayer(api_key=settings.promptlayer_api_key, enable_tracing=True)
+        self._current_prompt_name = None
 
     def _create_llm(self, llm_name: AllowedModels) -> BaseChatModel:
         match llm_name:
@@ -34,13 +36,13 @@ class ClaimProcessor:
                     azure_endpoint=settings.azure_openai_endpoint,
                     azure_deployment=settings.azure_openai_deployment_name,
                     api_version=settings.azure_openai_api_version,
-                    callbacks=[
-                        PromptLayerCallbackHandler(pl_id_callback=self._pl_id_callback)
-                    ],
+                    callbacks=[PromptLayerCallbackHandler(pl_id_callback=self._pl_id_callback)],
                 )
             case AllowedModels.GEMINI:
                 return ChatGoogleGenerativeAI(
-                    model=llm_name.value, google_api_key=settings.gemini_api_key
+                    model=llm_name.value,
+                    google_api_key=settings.gemini_api_key,
+                    callbacks=[PromptLayerCallbackHandler(pl_id_callback=self._pl_id_callback)],
                 )
             case _:
                 raise ValueError(
@@ -49,67 +51,53 @@ class ClaimProcessor:
 
     # Helper functions
     @staticmethod
-    def convert_role(role):
+    def convert_role(role: str) -> str:
         """Convert 'user' role to 'human', keep others as is."""
         return "human" if role == "user" else role
 
     @staticmethod
-    def convert_content(content):
+    def convert_content(content: list[dict]) -> str | Any:
         """Extract text content from list or return as is."""
         return content[0]["text"] if isinstance(content, list) else content
 
-    def track_prompt_usage(self, prompt_layer_id):
-        """Track prompt usage in PromptLayer."""
-        self.pl_client.track.prompt(
-            prompt_name=settings.promptlayer_prompt_name,
-            request_id=prompt_layer_id,
-            prompt_input_variables={
-                "output_format": self.output_parser.get_format_instructions()
-            },
-            version=settings.promptlayer_prompt_version,
-        )
-
-        # # Define analysis prompt with format instructions
-        # self.prompt = ChatPromptTemplate.from_messages(
-        #     [
-        #         (
-        #             "system",
-        #             """You are an expert in extracting structured data from documents.
-        #             Extract and structure the information from the text according to the following format:
-        #             {format_instructions}
-
-        #             The text is a document that contains information about a policy or a claim.
-        #             You should identify the type of document and extract the information accordingly.
-        #             Make sure to extract all required information, do not skip anything.
-        #             """,
-        #         ),
-        #         ("user", "{text}"),
-        #     ]
-        # ).partial(format_instructions=self.parser.get_format_instructions())
-
-    def _pl_id_callback(self, promptlayer_request_id):
-        logger.info("prompt layer id: %s", promptlayer_request_id)
+    def _pl_id_callback(self, promptlayer_request_id: str) -> None:
+        logger.debug("prompt layer id: %s", promptlayer_request_id)
         self.pl_client.track.metadata(
             request_id=promptlayer_request_id,
             metadata={"timestamp": datetime.now().isoformat()},
         )
         self.pl_client.track.prompt(
             request_id=promptlayer_request_id,
-            prompt_name=settings.promptlayer_prompt_name,
-            prompt_input_variables={
-                "output_format": self.output_parser.get_format_instructions()
-            },
-            version=settings.promptlayer_prompt_version,
+            prompt_name=self._current_prompt_name,
+            prompt_input_variables={"output_format": self.output_parser.get_format_instructions()},
         )
 
-    def run(self, input_docs: Input) -> ParsedOutput:
+    def run(
+        self,
+        input: BaseModel | Any,
+        prompt_name: str,
+        output_class: type = BaseModel,
+        benefits: AllBenefits | None = None,
+    ) -> BaseModel:
+        self._current_prompt_name = prompt_name
+        self.output_parser = PydanticOutputParser(pydantic_object=output_class)
+
+        if benefits:
+            input_variables = {
+                "output_format": self.output_parser.get_format_instructions(),
+                "input": input.model_dump_json(),
+                "benefits": benefits.model_dump_json(),
+            }
+        else:
+            input_variables = {
+                "output_format": self.output_parser.get_format_instructions(),
+                "input": input.model_dump_json(),
+            }
+
         template = self.pl_client.templates.get(
-            settings.promptlayer_prompt_name,
+            self._current_prompt_name,
             {
-                "input_variables": {
-                    "output_format": self.output_parser.get_format_instructions(),
-                    "input": input_docs.model_dump_json(),
-                }
+                "input_variables": input_variables,
             },
         )
         pl_messages = template["llm_kwargs"]["messages"]
@@ -121,4 +109,4 @@ class ClaimProcessor:
             for pl_message in pl_messages
         ]
         response = self.llm.invoke(messages)
-        return Output.model_validate(json.loads(response.content))
+        return output_class.model_validate(json.loads(response.content))

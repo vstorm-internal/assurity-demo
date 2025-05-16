@@ -1,35 +1,54 @@
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import Field, BaseModel
+
+from .benefits import BenefitsOutput
 
 
 class Document(BaseModel):
     text: str = Field(description="Original text extracted from the document")
+    file_name: str = Field(description="Name of the file")
 
 
 class Input(BaseModel):
     documents: list[Document] = Field(description="List of documents")
 
 
-class Decision(BaseModel):
-    decision: Literal["accept", "review"] = Field(description="Decision on the claim.")
-    reason: str = Field(description="Reason for the decision.")
-    details: str = Field(
-        description="Details of the decision containing all the information that led to the decision. Try to be as specific as possible."
+class DatesOutput(BaseModel):
+    was_policy_active: bool = Field(description="Whether the policy was active at the time of the accident")
+    was_treatment_within_policy_timeframe: bool = Field(
+        description="Whether the treatment was completed within the policy timeframe"
     )
-    should_reject: bool | None = Field(
-        description="Should the claim be rejected? As the decision for the claim can only be either `accept` or `review`, this field must be true if any conditions for rejection are met. Thanks to this we can differentiate between claims that require a human review for a more detailed analysis and claims that are clearly invalid."
+    status: Literal["pay", "deny", "refer"] = Field(description="Decision on the claim based on the dates")
+
+
+class ExclusionsOutput(BaseModel):
+    do_any_exclusions_apply: bool = Field(description="Whether any exclusions apply to the claim")
+    exclusions: list[str] = Field(description="List of exclusions that apply to the claim")
+    status: Literal["pay", "deny", "refer"] = Field(description="Decision on the claim based on the exclusions")
+    trigger_files: list[str] = Field(
+        description="List of claim files that show evidence of the exclusions (not the policy documents)"
+    )
+    details: str = Field(
+        description="Concise explanation of the decision along with every evidence file that shows the exclusions apply."
+    )
+
+
+class FinalDecisionInput(BaseModel):
+    dates: DatesOutput = Field(description="Dates output")
+    exclusions: ExclusionsOutput = Field(description="Exclusions output")
+    benefits: BenefitsOutput = Field(description="Benefits output")
+
+
+class FinalDecision(BaseModel):
+    status: Literal["pay", "deny", "refer"] = Field(description="Decision on the claim.")
+    details: str = Field(
+        description="Detailed explanation of the decision along with every piece of information that led to it."
     )
 
 
 class Output(BaseModel):
-    was_policy_active: bool = Field(
-        description="Whether the policy was active at the time of the accident"
-    )
-    was_treatment_completed_within_policy_timeframe: bool = Field(
-        description="Whether the treatment was completed within the policy timeframe"
-    )
-    do_any_exclusions_apply: bool = Field(
-        description="Whether any exclusions apply to the claim"
-    )
-    decision: Decision = Field(description="Decision on the claim")
+    dates: DatesOutput = Field(description="Dates output")
+    exclusions: ExclusionsOutput = Field(description="Exclusions output")
+    benefits: BenefitsOutput = Field(description="Benefits output")
+    decision: FinalDecision = Field(description="Decision on the claim")

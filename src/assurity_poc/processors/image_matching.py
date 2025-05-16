@@ -1,10 +1,11 @@
 import os
 
 import cv2
-import fire
-import imagehash
-import numpy as np
 import PIL
+import fire
+import numpy as np
+import imagehash
+
 from PIL import Image
 from skimage.metrics import structural_similarity as ssim
 
@@ -61,9 +62,7 @@ class ImageMatcher:
 
         # Double check dimensions match
         if img1.shape != img2.shape:
-            raise ValueError(
-                f"Image dimensions still don't match after resize: {img1.shape} vs {img2.shape}"
-            )
+            raise ValueError(f"Image dimensions still don't match after resize: {img1.shape} vs {img2.shape}")
 
         score, _ = ssim(img1, img2, full=True)
         return score
@@ -99,12 +98,8 @@ class ImageMatcher:
 
     def classify_image(self, img1, img2):
         ssim_score = self.calculate_ssim(img1, img2)  # 0-1, 1 is perfect match
-        psnr_score = self.calculate_psnr(
-            img1, img2
-        )  # higher values indicate better image quality and less noise
-        hash_diff = self.calculate_hash(
-            img1, img2
-        )  # lower values suggest more similarity
+        psnr_score = self.calculate_psnr(img1, img2)  # higher values indicate better image quality and less noise
+        hash_diff = self.calculate_hash(img1, img2)  # lower values suggest more similarity
 
         return {
             "ssim_score": ssim_score,

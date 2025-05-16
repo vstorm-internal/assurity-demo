@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import datetime
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple
-from uuid import UUID
 
-from langchain_core.callbacks import BaseCallbackHandler
+from uuid import UUID
+from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Callable, Optional
+
+from langchain_core.outputs import LLMResult, ChatGeneration
 from langchain_core.messages import (
     AIMessage,
     BaseMessage,
@@ -14,7 +15,7 @@ from langchain_core.messages import (
     HumanMessage,
     SystemMessage,
 )
-from langchain_core.outputs import ChatGeneration, LLMResult
+from langchain_core.callbacks import BaseCallbackHandler
 
 if TYPE_CHECKING:
     import promptlayer
@@ -105,11 +106,7 @@ class PromptLayerCallbackHandler(BaseCallbackHandler):
             }
             model_params = run_info.get("invocation_params", {})
             is_chat_model = run_info.get("messages", None) is not None
-            model_input = (
-                run_info.get("messages", [])[i]
-                if is_chat_model
-                else [run_info.get("prompts", [])[i]]
-            )
+            model_input = run_info.get("messages", [])[i] if is_chat_model else [run_info.get("prompts", [])[i]]
             model_response = (
                 [self._convert_message_to_dict(generation.message)]
                 if is_chat_model and isinstance(generation, ChatGeneration)
@@ -152,9 +149,7 @@ class PromptLayerCallbackHandler(BaseCallbackHandler):
             message_dict["name"] = message.additional_kwargs["name"]
         return message_dict
 
-    def _create_message_dicts(
-        self, messages: List[BaseMessage]
-    ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    def _create_message_dicts(self, messages: List[BaseMessage]) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
         params: Dict[str, Any] = {}
         message_dicts = [self._convert_message_to_dict(m) for m in messages]
         return message_dicts, params

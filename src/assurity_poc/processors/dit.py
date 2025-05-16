@@ -1,4 +1,5 @@
 import torch
+
 from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 
@@ -7,12 +8,8 @@ from src.assurity_poc.utils.file import convert_pdf_to_image
 
 class DITClassifier:
     def __init__(self):
-        self.processor = AutoImageProcessor.from_pretrained(
-            "microsoft/dit-base-finetuned-rvlcdip"
-        )
-        self.model = AutoModelForImageClassification.from_pretrained(
-            "microsoft/dit-base-finetuned-rvlcdip"
-        )
+        self.processor = AutoImageProcessor.from_pretrained("microsoft/dit-base-finetuned-rvlcdip")
+        self.model = AutoModelForImageClassification.from_pretrained("microsoft/dit-base-finetuned-rvlcdip")
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model.to(self.device)

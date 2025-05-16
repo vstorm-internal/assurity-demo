@@ -1,10 +1,4 @@
 repos:
-    - repo: https://github.com/pycqa/isort
-      rev: 5.13.2
-      hooks:
-          - id: isort
-            args: ["--atomic", "--overwrite-in-place"]
-
     - repo: https://github.com/astral-sh/ruff-pre-commit
       rev: v0.11.2
       hooks:

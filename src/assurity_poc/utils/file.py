@@ -1,11 +1,12 @@
-from pathlib import Path
 from typing import Iterator
+from pathlib import Path
 
 import fire
-from logzero import logger
-from pdf2image import convert_from_path
+
 from PIL import Image, ImageSequence
 from PyPDF2 import PdfReader, PdfWriter
+from logzero import logger
+from pdf2image import convert_from_path
 
 from assurity_poc.config import get_settings
 
@@ -13,11 +14,7 @@ settings = get_settings()
 
 
 def convert_tiff_to_pdf(tiff_path: Path, split_pages: bool = False) -> None:
-    if not (
-        (tiff_path.suffix == ".tiff" or tiff_path.suffix == ".tif")
-        and tiff_path.is_file()
-        and tiff_path.exists()
-    ):
+    if not ((tiff_path.suffix == ".tiff" or tiff_path.suffix == ".tif") and tiff_path.is_file() and tiff_path.exists()):
         logger.warning(f"{tiff_path} is not a valid TIFF file.")
         raise ValueError(f"{tiff_path} is not a valid TIFF file.")
     else:

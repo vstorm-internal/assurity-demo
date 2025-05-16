@@ -1,10 +1,13 @@
 import asyncio
 
+from pathlib import Path
+
 import nest_asyncio
+
 from llama_parse import LlamaParse
 
 from assurity_poc.config import get_settings
-from assurity_poc.utils.text import compute_text_similarity, preprocess_text
+from assurity_poc.utils.text import preprocess_text, compute_text_similarity
 
 # Apply nest_asyncio for async operations
 nest_asyncio.apply()
@@ -69,9 +72,7 @@ class OCRProcessor:
         """Calculate the similarity between two texts."""
         return compute_text_similarity(text1, text2)
 
-    async def process_image_async(
-        self, image_path: str
-    ) -> dict[str, str | dict[str, float]]:
+    async def process_image_async(self, image_path: str | Path) -> dict[str, str | dict[str, float]]:
         """Process an image through the complete OCR pipeline asynchronously."""
         # Create and run both extractions in parallel
         gpt_text, gemini_text = await asyncio.gather(
@@ -100,6 +101,6 @@ class OCRProcessor:
             "similarity": similarity,
         }
 
-    def process_image(self, image_path: str) -> dict:
+    def process_image(self, image_path: str | Path) -> dict:
         """Process an image through the complete OCR pipeline (synchronous wrapper)."""
         return asyncio.run(self.process_image_async(image_path))

@@ -1,8 +1,15 @@
-from .output import Document, Input, Output, ParsedOutput
+from .output import Input, Output, Document, DatesOutput, FinalDecision, ExclusionsOutput, FinalDecisionInput
+from .benefits import Benefit, AllBenefits, BenefitsOutput
 
 __all__ = [
+    "Benefit",
+    "BenefitsOutput",
+    "AllBenefits",
     "Document",
-    "ParsedOutput",
     "Output",
     "Input",
+    "FinalDecisionInput",
+    "FinalDecision",
+    "DatesOutput",
+    "ExclusionsOutput",
 ]

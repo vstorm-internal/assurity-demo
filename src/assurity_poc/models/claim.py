@@ -1,9 +1,9 @@
-from datetime import date
 from enum import Enum
+from datetime import date
 
-from pydantic import BaseModel, Field
+from pydantic import Field, BaseModel
 
-from assurity_poc.models.common import Address, Person
+from assurity_poc.models.common import Person, Address
 
 
 class ClaimDocumentType(str, Enum):

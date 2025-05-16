@@ -1,11 +1,19 @@
 import os
+
 from enum import Enum
-from functools import lru_cache
 from pathlib import Path
+from functools import lru_cache
 
 from dotenv import load_dotenv
 from pydantic import Field
 from pydantic_settings import BaseSettings
+
+
+class Prompts(Enum):
+    DATES = "dates"
+    EXCLUSIONS = "exclusions"
+    BENEFIT_MAPPING = "benefit_mapping"
+    DECISION_MAKING = "decision_making"
 
 
 class AllowedModels(str, Enum):
@@ -14,30 +22,26 @@ class AllowedModels(str, Enum):
     AZURE_OPENAI = "azure-openai"
 
 
+RES_DIR = Path("res")
+
+
 class Settings(BaseSettings):
     """Application settings"""
 
-    data_dir: Path = Path("res/data")
+    data_dir: Path = RES_DIR / "data"
+    benefits_csv: Path = RES_DIR / "benefits.csv"
 
     llamaparse_api_key: str = Field(description="API key for LlamaParse")
     promptlayer_api_key: str = Field(description="API key for PromptLayer")
     azure_openai_api_key: str = Field(description="API key for Azure OpenAI")
     azure_openai_endpoint: str = Field(description="Endpoint for Azure OpenAI")
-    azure_openai_deployment_name: str = Field(
-        description="Deployment name for Azure OpenAI"
-    )
+    azure_openai_deployment_name: str = Field(description="Deployment name for Azure OpenAI")
     azure_openai_api_version: str = Field(description="API version for Azure OpenAI")
 
     gemini_api_key: str = Field(description="API key for Gemini")
-    promptlayer_prompt_name: str = Field(description="Prompt name for PromptLayer")
-    promptlayer_prompt_version: str = Field(
-        description="Prompt version for PromptLayer"
-    )
 
     # OCR
-    similarity_threshold: float = Field(
-        description="Threshold for similarity", default=0.75
-    )
+    similarity_threshold: float = Field(description="Threshold for similarity", default=0.75)
 
     # Image matching
     ssim_threshold: float = Field(description="Threshold for SSIM", default=0.8)
@@ -57,8 +61,6 @@ def get_settings() -> Settings:
     azure_openai_deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
     azure_openai_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
     promptlayer_api_key = os.getenv("PROMPTLAYER_API_KEY")
-    promptlayer_prompt_name = os.getenv("PROMPTLAYER_PROMPT_NAME")
-    promptlayer_prompt_version = os.getenv("PROMPTLAYER_PROMPT_VERSION")
 
     return Settings(
         llamaparse_api_key=llamaparse_api_key,
@@ -68,6 +70,4 @@ def get_settings() -> Settings:
         azure_openai_api_version=azure_openai_api_version,
         gemini_api_key=gemini_api_key,
         promptlayer_api_key=promptlayer_api_key,
-        promptlayer_prompt_name=promptlayer_prompt_name,
-        promptlayer_prompt_version=promptlayer_prompt_version,
     )

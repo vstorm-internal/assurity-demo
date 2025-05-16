@@ -41,6 +41,36 @@ jupyter = "^1.1.1"
 ipykernel = "^6.29.5"
 seaborn = "^0.13.2"
 isort = "^6.0.1"
+ipdb = "^0.13.13"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "B", # flake8-bugbear
+]
+
+[tool.ruff.lint.isort]
+length-sort = true
+lines-between-types = 1
+
+
+[tool.mypy]
+python_version = "3.13"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
 
 [build-system]
 requires = ["poetry-core"]
