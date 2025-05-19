@@ -8,23 +8,17 @@ from logzero import logger
 
 from assurity_poc.config import Prompts, get_settings
 from assurity_poc.models import (
+    Claim,
     Input,
-    AdjudicationOutput,
     Document,
-    AllBenefits,
     DatesOutput,
     FinalDecision,
     BenefitsOutput,
     ExclusionsOutput,
-    FinalDecisionInput,
-    Claim,
-    BenefitsPresentInClaim,
-    BenefitsPresentInPolicy,
-    BenefitsCovered,
-    BenefitsNotCovered,
+    AdjudicationOutput,
 )
 from assurity_poc.utils.file import iterate_over_files
-from assurity_poc.utils.helpers import parse_benefits, check_text_readability
+from assurity_poc.utils.helpers import check_text_readability
 from assurity_poc.processors.ocr_processor import OCRProcessor
 from assurity_poc.processors.claim_processor import ClaimProcessor
 
@@ -48,13 +42,19 @@ class Pipeline:
         claims = []
         for claim_dir in policy_dir.iterdir():
             if claim_dir.is_dir():
-                logger.info(f"================")
+                logger.info("================")
                 logger.info(f"Running OCR on claim: {claim_dir.name} under Policy: {policy_id}")
-                logger.info(f"================")
+                logger.info("================")
                 claim_id = claim_dir.name
                 claim_documents = self.run_ocr(claim_dir, should_save_ocr_output=False)
-                claims.append(Claim(policy_id=policy_id, claim_id=claim_id, documents=claim_documents))
-                
+                claims.append(
+                    Claim(
+                        policy_id=policy_id,
+                        claim_id=claim_id,
+                        documents=claim_documents,
+                    )
+                )
+
         return claims
 
     def run_ocr(self, claim_dir: Path, should_save_ocr_output: bool = True) -> list[Document]:
@@ -68,7 +68,12 @@ class Pipeline:
 
         logger.info(f"Running OCR for {claim_dir.name}")
         for file in iterate_over_files(claim_dir):
-            if not (file.is_file() and file.suffix == ".pdf") or "CLAIM_CORRESPONDENCE" in file.name or "DEPOSIT" in file.name or "CHECK" in file.name:
+            if (
+                not (file.is_file() and file.suffix == ".pdf")
+                or "CLAIM_CORRESPONDENCE" in file.name
+                or "DEPOSIT" in file.name
+                or "CHECK" in file.name
+            ):
                 num_files_ocr_skipped += 1
                 continue
 
@@ -90,7 +95,9 @@ class Pipeline:
         if should_save_ocr_output:
             self._save_ocr_output(ocr_output, claim_dir)
 
-        logger.info(f"Completed OCR: {claim_dir.name} - {num_files_ocr_processed}/{num_files_in_claims_dir} files processed")
+        logger.info(
+            f"Completed OCR: {claim_dir.name} - {num_files_ocr_processed}/{num_files_in_claims_dir} files processed"
+        )
         return claim_documents
 
     def check_dates(self, claim_documents: list[Document], prompt_name: str) -> Any:
@@ -108,57 +115,49 @@ class Pipeline:
         )
         return exclusions_output
 
-    def _get_benefits(self, benefits_csv: Path) -> AllBenefits:
-        return parse_benefits(benefits_csv)
-
-    def map_benefits(self, claim_documents: list[Document], benefits: AllBenefits, prompt_name: str) -> Any:
+    def map_benefits(self, claim_documents: list[Document], prompt_name: str) -> BenefitsOutput:
         logger.debug("Mapping benefits")
         model_input = Input(documents=claim_documents)
         benefit_mapping_output = self.claim_processor.run(
-            input=model_input, benefits=benefits, output_class=BenefitsOutput, prompt_name=prompt_name
+            input=model_input,
+            output_class=BenefitsOutput,
+            prompt_name=prompt_name,
         )
         return benefit_mapping_output
 
-    def make_decision(self, input: FinalDecisionInput) -> Any:
-        return self.claim_processor.run(
-            input=input, output_class=FinalDecision, prompt_name=settings.promptlayer_prompt_names[2]
-        )
+    # def make_decision(self, input: FinalDecisionInput) -> Any:
+    #     return self.claim_processor.run(
+    #         input=input,
+    #         output_class=FinalDecision,
+    #         prompt_name=settings.promptlayer_prompt_names[2],
+    #     )
 
     def run_adjudication_on_claim(self, claim: Claim, output_dir: Path) -> AdjudicationOutput:
         exclusions_output = self.check_exclusions(claim_documents=claim.documents, prompt_name=Prompts.EXCLUSIONS.value)
-        
+
         # Create proper objects for the required fields
         dates_output = DatesOutput(
             was_policy_active=False,
             was_treatment_within_policy_timeframe=False,
-            status="refer"
+            status="refer",
         )
-        
-        # Create empty benefit lists
-        empty_benefit_list = []
-        
-        # Create proper BenefitsOutput with all required fields
-        benefits_output = BenefitsOutput(
-            benefits_present_in_claim=BenefitsPresentInClaim(benefits_present=[]),
-            benefits_present_in_policy=BenefitsPresentInPolicy(benefits_present=[]),
-            benefits_covered=BenefitsCovered(benefits_covered=[]),
-            benefits_not_covered=BenefitsNotCovered(benefits_not_covered=[])
-        )
-        
+
+        benefits_output = self.map_benefits(claim_documents=claim.documents, prompt_name=Prompts.BENEFIT_MAPPING.value)
+
         # Create a proper FinalDecision object
         decision = FinalDecision(
             status=exclusions_output.status,
-            details=f"Decision based on exclusions: {exclusions_output.details}"
+            details=f"Decision based on exclusions: {exclusions_output.details}",
         )
-        
+
         return AdjudicationOutput(
-            policy_id=claim.policy_id, 
-            claim_id=claim.claim_id, 
-            claim_documents=claim.documents, 
+            policy_id=claim.policy_id,
+            claim_id=claim.claim_id,
+            claim_documents=claim.documents,
             dates=dates_output,
-            exclusions=exclusions_output, 
+            exclusions=exclusions_output,
             benefits=benefits_output,
-            decision=decision
+            decision=decision,
         )
 
     def run_pipeline(self, claim_dir: Path) -> tuple[DatesOutput, ExclusionsOutput, BenefitsOutput]:
@@ -173,8 +172,9 @@ class Pipeline:
 
         # LLM PHASE 3: BENEFITS MAPPING PHASE
         benefits_output = self.map_benefits(
-            claim_documents=claim_documents, benefits=self.benefits, prompt_name=Prompts.BENEFIT_MAPPING.value
-        )  # noqa
+            claim_documents=claim_documents,
+            prompt_name=Prompts.BENEFIT_MAPPING.value,
+        )
 
         return dates_output, exclusions_output, benefits_output
 
@@ -189,9 +189,12 @@ class Pipeline:
         # )
 
     def save_adjudication_output_for_claim(self, adjudication_output: AdjudicationOutput, output_dir: Path):
-        with open(output_dir / f"{adjudication_output.policy_id}_{adjudication_output.claim_id}_adjudication.json", "w") as f:
+        with open(
+            output_dir / f"{adjudication_output.policy_id}_{adjudication_output.claim_id}_adjudication.json",
+            "w",
+        ) as f:
             json.dump(adjudication_output.model_dump(), f)
-    
+
     def save_ocr_output_for_claim(self, claim: Claim, output_dir: Path):
         with open(output_dir / f"{claim.policy_id}_{claim.claim_id}.json", "w") as f:
             json.dump(claim.model_dump(), f)

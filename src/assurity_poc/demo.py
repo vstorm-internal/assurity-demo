@@ -13,6 +13,7 @@ from assurity_poc.config import Prompts
 from assurity_poc.models import Document
 from assurity_poc.pipeline import Pipeline
 
+
 def run_ocr() -> None:
     input_dir = Path("./res/inputs/claims/4151474402")
     output_dir = Path("./res/outputs/ocr/")
@@ -20,7 +21,6 @@ def run_ocr() -> None:
 
     logger.info("Initializing pipeline")
     pipeline = Pipeline()
-
 
     res = pipeline.run_ocr(input_dir)
 

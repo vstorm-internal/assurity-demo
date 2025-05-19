@@ -7,7 +7,6 @@ import pandas as pd
 from logzero import logger
 
 from assurity_poc.config import get_settings
-from assurity_poc.models import Benefit, AllBenefits
 from assurity_poc.models.claim import ClaimDocument
 from assurity_poc.models.policy import Policy
 from assurity_poc.processors.image_matching import ImageMatcher
@@ -55,40 +54,6 @@ def check_text_readability(similarity_score: float) -> bool:
         return False
 
 
-# def parse_policy(
-#     policy_path: str, policy_parser: PolicyParser, ocr_processor: OCRProcessor
-# ):
-#     # do ocr
-#     results = ocr_processor.process_image(policy_path)
-
-#     is_readable = check_text_readability(results["similarity"]["overall"])
-
-#     if not is_readable:
-#         return None
-
-#     # parse policy
-#     policy = policy_parser.parse(results["gpt_text"])
-
-#     return policy
-
-
-# def parse_claim(
-#     claim_path: str, claim_parser: ClaimParser, ocr_processor: OCRProcessor
-# ):
-#     # do ocr
-#     results = ocr_processor.process_image(claim_path)
-
-#     is_readable = check_text_readability(results["similarity"]["overall"])
-
-#     if not is_readable:
-#         return None
-
-#     # parse claim
-#     claim = claim_parser.parse(results["gpt_text"])
-
-#     return claim
-
-
 def was_policy_active_at_time_of_accident(policy: Policy, claim: ClaimDocument) -> bool:
     # Policy is active if it was issued before the accident date and hasn't expired
     if claim.accident_date < policy.issue_date:
@@ -109,25 +74,25 @@ def was_treatment_completed_within_policy_timeframe(policy: Policy, claim: Claim
         return True  # Policy was active when treatment happened
 
 
-def parse_benefits(benefits_csv: str | Path) -> AllBenefits:
-    benefits_df = pd.read_csv(benefits_csv)
-    benefits = []
+# def parse_benefits(benefits_csv: str | Path) -> AllBenefits:
+#     benefits_df = pd.read_csv(benefits_csv)
+#     benefits = []
 
-    COLUMN_NAME_MAP = {
-        "Benefit": "name",
-        "CPT Codes": "cpt_codes",
-        "State Specific": "state_specific",
-        "HCPCS Codes": "hcpcs_codes",
-        "ICD-10 PCS Codes": "icd10_pcs_codes",
-    }
-    benefits_df = benefits_df.rename(columns=COLUMN_NAME_MAP)
-    benefits_df["cpt_codes"] = benefits_df["cpt_codes"].apply(parse_cpt_codes)
-    benefits_df["icd10_pcs_codes"] = benefits_df["icd10_pcs_codes"].apply(parse_icd10_pcs_codes)
-    benefits_df["hcpcs_codes"] = benefits_df["hcpcs_codes"].apply(parse_hcpcs_codes)
-    benefits_df["state_specific"] = benefits_df["state_specific"].apply(parse_cpt_codes)
+#     COLUMN_NAME_MAP = {
+#         "Benefit": "name",
+#         "CPT Codes": "cpt_codes",
+#         "State Specific": "state_specific",
+#         "HCPCS Codes": "hcpcs_codes",
+#         "ICD-10 PCS Codes": "icd10_pcs_codes",
+#     }
+#     benefits_df = benefits_df.rename(columns=COLUMN_NAME_MAP)
+#     benefits_df["cpt_codes"] = benefits_df["cpt_codes"].apply(parse_cpt_codes)
+#     benefits_df["icd10_pcs_codes"] = benefits_df["icd10_pcs_codes"].apply(parse_icd10_pcs_codes)
+#     benefits_df["hcpcs_codes"] = benefits_df["hcpcs_codes"].apply(parse_hcpcs_codes)
+#     benefits_df["state_specific"] = benefits_df["state_specific"].apply(parse_cpt_codes)
 
-    benefits = [Benefit(**row) for row in benefits_df.to_dict(orient="records")]
-    return AllBenefits(benefits=benefits)
+#     benefits = [Benefit(**row) for row in benefits_df.to_dict(orient="records")]
+#     return AllBenefits(benefits=benefits)
 
 
 def parse_icd10_pcs_codes(cell):

@@ -25,11 +25,11 @@ def _lazy_import_promptlayer() -> promptlayer:
     """Lazy import promptlayer to avoid circular imports."""
     try:
         import promptlayer
-    except ImportError:
+    except ImportError as e:
         raise ImportError(
             "The PromptLayerCallbackHandler requires the promptlayer package. "
             " Please install it with `pip install promptlayer`."
-        )
+        ) from e
     return promptlayer
 
 
@@ -106,6 +106,7 @@ class PromptLayerCallbackHandler(BaseCallbackHandler):
             }
             model_params = run_info.get("invocation_params", {})
             is_chat_model = run_info.get("messages", None) is not None
+            model_input = run_info.get("messages", [])[i] if is_chat_model else [run_info.get("prompts", [])[i]]
             model_input = run_info.get("messages", [])[i] if is_chat_model else [run_info.get("prompts", [])[i]]
             model_response = (
                 [self._convert_message_to_dict(generation.message)]

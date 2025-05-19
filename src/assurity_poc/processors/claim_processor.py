@@ -12,7 +12,6 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.language_models import BaseChatModel  # Fixed import path
 
 from assurity_poc.config import AllowedModels, get_settings
-from assurity_poc.models import AllBenefits
 from assurity_poc.callbacks.promptlayer_callback import PromptLayerCallbackHandler
 
 settings = get_settings()
@@ -77,22 +76,13 @@ class ClaimProcessor:
         input: BaseModel | Any,
         prompt_name: str,
         output_class: type = BaseModel,
-        benefits: AllBenefits | None = None,
     ) -> BaseModel:
         self._current_prompt_name = prompt_name
         self.output_parser = PydanticOutputParser(pydantic_object=output_class)
-
-        if benefits:
-            input_variables = {
-                "output_format": self.output_parser.get_format_instructions(),
-                "input": input.model_dump_json(),
-                "benefits": benefits.model_dump_json(),
-            }
-        else:
-            input_variables = {
-                "output_format": self.output_parser.get_format_instructions(),
-                "input": input.model_dump_json(),
-            }
+        input_variables = {
+            "output_format": self.output_parser.get_format_instructions(),
+            "input": input.model_dump_json(),
+        }
 
         template = self.pl_client.templates.get(
             self._current_prompt_name,

@@ -1,56 +1,45 @@
 from pydantic import Field, BaseModel
 
 
+class MedicalProcedure(BaseModel):
+    """
+    Medical procedures are the procedures that are performed on the patient, and are
+    represented either by name, CPT codes, HCPCS codes, or ICD-10 PCS codes.
+    Medical procedures include:
+    - surgical procedures
+    - medical procedures
+    - diagnostic procedures
+    - other procedures
+    """
+
+    name: str | None = Field(description="Name of the medical procedure")
+    cpt_codes: list[int | str] | None = Field(
+        description="CPT codes. CPT codes are five-digits and can be either numeric or alphanumeric."
+    )
+    hcpcs_codes: list[str] | None = Field(
+        description="HCPCS codes. HCPCS codes are formatted as a letter followed by four numbers."
+    )
+    icd10_pcs_codes: list[str] | None = Field(
+        description="ICD-10 PCS codes. ICD-10 PCS codes are formatted as seven-character alphanumeric codes."
+    )
+
+
 class Benefit(BaseModel):
+    """
+    Benefits are procedures or services that are covered by the policy.
+    """
+
     name: str = Field(description="Name of the benefit")
-    cpt_codes: list[int | str] = Field(description="CPT codes associated with the benefit")
-    state_specific: list[int] | None = Field(description="State specific codes associated with the benefit (if any)")
-    hcpcs_codes: list[str] | None = Field(description="HCPCS codes associated with the benefit")
-    icd10_pcs_codes: list[str] | None = Field(description="ICD-10 PCS codes associated with the benefit")
-
-
-class AllBenefits(BaseModel):
-    benefits: list[Benefit] = Field(description="List of benefits")
-
-
-class BenefitPresentInClaim(BaseModel):
-    name: str = Field(description="Name of the benefit")
-    cpt_codes: list[int | str] = Field(description="CPT code(s) present in the claim")
-    state_specific: list[int] | None = Field(description="State specific code(s) present in the claim")
-    hcpcs_codes: list[str] | None = Field(description="HCPCS code(s) present in the claim")
-    icd10_pcs_codes: list[str] | None = Field(description="ICD-10 PCS code(s) present in the claim")
-
-
-class BenefitsPresentInClaim(BaseModel):
-    benefits_present: list[BenefitPresentInClaim] = Field(description="List of benefits present in the claim")
-
-
-class BenefitPresentInPolicy(BaseModel):
-    name: str = Field(description="Name of the benefit")
-    cpt_codes: list[int | str] = Field(description="CPT code(s) present in the policy")
-    state_specific: list[int] | None = Field(description="State specific code(s) present in the policy")
-    hcpcs_codes: list[str] | None = Field(description="HCPCS code(s) present in the policy")
-    icd10_pcs_codes: list[str] | None = Field(description="ICD-10 PCS code(s) present in the policy")
-
-
-class BenefitsPresentInPolicy(BaseModel):
-    benefits_present: list[BenefitPresentInPolicy] = Field(description="List of benefits present in the policy")
-
-
-class BenefitsCovered(BaseModel):
-    benefits_covered: list[BenefitPresentInClaim] = Field(
-        description="List of benefits present in the claim and covered by the policy"
-    )
-
-
-class BenefitsNotCovered(BaseModel):
-    benefits_not_covered: list[BenefitPresentInClaim] = Field(
-        description="List of benefit codes present in the claim but not covered by the policy"
-    )
 
 
 class BenefitsOutput(BaseModel):
-    benefits_present_in_claim: BenefitsPresentInClaim = Field(description="Benefits present in the claim")
-    benefits_present_in_policy: BenefitsPresentInPolicy = Field(description="Benefits present in the policy")
-    benefits_covered: BenefitsCovered = Field(description="Benefits covered in the claim")
-    benefits_not_covered: BenefitsNotCovered = Field(description="Benefits not covered in the claim")
+    medical_procedures_in_claim: list[MedicalProcedure] = Field(
+        description="List of all medical procedures found in claim documents"
+    )
+    policy_benefits: list[Benefit] = Field(description="List of all benefits found in the policy")
+    covered: list[MedicalProcedure] = Field(
+        description="List of medical procedures present in the claim that are covered by the policy."
+    )
+    not_covered: list[MedicalProcedure] = Field(
+        description="List of medical procedures present in the claim that are NOT covered by the policy."
+    )
