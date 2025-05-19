@@ -9,7 +9,7 @@ from logzero import logger
 from assurity_poc.config import Prompts, get_settings
 from assurity_poc.models import (
     Input,
-    Output,
+    AdjudicationOutput,
     Document,
     AllBenefits,
     DatesOutput,
@@ -17,6 +17,11 @@ from assurity_poc.models import (
     BenefitsOutput,
     ExclusionsOutput,
     FinalDecisionInput,
+    Claim,
+    BenefitsPresentInClaim,
+    BenefitsPresentInPolicy,
+    BenefitsCovered,
+    BenefitsNotCovered,
 )
 from assurity_poc.utils.file import iterate_over_files
 from assurity_poc.utils.helpers import parse_benefits, check_text_readability
@@ -37,14 +42,34 @@ class Pipeline:
         self._save_output(output, claim_dir)
         return output
 
-    def run_ocr(self, claim_dir: Path) -> list[Document]:
+    def run_ocr_on_claims_in_directory(self, policy_dir: Path, policy_id: str) -> list[Claim]:
+        # Each sub folder of policy_dir is a claim, the name of the sub folder is the claim number
+        # Process the claim and return a Claim object with policy_id
+        claims = []
+        for claim_dir in policy_dir.iterdir():
+            if claim_dir.is_dir():
+                logger.info(f"================")
+                logger.info(f"Running OCR on claim: {claim_dir.name} under Policy: {policy_id}")
+                logger.info(f"================")
+                claim_id = claim_dir.name
+                claim_documents = self.run_ocr(claim_dir, should_save_ocr_output=False)
+                claims.append(Claim(policy_id=policy_id, claim_id=claim_id, documents=claim_documents))
+                
+        return claims
+
+    def run_ocr(self, claim_dir: Path, should_save_ocr_output: bool = True) -> list[Document]:
         claim_documents = []
 
         ocr_output = []
+        num_files_in_claims_dir = len(list(claim_dir.iterdir()))
+        num_files_ocr_processed = 0
+        num_files_ocr_skipped = 0
+        num_files_ocr_failed = 0
 
         logger.info(f"Running OCR for {claim_dir.name}")
         for file in iterate_over_files(claim_dir):
-            if not (file.is_file() and file.suffix == ".pdf") or "CLAIM_CORRESPONDENCE" in file.name:
+            if not (file.is_file() and file.suffix == ".pdf") or "CLAIM_CORRESPONDENCE" in file.name or "DEPOSIT" in file.name or "CHECK" in file.name:
+                num_files_ocr_skipped += 1
                 continue
 
             # OCR
@@ -55,13 +80,17 @@ class Pipeline:
 
             if not check_text_readability(ocr_results["similarity"]["overall"]):
                 logger.warning(f"Text is not readable: {file.name}")
+                num_files_ocr_failed += 1
                 continue
             else:
                 logger.info(f"Text is readable: {file.name}")
                 document = Document(text=ocr_results["gpt_text"], file_name=file.name)
                 claim_documents.append(document)
-        self._save_ocr_output(ocr_output, claim_dir)
+                num_files_ocr_processed += 1
+        if should_save_ocr_output:
+            self._save_ocr_output(ocr_output, claim_dir)
 
+        logger.info(f"Completed OCR: {claim_dir.name} - {num_files_ocr_processed}/{num_files_in_claims_dir} files processed")
         return claim_documents
 
     def check_dates(self, claim_documents: list[Document], prompt_name: str) -> Any:
@@ -95,6 +124,43 @@ class Pipeline:
             input=input, output_class=FinalDecision, prompt_name=settings.promptlayer_prompt_names[2]
         )
 
+    def run_adjudication_on_claim(self, claim: Claim, output_dir: Path) -> AdjudicationOutput:
+        exclusions_output = self.check_exclusions(claim_documents=claim.documents, prompt_name=Prompts.EXCLUSIONS.value)
+        
+        # Create proper objects for the required fields
+        dates_output = DatesOutput(
+            was_policy_active=False,
+            was_treatment_within_policy_timeframe=False,
+            status="refer"
+        )
+        
+        # Create empty benefit lists
+        empty_benefit_list = []
+        
+        # Create proper BenefitsOutput with all required fields
+        benefits_output = BenefitsOutput(
+            benefits_present_in_claim=BenefitsPresentInClaim(benefits_present=[]),
+            benefits_present_in_policy=BenefitsPresentInPolicy(benefits_present=[]),
+            benefits_covered=BenefitsCovered(benefits_covered=[]),
+            benefits_not_covered=BenefitsNotCovered(benefits_not_covered=[])
+        )
+        
+        # Create a proper FinalDecision object
+        decision = FinalDecision(
+            status=exclusions_output.status,
+            details=f"Decision based on exclusions: {exclusions_output.details}"
+        )
+        
+        return AdjudicationOutput(
+            policy_id=claim.policy_id, 
+            claim_id=claim.claim_id, 
+            claim_documents=claim.documents, 
+            dates=dates_output,
+            exclusions=exclusions_output, 
+            benefits=benefits_output,
+            decision=decision
+        )
+
     def run_pipeline(self, claim_dir: Path) -> tuple[DatesOutput, ExclusionsOutput, BenefitsOutput]:
         # OCR PHASE
         claim_documents = self.run_ocr(claim_dir)
@@ -122,11 +188,19 @@ class Pipeline:
         #     decision=decision_output,
         # )
 
+    def save_adjudication_output_for_claim(self, adjudication_output: AdjudicationOutput, output_dir: Path):
+        with open(output_dir / f"{adjudication_output.policy_id}_{adjudication_output.claim_id}_adjudication.json", "w") as f:
+            json.dump(adjudication_output.model_dump(), f)
+    
+    def save_ocr_output_for_claim(self, claim: Claim, output_dir: Path):
+        with open(output_dir / f"{claim.policy_id}_{claim.claim_id}.json", "w") as f:
+            json.dump(claim.model_dump(), f)
+
     def _save_ocr_output(self, ocr_output: list[dict], claim_dir: Path) -> None:
         with open(Path("./res/outputs/ocr") / f"{Path(claim_dir).name}.json", "a") as f:
             json.dump(ocr_output, f)
 
-    def _save_output(self, output: Output, claim_dir: Path) -> None:
+    def _save_output(self, output: AdjudicationOutput, claim_dir: Path) -> None:
         output_dict = output.model_dump()
         decision_dict = output_dict.pop("decision", {})
 

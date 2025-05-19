@@ -1,15 +1,21 @@
-from .output import Input, Output, Document, DatesOutput, FinalDecision, ExclusionsOutput, FinalDecisionInput
-from .benefits import Benefit, AllBenefits, BenefitsOutput
+from .output import Input, AdjudicationOutput, Document, DatesOutput, FinalDecision, ExclusionsOutput, FinalDecisionInput, Claim
+from .benefits import Benefit, AllBenefits, BenefitsOutput, BenefitsPresentInClaim, BenefitsPresentInPolicy, BenefitsCovered, BenefitsNotCovered
 
 __all__ = [
     "Benefit",
     "BenefitsOutput",
     "AllBenefits",
     "Document",
-    "Output",
+    "AdjudicationOutput",
     "Input",
     "FinalDecisionInput",
     "FinalDecision",
     "DatesOutput",
     "ExclusionsOutput",
+    "Claim",
+    "BenefitsOutput",
+    "BenefitsPresentInClaim",
+    "BenefitsPresentInPolicy",
+    "BenefitsCovered",
+    "BenefitsNotCovered",
 ]

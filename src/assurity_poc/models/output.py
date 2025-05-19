@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field, BaseModel
@@ -8,7 +10,48 @@ from .benefits import BenefitsOutput
 class Document(BaseModel):
     text: str = Field(description="Original text extracted from the document")
     file_name: str = Field(description="Name of the file")
+    
+    def to_json(self):
+        return self.model_dump_json()
 
+
+class Claim(BaseModel):
+    policy_id: str = Field(description="Policy ID")
+    claim_id: str = Field(description="Claim ID")
+    documents: list[Document] = Field(description="List of claim documents")
+
+    @classmethod
+    def load_from_path(cls, path: Path) -> list["Claim"]:
+        """
+        Scan a directory for JSON files and load valid Claim objects.
+        
+        Args:
+            path: Path to the directory containing claim JSON files
+            
+        Returns:
+            List of valid Claim objects found in the directory
+        """
+        claims = []
+        
+        # Check if path is a directory
+        if not path.is_dir():
+            raise ValueError(f"Path {path} is not a directory")
+        
+        # Iterate through all JSON files in the directory
+        for file_path in path.glob("*.json"):
+            try:
+                with open(file_path, "r") as f:
+                    data = json.load(f)
+                
+                # Attempt to create a Claim object and validate it
+                claim = cls(**data)
+                claims.append(claim)
+                
+            except (json.JSONDecodeError, TypeError, ValueError) as e:
+                # Log the error but continue processing other files
+                continue
+        
+        return claims
 
 class Input(BaseModel):
     documents: list[Document] = Field(description="List of documents")
@@ -47,8 +90,12 @@ class FinalDecision(BaseModel):
     )
 
 
-class Output(BaseModel):
+class AdjudicationOutput(BaseModel):
     dates: DatesOutput = Field(description="Dates output")
     exclusions: ExclusionsOutput = Field(description="Exclusions output")
     benefits: BenefitsOutput = Field(description="Benefits output")
     decision: FinalDecision = Field(description="Decision on the claim")
+    policy_id: str = Field(description="Policy ID")
+    claim_id: str = Field(description="Claim ID")
+    claim_documents: list[Document] = Field(description="List of claim documents")
+    
