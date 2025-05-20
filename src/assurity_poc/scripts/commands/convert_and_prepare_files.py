@@ -7,6 +7,7 @@ from PIL import Image
 from tqdm import tqdm
 from logzero import logger
 
+from assurity_poc.utils.file import convert_tiff_to_pdf
 
 def run(**kwargs):
     start_time = time.time()
@@ -36,6 +37,7 @@ def run(**kwargs):
 
     if output_directory_str is None:
         should_save_converted_file_in_line = True
+        output_path_obj = input_path
         logger.info(
             "Output directory not provided. Converted files will be saved in the same location as source files."
         )
@@ -80,6 +82,7 @@ def run(**kwargs):
         for tif_file_path_obj in tqdm(tif_files, desc="Converting TIFF to PDF", unit="file"):
             try:
                 output_pdf_target_path = None
+                output_path_obj = tif_file_path_obj.parent
                 if should_save_converted_file_in_line:
                     output_pdf_target_path = tif_file_path_obj.with_suffix(".pdf")
                 else:
@@ -95,25 +98,7 @@ def run(**kwargs):
                     files_skipped += 1
                     continue
 
-                image = Image.open(tif_file_path_obj)
-
-                if image.mode != "RGB":
-                    has_alpha = "A" in image.mode or (image.mode == "P" and "transparency" in image.info)
-
-                    if has_alpha:
-                        img_to_convert = image
-                        if img_to_convert.mode != "RGBA":
-                            img_to_convert = img_to_convert.convert("RGBA")
-
-                        background = Image.new("RGB", img_to_convert.size, (255, 255, 255))
-                        background.paste(img_to_convert, mask=img_to_convert.split()[3])
-                        image = background
-                    elif image.mode in ("1", "L", "P"):
-                        image = image.convert("RGB")
-                    elif image.mode not in ("RGB", "RGBA"):
-                        image = image.convert("RGB")
-
-                image.save(output_pdf_target_path, "PDF", resolution=100.0, save_all=True)
+                convert_tiff_to_pdf(tif_file_path_obj, split_pages=False, output_dir=output_path_obj)             
                 files_converted += 1
 
                 if should_delete_original_files:

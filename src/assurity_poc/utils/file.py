@@ -13,13 +13,14 @@ from assurity_poc.config import get_settings
 settings = get_settings()
 
 
-def convert_tiff_to_pdf(tiff_path: Path, split_pages: bool = False) -> None:
+def convert_tiff_to_pdf(tiff_path: Path, split_pages: bool = False, output_dir: Path | None = None) -> None:
     if not ((tiff_path.suffix == ".tiff" or tiff_path.suffix == ".tif") and tiff_path.is_file() and tiff_path.exists()):
         logger.warning(f"{tiff_path} is not a valid TIFF file.")
         raise ValueError(f"{tiff_path} is not a valid TIFF file.")
     else:
-        output_dir = settings.data_dir / "converted" / tiff_path.stem
-        output_dir.mkdir(parents=True, exist_ok=True)
+        if output_dir is None:
+            output_dir = settings.data_dir / "converted" / tiff_path.stem
+            output_dir.mkdir(parents=True, exist_ok=True)
         pdf_path = output_dir / Path(tiff_path.stem).with_suffix(".pdf")
 
         logger.debug(f"{tiff_path.name} -> {pdf_path.name}")
