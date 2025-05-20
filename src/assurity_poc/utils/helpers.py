@@ -64,7 +64,9 @@ def was_policy_active_at_time_of_accident(policy: Policy, claim: ClaimDocument) 
         return True  # Policy was active when accident happened
 
 
-def was_treatment_completed_within_policy_timeframe(policy: Policy, claim: ClaimDocument) -> bool:
+def was_treatment_completed_within_policy_timeframe(
+    policy: Policy, claim: ClaimDocument
+) -> bool:
     # Treatment is valid if it was completed within the policy timeframe
     if claim.treatment_date < policy.issue_date:
         return False  # Policy wasn't in effect when treatment happened
@@ -74,25 +76,37 @@ def was_treatment_completed_within_policy_timeframe(policy: Policy, claim: Claim
         return True  # Policy was active when treatment happened
 
 
-# def parse_benefits(benefits_csv: str | Path) -> AllBenefits:
-#     benefits_df = pd.read_csv(benefits_csv)
-#     benefits = []
+def get_benefits(
+    individual_benefits_csv: str | Path, group_benefits_csv: str | Path
+) -> dict[str, pd.DataFrame]:
+    individual_benefits_df = parse_benefits(individual_benefits_csv)
+    group_benefits_df = parse_benefits(group_benefits_csv)
 
-#     COLUMN_NAME_MAP = {
-#         "Benefit": "name",
-#         "CPT Codes": "cpt_codes",
-#         "State Specific": "state_specific",
-#         "HCPCS Codes": "hcpcs_codes",
-#         "ICD-10 PCS Codes": "icd10_pcs_codes",
-#     }
-#     benefits_df = benefits_df.rename(columns=COLUMN_NAME_MAP)
-#     benefits_df["cpt_codes"] = benefits_df["cpt_codes"].apply(parse_cpt_codes)
-#     benefits_df["icd10_pcs_codes"] = benefits_df["icd10_pcs_codes"].apply(parse_icd10_pcs_codes)
-#     benefits_df["hcpcs_codes"] = benefits_df["hcpcs_codes"].apply(parse_hcpcs_codes)
-#     benefits_df["state_specific"] = benefits_df["state_specific"].apply(parse_cpt_codes)
+    return {
+        "individual": individual_benefits_df,
+        "group": group_benefits_df,
+    }
 
-#     benefits = [Benefit(**row) for row in benefits_df.to_dict(orient="records")]
-#     return AllBenefits(benefits=benefits)
+
+def parse_benefits(benefits_csv: str | Path) -> pd.DataFrame:
+    benefits_df = pd.read_csv(benefits_csv)
+
+    COLUMN_NAME_MAP = {
+        "Benefit": "name",
+        "CPT Codes": "cpt_codes",
+        "State Specific": "state_specific",
+        "HCPCS Codes": "hcpcs_codes",
+        "ICD-10 PCS Codes": "icd10_pcs_codes",
+    }
+    benefits_df = benefits_df.rename(columns=COLUMN_NAME_MAP)
+    benefits_df["cpt_codes"] = benefits_df["cpt_codes"].apply(parse_cpt_codes)
+    benefits_df["icd10_pcs_codes"] = benefits_df["icd10_pcs_codes"].apply(
+        parse_icd10_pcs_codes
+    )
+    benefits_df["hcpcs_codes"] = benefits_df["hcpcs_codes"].apply(parse_hcpcs_codes)
+    benefits_df["state_specific"] = benefits_df["state_specific"].apply(parse_cpt_codes)
+
+    return benefits_df
 
 
 def parse_icd10_pcs_codes(cell):

@@ -29,7 +29,8 @@ class Settings(BaseSettings):
     """Application settings"""
 
     data_dir: Path = RES_DIR / "data"
-    benefits_csv: Path = RES_DIR / "benefits.csv"
+    individual_benefits_csv: Path = RES_DIR / "individual_benefits.csv"
+    group_benefits_csv: Path = RES_DIR / "group_benefits.csv"
 
     llamaparse_api_key: str = Field(description="API key for LlamaParse")
     promptlayer_api_key: str = Field(description="API key for PromptLayer")

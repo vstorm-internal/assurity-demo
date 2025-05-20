@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import Field, BaseModel
 
 
@@ -36,10 +38,15 @@ class BenefitsOutput(BaseModel):
     medical_procedures_in_claim: list[MedicalProcedure] = Field(
         description="List of all medical procedures found in claim documents"
     )
-    policy_benefits: list[Benefit] = Field(description="List of all benefits found in the policy")
+    policy_benefits: list[Benefit] = Field(
+        description="List of all benefits found in the policy"
+    )
     covered: list[MedicalProcedure] = Field(
         description="List of medical procedures present in the claim that are covered by the policy."
     )
     not_covered: list[MedicalProcedure] = Field(
         description="List of medical procedures present in the claim that are NOT covered by the policy."
+    )
+    policy_type: Literal["INDIVIDUAL", "GROUP"] = Field(
+        description="Type of policy. Either 'INDIVIDUAL' or 'GROUP'"
     )
