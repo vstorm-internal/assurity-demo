@@ -2,6 +2,8 @@ from typing import Literal
 
 from pydantic import Field, BaseModel
 
+from assurity_poc.models.common import Document
+
 
 class MedicalProcedure(BaseModel):
     """
@@ -34,19 +36,43 @@ class Benefit(BaseModel):
     name: str = Field(description="Name of the benefit")
 
 
-class BenefitsOutput(BaseModel):
+class BenefitMappingOutput(BaseModel):
     medical_procedures_in_claim: list[MedicalProcedure] = Field(
         description="List of all medical procedures found in claim documents"
     )
-    policy_benefits: list[Benefit] = Field(
-        description="List of all benefits found in the policy"
-    )
+    policy_benefits: list[Benefit] = Field(description="List of all benefits found in the policy")
     covered: list[MedicalProcedure] = Field(
         description="List of medical procedures present in the claim that are covered by the policy."
     )
     not_covered: list[MedicalProcedure] = Field(
         description="List of medical procedures present in the claim that are NOT covered by the policy."
     )
-    policy_type: Literal["INDIVIDUAL", "GROUP"] = Field(
-        description="Type of policy. Either 'INDIVIDUAL' or 'GROUP'"
+    policy_type: Literal["INDIVIDUAL", "GROUP"] = Field(description="Type of policy. Either 'INDIVIDUAL' or 'GROUP'")
+
+
+class BenefitPayment(BaseModel):
+    """
+    Benefit payment is the amount of money that is payable to the patient for a given benefit.
+    """
+
+    benefit: Benefit = Field(description="Benefit that is being paid for")
+    payment_amount: float = Field(description="Amount of money that is payable to the patient")
+
+
+class BenefitPaymentInput(BaseModel):
+    """
+    Input of the benefit payment model.
+    """
+
+    claim_documents: list[Document] = Field(description="List of claim documents")
+    benefits: list[Benefit] = Field(description="List of benefits")
+
+
+class BenefitPaymentOutput(BaseModel):
+    """
+    Output of the benefit payment model.
+    """
+
+    benefit_payments: list[BenefitPayment] = Field(
+        description="List of benefits and the amount of money that is payable to the patient for each benefit."
     )

@@ -30,3 +30,11 @@ class Address(BaseModel):
     zip_code: str | None = Field(default=None, alias="zipCode", description="5 or 9 digit ZIP code")
     # Optional field
     phone: str | None = Field(default=None, description="Contact phone number")
+
+
+class Document(BaseModel):
+    text: str = Field(description="Original text extracted from the document")
+    file_name: str = Field(description="Name of the file")
+
+    def to_json(self):
+        return self.model_dump_json()

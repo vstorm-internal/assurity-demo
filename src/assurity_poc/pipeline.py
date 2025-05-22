@@ -12,12 +12,15 @@ from assurity_poc.config import Prompts, get_settings
 from assurity_poc.models import (
     Claim,
     Input,
+    Benefit,
     Document,
     DatesOutput,
     FinalDecision,
-    BenefitsOutput,
     ExclusionsOutput,
     AdjudicationOutput,
+    BenefitPaymentInput,
+    BenefitMappingOutput,
+    BenefitPaymentOutput,
 )
 from assurity_poc.utils.file import iterate_over_files
 from assurity_poc.utils.helpers import get_benefits, check_text_readability
@@ -41,18 +44,14 @@ class Pipeline:
         self._save_output(output, claim_dir)
         return output
 
-    def run_ocr_on_claims_in_directory(
-        self, policy_dir: Path, policy_id: str
-    ) -> list[Claim]:
+    def run_ocr_on_claims_in_directory(self, policy_dir: Path, policy_id: str) -> list[Claim]:
         # Each sub folder of policy_dir is a claim, the name of the sub folder is the claim number
         # Process the claim and return a Claim object with policy_id
         claims = []
         for claim_dir in policy_dir.iterdir():
             if claim_dir.is_dir():
                 logger.info("================")
-                logger.info(
-                    f"Running OCR on claim: {claim_dir.name} under Policy: {policy_id}"
-                )
+                logger.info(f"Running OCR on claim: {claim_dir.name} under Policy: {policy_id}")
                 logger.info("================")
                 claim_id = claim_dir.name
                 claim_documents = self.run_ocr(claim_dir, should_save_ocr_output=False)
@@ -66,9 +65,7 @@ class Pipeline:
 
         return claims
 
-    def run_ocr(
-        self, claim_dir: Path, should_save_ocr_output: bool = True
-    ) -> list[Document]:
+    def run_ocr(self, claim_dir: Path, should_save_ocr_output: bool = True) -> list[Document]:
         claim_documents = []
 
         ocr_output = []
@@ -114,15 +111,11 @@ class Pipeline:
     def check_dates(self, claim_documents: list[Document], prompt_name: str) -> Any:
         logger.debug("Checking dates")
         model_input = Input(documents=claim_documents)
-        dates_output = self.claim_processor.run(
-            input=model_input, output_class=DatesOutput, prompt_name=prompt_name
-        )
+        dates_output = self.claim_processor.run(input=model_input, output_class=DatesOutput, prompt_name=prompt_name)
 
         return dates_output
 
-    def check_exclusions(
-        self, claim_documents: list[Document], prompt_name: str
-    ) -> Any:
+    def check_exclusions(self, claim_documents: list[Document], prompt_name: str) -> Any:
         logger.debug("Checking exclusions")
         model_input = Input(documents=claim_documents)
         exclusions_output = self.claim_processor.run(
@@ -130,14 +123,12 @@ class Pipeline:
         )
         return exclusions_output
 
-    def map_benefits(
-        self, claim_documents: list[Document], prompt_name: str
-    ) -> BenefitsOutput:
+    def map_benefits(self, claim_documents: list[Document], prompt_name: str) -> BenefitMappingOutput:
         logger.debug("Mapping benefits")
         model_input = Input(documents=claim_documents)
         benefit_mapping_output = self.claim_processor.run(
             input=model_input,
-            output_class=BenefitsOutput,
+            output_class=BenefitMappingOutput,
             prompt_name=prompt_name,
         )
         benefits_from_codes = self._map_benefit_codes(benefit_mapping_output)
@@ -146,9 +137,7 @@ class Pipeline:
                 benefit_mapping_output.covered.append(benefit)
         return benefit_mapping_output
 
-    def _get_benefits(
-        self, individual_benefits_csv: Path, group_benefits_csv: Path
-    ) -> dict[str, pd.DataFrame]:
+    def _get_benefits(self, individual_benefits_csv: Path, group_benefits_csv: Path) -> dict[str, pd.DataFrame]:
         return get_benefits(individual_benefits_csv, group_benefits_csv)
 
     # def make_decision(self, input: FinalDecisionInput) -> Any:
@@ -158,7 +147,7 @@ class Pipeline:
     #         prompt_name=settings.promptlayer_prompt_names[2],
     #     )
 
-    def _map_benefit_codes(self, benefits_output: BenefitsOutput) -> list[str]:
+    def _map_benefit_codes(self, benefits_output: BenefitMappingOutput) -> list[str]:
         def translate_code(code: int | str, column: str) -> list:
             benefits_tmp = []
             filtered_df = benefits_df[
@@ -193,18 +182,24 @@ class Pipeline:
         benefits_from_codes = list(set(benefits_from_codes))
         # find which benefits obtained from codes in claim documents are present in the policy benefits
         benefits_from_codes_in_policy = [
-            benefit
-            for benefit in benefits_from_codes
-            if benefit in benefits_output.policy_benefits
+            benefit for benefit in benefits_from_codes if benefit in benefits_output.policy_benefits
         ]
         return benefits_from_codes_in_policy
 
-    def run_adjudication_on_claim(
-        self, claim: Claim, output_dir: Path
-    ) -> AdjudicationOutput:
-        exclusions_output = self.check_exclusions(
-            claim_documents=claim.documents, prompt_name=Prompts.EXCLUSIONS.value
+    def calculate_benefit_payments(
+        self, claim_documents: list[Document], benefits: list[Benefit], prompt_name: str
+    ) -> BenefitPaymentOutput:
+        logger.debug("Calculating benefit payments")
+        model_input = BenefitPaymentInput(claim_documents=claim_documents, benefits=benefits)
+        benefit_payment_output = self.claim_processor.run(
+            input=model_input,
+            output_class=BenefitPaymentOutput,
+            prompt_name=prompt_name,
         )
+        return benefit_payment_output
+
+    def run_adjudication_on_claim(self, claim: Claim, output_dir: Path) -> AdjudicationOutput:
+        exclusions_output = self.check_exclusions(claim_documents=claim.documents, prompt_name=Prompts.EXCLUSIONS.value)
 
         # Create proper objects for the required fields
         dates_output = DatesOutput(
@@ -213,9 +208,7 @@ class Pipeline:
             status="refer",
         )
 
-        benefits_output = self.map_benefits(
-            claim_documents=claim.documents, prompt_name=Prompts.BENEFIT_MAPPING.value
-        )
+        benefits_output = self.map_benefits(claim_documents=claim.documents, prompt_name=Prompts.BENEFIT_MAPPING.value)
 
         # Create a proper FinalDecision object
         decision = FinalDecision(
@@ -233,21 +226,15 @@ class Pipeline:
             decision=decision,
         )
 
-    def run_pipeline(
-        self, claim_dir: Path
-    ) -> tuple[DatesOutput, ExclusionsOutput, BenefitsOutput]:
+    def run_pipeline(self, claim_dir: Path) -> tuple[DatesOutput, ExclusionsOutput, BenefitMappingOutput]:
         # OCR PHASE
         claim_documents = self.run_ocr(claim_dir)
 
         # LLM PHASE 1: DATES PHASE
-        dates_output = self.check_dates(
-            claim_documents=claim_documents, prompt_name=Prompts.DATES.value
-        )
+        dates_output = self.check_dates(claim_documents=claim_documents, prompt_name=Prompts.DATES.value)
 
         # LLM PHASE 2: EXCLUSIONS PHASE
-        exclusions_output = self.check_exclusions(
-            claim_documents=claim_documents, prompt_name=Prompts.EXCLUSIONS.value
-        )
+        exclusions_output = self.check_exclusions(claim_documents=claim_documents, prompt_name=Prompts.EXCLUSIONS.value)
 
         # LLM PHASE 3: BENEFITS MAPPING PHASE
         benefits_output = self.map_benefits(
@@ -267,12 +254,9 @@ class Pipeline:
         #     decision=decision_output,
         # )
 
-    def save_adjudication_output_for_claim(
-        self, adjudication_output: AdjudicationOutput, output_dir: Path
-    ):
+    def save_adjudication_output_for_claim(self, adjudication_output: AdjudicationOutput, output_dir: Path):
         with open(
-            output_dir
-            / f"{adjudication_output.policy_id}_{adjudication_output.claim_id}_adjudication.json",
+            output_dir / f"{adjudication_output.policy_id}_{adjudication_output.claim_id}_adjudication.json",
             "w",
         ) as f:
             json.dump(adjudication_output.model_dump(), f)

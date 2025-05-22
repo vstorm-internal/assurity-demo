@@ -5,15 +5,8 @@ from pathlib import Path
 
 from pydantic import Field, BaseModel
 
-from assurity_poc.models.benefits import BenefitsOutput
-
-
-class Document(BaseModel):
-    text: str = Field(description="Original text extracted from the document")
-    file_name: str = Field(description="Name of the file")
-
-    def to_json(self):
-        return self.model_dump_json()
+from assurity_poc.models.common import Document
+from assurity_poc.models.benefits import BenefitMappingOutput
 
 
 class Claim(BaseModel):
@@ -82,7 +75,7 @@ class ExclusionsOutput(BaseModel):
 class FinalDecisionInput(BaseModel):
     dates: DatesOutput = Field(description="Dates output")
     exclusions: ExclusionsOutput = Field(description="Exclusions output")
-    benefits: BenefitsOutput = Field(description="Benefits output")
+    benefits: BenefitMappingOutput = Field(description="Benefits output")
 
 
 class FinalDecision(BaseModel):
@@ -95,7 +88,7 @@ class FinalDecision(BaseModel):
 class AdjudicationOutput(BaseModel):
     dates: DatesOutput = Field(description="Dates output")
     exclusions: ExclusionsOutput = Field(description="Exclusions output")
-    benefits: BenefitsOutput = Field(description="Benefits output")
+    benefits: BenefitMappingOutput = Field(description="Benefits output")
     decision: FinalDecision = Field(description="Decision on the claim")
     policy_id: str = Field(description="Policy ID")
     claim_id: str = Field(description="Claim ID")

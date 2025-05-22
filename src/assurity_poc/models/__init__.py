@@ -8,12 +8,18 @@ from .output import (
     AdjudicationOutput,
     FinalDecisionInput,
 )
-from .benefits import Benefit, BenefitsOutput
+from .benefits import (
+    Benefit,
+    BenefitPaymentInput,
+    BenefitMappingOutput,
+    BenefitPaymentOutput,
+)
 
 __all__ = [
     "AdjudicationOutput",
     "Benefit",
-    "BenefitsOutput",
+    "BenefitMappingOutput",
+    "BenefitPaymentInput",
     "Claim",
     "Document",
     "Input",
@@ -21,4 +27,5 @@ __all__ = [
     "FinalDecision",
     "DatesOutput",
     "ExclusionsOutput",
+    "BenefitPaymentOutput",
 ]
