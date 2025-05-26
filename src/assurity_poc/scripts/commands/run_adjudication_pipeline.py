@@ -55,7 +55,7 @@ def run(**kwargs):
             logger.info(f"Running Adjudication on claim: {claim.claim_id} ...")
             logger.info(">>>>>>>>>>>>>>>>>>>>>>")
             claim_adjudication_start_time = time.time()
-            adjudication_output = pipeline.run_adjudication_on_claim(claim, output_dir=adjudication_output_dir)
+            adjudication_output = pipeline.run_pipeline(claim, output_dir=adjudication_output_dir)
             claim_adjudication_end_time = time.time()
             logger.info(
                 f"Adjudication on claim: {claim.claim_id} completed in {claim_adjudication_end_time - claim_adjudication_start_time:.2f} seconds"

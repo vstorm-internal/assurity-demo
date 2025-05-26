@@ -15,12 +15,14 @@ from assurity_poc.models import (
     Benefit,
     Document,
     DatesOutput,
-    FinalDecision,
     ExclusionsOutput,
     AdjudicationOutput,
     BenefitPaymentInput,
+    ClaimRecommendation,
+    RecommendationInput,
     BenefitMappingOutput,
     BenefitPaymentOutput,
+    RecommendationOutput,
 )
 from assurity_poc.utils.file import iterate_over_files
 from assurity_poc.utils.helpers import get_benefits, check_text_readability
@@ -121,6 +123,7 @@ class Pipeline:
         exclusions_output = self.claim_processor.run(
             input=model_input, output_class=ExclusionsOutput, prompt_name=prompt_name
         )
+
         return exclusions_output
 
     def map_benefits(self, claim_documents: list[Document], prompt_name: str) -> BenefitMappingOutput:
@@ -135,12 +138,13 @@ class Pipeline:
         for benefit in benefits_from_codes:
             if benefit not in benefit_mapping_output.covered:
                 benefit_mapping_output.covered.append(benefit)
+
         return benefit_mapping_output
 
     def _get_benefits(self, individual_benefits_csv: Path, group_benefits_csv: Path) -> dict[str, pd.DataFrame]:
         return get_benefits(individual_benefits_csv, group_benefits_csv)
 
-    # def make_decision(self, input: FinalDecisionInput) -> Any:
+    # def make_decision(self, input: RecommendationInput) -> Any:
     #     return self.claim_processor.run(
     #         input=input,
     #         output_class=FinalDecision,
@@ -155,7 +159,7 @@ class Pipeline:
                     lambda x: code in x  # noqa: B023
                 )  # noqa: B023
             ]
-            benefits_tmp = filtered_df["Benefit"].tolist()
+            benefits_tmp = filtered_df["name"].tolist()
             return benefits_tmp
 
         if benefits_output.policy_type == "INDIVIDUAL":
@@ -191,12 +195,37 @@ class Pipeline:
     ) -> BenefitPaymentOutput:
         logger.debug("Calculating benefit payments")
         model_input = BenefitPaymentInput(claim_documents=claim_documents, benefits=benefits)
+
         benefit_payment_output = self.claim_processor.run(
             input=model_input,
             output_class=BenefitPaymentOutput,
             prompt_name=prompt_name,
         )
+
         return benefit_payment_output
+
+    def get_claim_recommendation(
+        self,
+        claim_documents: list[Document],
+        dates_output: DatesOutput,
+        exclusions_output: ExclusionsOutput,
+        benefits_output: BenefitMappingOutput,
+        prompt_name: str,
+    ) -> RecommendationOutput:
+        model_input = RecommendationInput(
+            claim_documents=claim_documents,
+            dates=dates_output,
+            exclusions=exclusions_output,
+            benefits=benefits_output,
+        )
+
+        claim_recommendation = self.claim_processor.run(
+            input=model_input,
+            output_class=RecommendationOutput,
+            prompt_name=prompt_name,
+        )
+
+        return claim_recommendation
 
     def run_adjudication_on_claim(self, claim: Claim, output_dir: Path) -> AdjudicationOutput:
         exclusions_output = self.check_exclusions(claim_documents=claim.documents, prompt_name=Prompts.EXCLUSIONS.value)
@@ -211,9 +240,13 @@ class Pipeline:
         benefits_output = self.map_benefits(claim_documents=claim.documents, prompt_name=Prompts.BENEFIT_MAPPING.value)
 
         # Create a proper FinalDecision object
-        decision = FinalDecision(
-            status=exclusions_output.status,
-            details=f"Decision based on exclusions: {exclusions_output.details}",
+        decision = RecommendationOutput(
+            claimant="John Doe",  # placeholder for now
+            decision_recommendation=exclusions_output.status,
+            decision_justification=f"Decision based on exclusions: {exclusions_output.details}",
+        )
+        benefit_payment_output = BenefitPaymentOutput(
+            recommended_benefit_payment_amount=0,  # placeholder for now
         )
 
         return AdjudicationOutput(
@@ -223,12 +256,12 @@ class Pipeline:
             dates=dates_output,
             exclusions=exclusions_output,
             benefits=benefits_output,
+            benefit_payment=benefit_payment_output,
             decision=decision,
         )
 
-    def run_pipeline(self, claim_dir: Path) -> tuple[DatesOutput, ExclusionsOutput, BenefitMappingOutput]:
-        # OCR PHASE
-        claim_documents = self.run_ocr(claim_dir)
+    def run_pipeline(self, claim: Claim, output_dir: Path) -> AdjudicationOutput:
+        claim_documents = claim.documents
 
         # LLM PHASE 1: DATES PHASE
         dates_output = self.check_dates(claim_documents=claim_documents, prompt_name=Prompts.DATES.value)
@@ -242,17 +275,50 @@ class Pipeline:
             prompt_name=Prompts.BENEFIT_MAPPING.value,
         )
 
-        return dates_output, exclusions_output, benefits_output
+        # LLM PHASE 4: BENEFIT PAYMENT AMOUNT
+        benefits_to_pay = [Benefit(name=medical_proc.name) for medical_proc in benefits_output.covered]
+        benefit_payment_output = self.calculate_benefit_payments(
+            claim_documents=claim_documents,
+            benefits=benefits_to_pay,
+            prompt_name=Prompts.BENEFIT_PAYMENT.value,
+        )
 
-        # # LLM PHASE 4: DECISION PHASE
-        # decision_output = self.make_decision(FinalDecisionInput(dates=dates_output, exclusions=exclusions_output, benefits=benefits_output))
+        # LLM PHASE 5: CLAIM RECOMMENDATION
+        recommendation_tmp = self.get_claim_recommendation(
+            claim_documents=claim_documents,
+            dates_output=dates_output,
+            exclusions_output=exclusions_output,
+            benefits_output=benefits_output,
+            prompt_name=Prompts.CLAIM_RECOMMENDATION.value,
+        )
 
-        # return Output(
-        #     dates=dates_output,
-        #     exclusions=exclusions_output,
-        #     benefits=benefits_output,
-        #     decision=decision_output,
-        # )
+        recommended_benefit_payment_amount = sum(
+            benefit_payment.payment_amount for benefit_payment in benefit_payment_output.benefit_payments
+        )
+        claim_recommendation = ClaimRecommendation(
+            policy_id=claim.policy_id,
+            claim_id=claim.claim_id,
+            claimant=recommendation_tmp.claimant,
+            decision_recommendation=recommendation_tmp.decision_recommendation,
+            decision_justification=recommendation_tmp.decision_justification,
+            recommended_benefit_payment_amount=recommended_benefit_payment_amount,
+        )
+
+        self.save_claim_recommendation_for_claim(
+            claim_recommendation=claim_recommendation,
+            output_dir=Path("./res/outputs/pipeline_output"),
+        )
+
+        return AdjudicationOutput(
+            policy_id=claim.policy_id,
+            claim_id=claim.claim_id,
+            claim_documents=claim_documents,
+            dates=dates_output,
+            exclusions=exclusions_output,
+            benefits=benefits_output,
+            benefit_payment=benefit_payment_output,
+            decision=recommendation_tmp,
+        )
 
     def save_adjudication_output_for_claim(self, adjudication_output: AdjudicationOutput, output_dir: Path):
         with open(
@@ -260,6 +326,13 @@ class Pipeline:
             "w",
         ) as f:
             json.dump(adjudication_output.model_dump(), f)
+
+    def save_claim_recommendation_for_claim(self, claim_recommendation: ClaimRecommendation, output_dir: Path):
+        with open(
+            output_dir / f"{claim_recommendation.policy_id}_{claim_recommendation.claim_id}_recommendation.json",
+            "w",
+        ) as f:
+            json.dump(claim_recommendation.model_dump(), f)
 
     def save_ocr_output_for_claim(self, claim: Claim, output_dir: Path):
         with open(output_dir / f"{claim.policy_id}_{claim.claim_id}.json", "w") as f:

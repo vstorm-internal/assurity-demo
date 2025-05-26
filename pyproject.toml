@@ -2,7 +2,7 @@
 name = "assurity-poc"
 version = "0.1.0"
 description = "An automated pipeline for OCR processing of insurance claims documents"
-authors = ["bartosz.roguski@bluelabellabs.com"]
+authors = ["bartosz.roguski@bluelabellabs.com, bobby.gill@bluelabellabs.com"]
 readme = "README.md"
 packages = [{include = "assurity_poc", from = "src"}]
 

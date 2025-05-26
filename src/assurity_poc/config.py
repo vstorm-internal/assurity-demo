@@ -15,6 +15,7 @@ class Prompts(Enum):
     BENEFIT_MAPPING = "benefit_mapping"
     DECISION_MAKING = "decision_making"
     BENEFIT_PAYMENT = "benefit_payment"
+    CLAIM_RECOMMENDATION = "claim_recommendation"
 
 
 class AllowedModels(str, Enum):

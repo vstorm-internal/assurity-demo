@@ -9,6 +9,7 @@ from logzero import logger
 
 from assurity_poc.utils.file import convert_tiff_to_pdf
 
+
 def run(**kwargs):
     start_time = time.time()
     script_start_dt = datetime.now()
@@ -98,7 +99,7 @@ def run(**kwargs):
                     files_skipped += 1
                     continue
 
-                convert_tiff_to_pdf(tif_file_path_obj, split_pages=False, output_dir=output_path_obj)             
+                convert_tiff_to_pdf(tif_file_path_obj, split_pages=False, output_dir=output_path_obj)
                 files_converted += 1
 
                 if should_delete_original_files:
