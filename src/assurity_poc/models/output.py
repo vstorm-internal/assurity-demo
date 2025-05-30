@@ -6,7 +6,10 @@ from pathlib import Path
 from pydantic import Field, BaseModel
 
 from assurity_poc.models.common import Document
-from assurity_poc.models.benefits import BenefitMappingOutput, BenefitPaymentOutput
+from assurity_poc.models.benefits import (
+    BenefitPaymentOutput,
+    EnhancedBenefitMappingOutput,
+)
 
 
 class Claim(BaseModel):
@@ -53,16 +56,20 @@ class Input(BaseModel):
 
 
 class DatesOutput(BaseModel):
-    policy_start_date: str = Field(description="Policy start date")
-    accident_date: str = Field(description="Accident date")
-    treatment_date: str = Field(description="Treatment date")
-
-    was_policy_active: bool = Field(description="Whether the policy was active at the time of the accident")
-    was_treatment_within_policy_timeframe: bool = Field(
-        description="Whether the treatment was completed within the policy timeframe"
+    policy_start_date: str | None = Field(
+        default=None, description="The date the policy was issued or became effective."
+    )
+    accident_date: str | None = Field(default=None, description="The date the accident occurred.")
+    treatment_date: str | None = Field(
+        default=None,
+        description="The earliest date of medical treatment related to the claim.",
     )
     decision_recommendation: Literal["accept", "deny", "requires_review"] = Field(
-        description="Decision recommendation based on the dates."
+        description="The decision recommendation based on the dates analysis."
+    )
+    details_for_decision: str | None = Field(
+        default=None,
+        description="Explanation of findings, including dates and flags, leading to the recommendation.",
     )
 
 
@@ -84,7 +91,7 @@ class RecommendationInput(BaseModel):
     claim_documents: list[Document] = Field(description="List of claim documents")
     dates: DatesOutput = Field(description="Dates output")
     exclusions: ExclusionsOutput = Field(description="Exclusions output")
-    benefits: BenefitMappingOutput = Field(description="Benefits output")
+    benefits: EnhancedBenefitMappingOutput = Field(description="Benefits output")
 
 
 class RecommendationOutput(BaseModel):
@@ -113,7 +120,7 @@ class ClaimRecommendation(BaseModel):
 class AdjudicationOutput(BaseModel):
     dates: DatesOutput = Field(description="Dates output")
     exclusions: ExclusionsOutput = Field(description="Exclusions output")
-    benefits: BenefitMappingOutput = Field(description="Benefit mapping output")
+    benefits: EnhancedBenefitMappingOutput = Field(description="Benefit mapping output")
     benefit_payment: BenefitPaymentOutput = Field(description="Benefit payment output")
     decision: RecommendationOutput = Field(description="Decision recommendation on the claim")
     policy_id: str = Field(description="Policy ID")

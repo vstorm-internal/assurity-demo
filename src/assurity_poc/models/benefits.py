@@ -24,7 +24,7 @@ class MedicalProcedure(BaseModel):
         description="HCPCS codes. HCPCS codes are formatted as a letter followed by four numbers."
     )
     icd10_pcs_codes: list[str] | None = Field(
-        description="ICD-10 PCS codes. ICD-10 PCS codes are formatted as seven-character alphanumeric codes."
+        description="ICD-10 PCS codes. ICD-10 PCS codes are formatted as seven-character alphanumeric codes used for inpatient medical procedures."
     )
 
 
@@ -40,14 +40,25 @@ class BenefitMappingOutput(BaseModel):
     medical_procedures_in_claim: list[MedicalProcedure] = Field(
         description="List of all medical procedures found in claim documents"
     )
-    policy_benefits: list[Benefit] = Field(description="List of all benefits found in the policy")
+    policy_benefits: list[Benefit] = Field(description="List of all benefits found in the policy documents")
+    policy_type: Literal["INDIVIDUAL", "GROUP"] = Field(description="Type of policy. Either 'INDIVIDUAL' or 'GROUP'")
+    document_quality_issues: list[str] = Field(
+        default_factory=list,
+        description="List of any issues that might affect processing (illegible codes, incomplete descriptions, etc.)",
+    )
+
+
+class EnhancedBenefitMappingOutput(BenefitMappingOutput):
+    """Extended output that includes coverage determination results for pipeline compatibility."""
+
     covered: list[MedicalProcedure] = Field(
-        description="List of medical procedures present in the claim that are covered by the policy."
+        default_factory=list,
+        description="List of medical procedures that are covered by the policy (determined by code-based lookup)",
     )
     not_covered: list[MedicalProcedure] = Field(
-        description="List of medical procedures present in the claim that are NOT covered by the policy."
+        default_factory=list,
+        description="List of medical procedures that are NOT covered by the policy",
     )
-    policy_type: Literal["INDIVIDUAL", "GROUP"] = Field(description="Type of policy. Either 'INDIVIDUAL' or 'GROUP'")
 
 
 class BenefitPayment(BaseModel):

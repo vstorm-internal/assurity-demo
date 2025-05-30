@@ -1,5 +1,3 @@
-import json
-
 from typing import Any
 from datetime import datetime
 
@@ -8,8 +6,9 @@ from pydantic import BaseModel
 from promptlayer import PromptLayer
 from langchain_openai import AzureChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.output_parsers import OutputFixingParser
 from langchain_core.output_parsers import PydanticOutputParser
-from langchain_core.language_models import BaseChatModel  # Fixed import path
+from langchain_core.language_models import BaseChatModel
 
 from assurity_poc.config import AllowedModels, get_settings
 from assurity_poc.callbacks.promptlayer_callback import PromptLayerCallbackHandler
@@ -78,7 +77,13 @@ class ClaimProcessor:
         output_class: type = BaseModel,
     ) -> BaseModel:
         self._current_prompt_name = prompt_name
-        self.output_parser = PydanticOutputParser(pydantic_object=output_class)
+
+        # Create base parser
+        base_parser = PydanticOutputParser(pydantic_object=output_class)
+
+        # Use OutputFixingParser that will retry on JSON errors
+        self.output_parser = OutputFixingParser.from_llm(parser=base_parser, llm=self.llm)
+
         input_variables = {
             "output_format": self.output_parser.get_format_instructions(),
             "input": input.model_dump_json(),
@@ -99,4 +104,11 @@ class ClaimProcessor:
             for pl_message in pl_messages
         ]
         response = self.llm.invoke(messages)
-        return output_class.model_validate(json.loads(response.content))
+
+        try:
+            # Use the fixing parser directly - it will handle JSON errors and retry
+            parsed_result = self.output_parser.parse(response.content)
+            return parsed_result
+        except Exception as e:
+            logger.error(f"OutputFixingParser failed to parse response: {e}")
+            logger.error(f"Response content (first 1000 chars): {response.content[:1000]}")

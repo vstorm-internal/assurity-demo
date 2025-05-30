@@ -1,12 +1,13 @@
-import csv
+import ast
 import json
 
 from typing import Any
 from pathlib import Path
+from datetime import datetime
 
 import pandas as pd
 
-from logzero import logger
+from logzero import logger, logfile
 
 from assurity_poc.config import Prompts, get_settings
 from assurity_poc.models import (
@@ -16,9 +17,9 @@ from assurity_poc.models import (
     Document,
     DatesOutput,
     ExclusionsOutput,
+    MedicalProcedure,
     AdjudicationOutput,
     BenefitPaymentInput,
-    ClaimRecommendation,
     RecommendationInput,
     BenefitMappingOutput,
     BenefitPaymentOutput,
@@ -26,10 +27,18 @@ from assurity_poc.models import (
 )
 from assurity_poc.utils.file import iterate_over_files
 from assurity_poc.utils.helpers import get_benefits, check_text_readability
+from assurity_poc.models.benefits import EnhancedBenefitMappingOutput
 from assurity_poc.processors.ocr_processor import OCRProcessor
 from assurity_poc.processors.claim_processor import ClaimProcessor
 
 settings = get_settings()
+
+Path("./logs").mkdir(parents=True, exist_ok=True)
+logfile(
+    f"./logs/pipeline_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log",
+    maxBytes=10_000_000,
+    backupCount=5,
+)
 
 
 class Pipeline:
@@ -41,14 +50,38 @@ class Pipeline:
             settings.group_benefits_csv,
         )
 
-    def __call__(self, claim_dir: Path) -> Any:
-        output = self.run_pipeline(claim_dir)
-        self._save_output(output, claim_dir)
-        return output
-
     def run_ocr_on_claims_in_directory(self, policy_dir: Path, policy_id: str) -> list[Claim]:
         # Each sub folder of policy_dir is a claim, the name of the sub folder is the claim number
         # Process the claim and return a Claim object with policy_id
+
+        # First, process policy-level files (these contain important policy information)
+        logger.info("================")
+        logger.info(f"Processing policy-level files for Policy: {policy_id}")
+        logger.info("================")
+
+        policy_documents = []
+        for file in policy_dir.iterdir():
+            if (
+                file.is_file()
+                and file.suffix == ".pdf"
+                and "PolicyPages" in file.name
+                and "CLAIM_CORRESPONDENCE" not in file.name
+                and "DEPOSIT" not in file.name
+                and "CHECK" not in file.name
+            ):
+                logger.info(f"OCR on policy file: {file.name}")
+                ocr_results = self.ocr_processor.process_image(file)
+
+                if check_text_readability(ocr_results["similarity"]["overall"]):
+                    logger.info(f"Policy file text is readable: {file.name}")
+                    document = Document(text=ocr_results["gpt_text"], file_name=file.name)
+                    policy_documents.append(document)
+                else:
+                    logger.warning(f"Policy file text is not readable: {file.name}")
+
+        logger.info(f"Processed {len(policy_documents)} policy-level documents")
+
+        # Now process claims and include policy documents in each claim
         claims = []
         for claim_dir in policy_dir.iterdir():
             if claim_dir.is_dir():
@@ -57,11 +90,15 @@ class Pipeline:
                 logger.info("================")
                 claim_id = claim_dir.name
                 claim_documents = self.run_ocr(claim_dir, should_save_ocr_output=False)
+
+                # Combine policy documents with claim documents
+                all_documents = policy_documents + claim_documents
+
                 claims.append(
                     Claim(
                         policy_id=policy_id,
                         claim_id=claim_id,
-                        documents=claim_documents,
+                        documents=all_documents,
                     )
                 )
 
@@ -126,7 +163,7 @@ class Pipeline:
 
         return exclusions_output
 
-    def map_benefits(self, claim_documents: list[Document], prompt_name: str) -> BenefitMappingOutput:
+    def map_benefits(self, claim_documents: list[Document], prompt_name: str) -> EnhancedBenefitMappingOutput:
         logger.debug("Mapping benefits")
         model_input = Input(documents=claim_documents)
         benefit_mapping_output = self.claim_processor.run(
@@ -134,61 +171,124 @@ class Pipeline:
             output_class=BenefitMappingOutput,
             prompt_name=prompt_name,
         )
-        benefits_from_codes = self._map_benefit_codes(benefit_mapping_output)
-        for benefit in benefits_from_codes:
-            if benefit not in benefit_mapping_output.covered:
-                benefit_mapping_output.covered.append(benefit)
 
-        return benefit_mapping_output
+        if benefit_mapping_output.policy_type not in ["INDIVIDUAL", "GROUP"]:
+            logger.warning(
+                f"Policy type is missing or invalid: {benefit_mapping_output.policy_type}. Attempting to infer or default."
+            )
+
+        benefits_df = None
+        if benefit_mapping_output.policy_type == "INDIVIDUAL":
+            benefits_df = self.benefits["individual"]
+        elif benefit_mapping_output.policy_type == "GROUP":
+            benefits_df = self.benefits["group"]
+
+        # Determine coverage using code-based lookups
+        covered_procedures: list[MedicalProcedure] = []
+        not_covered_procedures: list[MedicalProcedure] = []
+
+        for medical_procedure in benefit_mapping_output.medical_procedures_in_claim:
+            matched_benefit_names = set()
+
+            # Check all procedure codes against the benefits database
+            if benefits_df is not None:
+                if medical_procedure.cpt_codes:
+                    for code in medical_procedure.cpt_codes:
+                        matched_benefit_names.update(self._get_benefit_names_from_code(code, "cpt_codes", benefits_df))
+
+                if medical_procedure.hcpcs_codes:
+                    for code in medical_procedure.hcpcs_codes:
+                        matched_benefit_names.update(
+                            self._get_benefit_names_from_code(code, "hcpcs_codes", benefits_df)
+                        )
+
+                if medical_procedure.icd10_pcs_codes:
+                    for code in medical_procedure.icd10_pcs_codes:
+                        matched_benefit_names.update(
+                            self._get_benefit_names_from_code(code, "icd10_pcs_codes", benefits_df)
+                        )
+
+            if matched_benefit_names:
+                primary_benefit = list(matched_benefit_names)[0]  # Take first match
+                covered_procedure = medical_procedure.model_copy(deep=True)
+                covered_procedure.name = primary_benefit
+                covered_procedures.append(covered_procedure)
+
+                logger.debug(
+                    f"Procedure covered by '{primary_benefit}': {medical_procedure.name or 'Unnamed'} (codes matched)"
+                )
+            else:
+                not_covered_procedures.append(medical_procedure)
+                logger.debug(f"Procedure not covered: {medical_procedure.name or 'Unnamed'} (no matching codes)")
+
+        enhanced_output = EnhancedBenefitMappingOutput(
+            medical_procedures_in_claim=benefit_mapping_output.medical_procedures_in_claim,
+            policy_benefits=benefit_mapping_output.policy_benefits,
+            policy_type=benefit_mapping_output.policy_type,
+            document_quality_issues=benefit_mapping_output.document_quality_issues,
+            covered=covered_procedures,
+            not_covered=not_covered_procedures,
+        )
+
+        return enhanced_output
+
+    def _get_benefit_names_from_code(self, code: int | str, column: str, benefits_df: pd.DataFrame) -> list[str]:
+        """Helper function to get benefit names from a code and DataFrame column."""
+        if benefits_df is None or column not in benefits_df.columns:
+            return []
+        try:
+
+            def is_code_present(cell_value, target_code):
+                if isinstance(cell_value, list):
+                    # Handle both integer and string codes in the list
+                    if column == "cpt_codes" or column == "state_specific":
+                        # CPT codes are stored as integers after range expansion
+                        try:
+                            target_int = int(target_code)
+                            return target_int in cell_value or str(target_int) in map(str, cell_value)
+                        except (ValueError, TypeError):
+                            return str(target_code) in map(str, cell_value)
+                    else:
+                        # HCPCS and ICD-10 PCS codes are stored as strings
+                        return str(target_code) in map(str, cell_value)
+
+                if isinstance(cell_value, str):
+                    if cell_value.startswith("[") and cell_value.endswith("]"):
+                        try:
+                            parsed_list = ast.literal_eval(cell_value)
+                            if column == "cpt_codes" or column == "state_specific":
+                                try:
+                                    target_int = int(target_code)
+                                    return target_int in parsed_list or str(target_int) in map(str, parsed_list)
+                                except (ValueError, TypeError):
+                                    return str(target_code) in map(str, parsed_list)
+                            else:
+                                return str(target_code) in map(str, parsed_list)
+                        except:  # noqa E722
+                            return False
+                    else:
+                        # Handle comma-separated string format
+                        codes_in_cell = [c.strip() for c in cell_value.split(",")]
+                        if column == "cpt_codes" or column == "state_specific":
+                            try:
+                                target_int = int(target_code)
+                                return str(target_int) in codes_in_cell or target_int in [
+                                    int(c) for c in codes_in_cell if c.isdigit()
+                                ]
+                            except (ValueError, TypeError):
+                                return str(target_code) in codes_in_cell
+                        else:
+                            return str(target_code) in codes_in_cell
+                return False
+
+            filtered_df = benefits_df[benefits_df[column].apply(lambda x: is_code_present(x, code))]
+            return filtered_df["name"].tolist()
+        except Exception as e:
+            logger.error(f"Error in _get_benefit_names_from_code for code {code}, column {column}: {e}")
+            return []
 
     def _get_benefits(self, individual_benefits_csv: Path, group_benefits_csv: Path) -> dict[str, pd.DataFrame]:
         return get_benefits(individual_benefits_csv, group_benefits_csv)
-
-    # def make_decision(self, input: RecommendationInput) -> Any:
-    #     return self.claim_processor.run(
-    #         input=input,
-    #         output_class=FinalDecision,
-    #         prompt_name=settings.promptlayer_prompt_names[2],
-    #     )
-
-    def _map_benefit_codes(self, benefits_output: BenefitMappingOutput) -> list[str]:
-        def translate_code(code: int | str, column: str) -> list:
-            benefits_tmp = []
-            filtered_df = benefits_df[
-                benefits_df[column].apply(
-                    lambda x: code in x  # noqa: B023
-                )  # noqa: B023
-            ]
-            benefits_tmp = filtered_df["name"].tolist()
-            return benefits_tmp
-
-        if benefits_output.policy_type == "INDIVIDUAL":
-            benefits_df = self.benefits["individual"]
-        elif benefits_output.policy_type == "GROUP":
-            benefits_df = self.benefits["group"]
-        else:
-            raise ValueError(f"Invalid policy type: {benefits_output.policy_type}")
-
-        benefits_from_codes = []
-        for medical_procedure in benefits_output.medical_procedures_in_claim:
-            if medical_procedure.cpt_codes:
-                for code in medical_procedure.cpt_codes:
-                    filtered_list = translate_code(code, "cpt_codes")
-                    benefits_from_codes.extend(filtered_list)
-            if medical_procedure.hcpcs_codes:
-                for code in medical_procedure.hcpcs_codes:
-                    filtered_list = translate_code(code, "hcpcs_codes")
-                    benefits_from_codes.extend(filtered_list)
-            if medical_procedure.icd10_pcs_codes:
-                for code in medical_procedure.icd10_pcs_codes:
-                    filtered_list = translate_code(code, "icd10_pcs_codes")
-                    benefits_from_codes.extend(filtered_list)
-        benefits_from_codes = list(set(benefits_from_codes))
-        # find which benefits obtained from codes in claim documents are present in the policy benefits
-        benefits_from_codes_in_policy = [
-            benefit for benefit in benefits_from_codes if benefit in benefits_output.policy_benefits
-        ]
-        return benefits_from_codes_in_policy
 
     def calculate_benefit_payments(
         self, claim_documents: list[Document], benefits: list[Benefit], prompt_name: str
@@ -209,7 +309,7 @@ class Pipeline:
         claim_documents: list[Document],
         dates_output: DatesOutput,
         exclusions_output: ExclusionsOutput,
-        benefits_output: BenefitMappingOutput,
+        benefits_output: EnhancedBenefitMappingOutput,
         prompt_name: str,
     ) -> RecommendationOutput:
         model_input = RecommendationInput(
@@ -262,7 +362,6 @@ class Pipeline:
 
     def run_pipeline(self, claim: Claim, output_dir: Path) -> AdjudicationOutput:
         claim_documents = claim.documents
-
         # LLM PHASE 1: DATES PHASE
         dates_output = self.check_dates(claim_documents=claim_documents, prompt_name=Prompts.DATES.value)
 
@@ -292,23 +391,6 @@ class Pipeline:
             prompt_name=Prompts.CLAIM_RECOMMENDATION.value,
         )
 
-        recommended_benefit_payment_amount = sum(
-            benefit_payment.payment_amount for benefit_payment in benefit_payment_output.benefit_payments
-        )
-        claim_recommendation = ClaimRecommendation(
-            policy_id=claim.policy_id,
-            claim_id=claim.claim_id,
-            claimant=recommendation_tmp.claimant,
-            decision_recommendation=recommendation_tmp.decision_recommendation,
-            decision_justification=recommendation_tmp.decision_justification,
-            recommended_benefit_payment_amount=recommended_benefit_payment_amount,
-        )
-
-        self.save_claim_recommendation_for_claim(
-            claim_recommendation=claim_recommendation,
-            output_dir=Path("./res/outputs/pipeline_output"),
-        )
-
         return AdjudicationOutput(
             policy_id=claim.policy_id,
             claim_id=claim.claim_id,
@@ -327,13 +409,6 @@ class Pipeline:
         ) as f:
             json.dump(adjudication_output.model_dump(), f)
 
-    def save_claim_recommendation_for_claim(self, claim_recommendation: ClaimRecommendation, output_dir: Path):
-        with open(
-            output_dir / f"{claim_recommendation.policy_id}_{claim_recommendation.claim_id}_recommendation.json",
-            "w",
-        ) as f:
-            json.dump(claim_recommendation.model_dump(), f)
-
     def save_ocr_output_for_claim(self, claim: Claim, output_dir: Path):
         with open(output_dir / f"{claim.policy_id}_{claim.claim_id}.json", "w") as f:
             json.dump(claim.model_dump(), f)
@@ -341,30 +416,3 @@ class Pipeline:
     def _save_ocr_output(self, ocr_output: list[dict], claim_dir: Path) -> None:
         with open(Path("./res/outputs/ocr") / f"{Path(claim_dir).name}.json", "a") as f:
             json.dump(ocr_output, f)
-
-    def _save_output(self, output: AdjudicationOutput, claim_dir: Path) -> None:
-        output_dict = output.model_dump()
-        decision_dict = output_dict.pop("decision", {})
-
-        flat_output = {
-            "policy_number": Path(claim_dir).name,
-            **output_dict,
-            **{f"{k}": v for k, v in decision_dict.items()},
-        }
-
-        # job_num = None
-        job_num = 1
-        if Path("./res/pipeline_output_job_00001.csv").exists():
-            header = False
-            # job_num = Path("./res/pipeline_output_job_00001.csv").stem.split("_")[-1]
-            # job_num = int(job_num) + 1
-        else:
-            header = True
-        csv_file_path = Path(f"./res/pipeline_output_job_{job_num:05d}.csv")
-        logger.info(f"Saving output to {csv_file_path.name}")
-        with open(csv_file_path, "a", newline="") as f:
-            writer = csv.writer(f)
-            if header:
-                writer.writerow(flat_output.keys())
-            writer.writerow(flat_output.values())
-        logger.info(f"Saved output to {csv_file_path.name}")
