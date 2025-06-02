@@ -9,7 +9,12 @@ import pandas as pd
 
 from tqdm import tqdm
 from logzero import logger
-from sklearn.metrics import recall_score, accuracy_score, precision_score, classification_report
+from sklearn.metrics import (
+    recall_score,
+    accuracy_score,
+    precision_score,
+    classification_report,
+)
 
 
 def run(**kwargs):
@@ -125,7 +130,14 @@ def run(**kwargs):
         claims_batch_df = pd.merge(
             claims_batch_df,
             gt_df_deduplicated[
-                ["policy_id", "claim_id", "gt_decision", "gt_status", "gt_status_reason", "gt_in_data_set"]
+                [
+                    "policy_id",
+                    "claim_id",
+                    "gt_decision",
+                    "gt_status",
+                    "gt_status_reason",
+                    "gt_in_data_set",
+                ]
             ],
             on=["policy_id", "claim_id"],
             how="left",
@@ -156,7 +168,17 @@ def run(**kwargs):
                         data = json.load(f)
                         claim_id = data.get("claim_id")
                         policy_id = data.get("policy_id")
-                        adjudication_decision = data.get("decision", {}).get("status", "UNKNOWN").upper()
+
+                        # Extract decision_recommendation from the correct field path
+                        raw_decision = data.get("decision", {}).get("decision_recommendation", "UNKNOWN").lower()
+
+                        # Map the actual decision values to the expected format
+                        decision_mapping = {
+                            "accept": "PAY",
+                            "deny": "DENY",
+                            "requires_review": "REFER",
+                        }
+                        adjudication_decision = decision_mapping.get(raw_decision, raw_decision.upper())
 
                         new_row = pd.DataFrame(
                             {
@@ -182,7 +204,10 @@ def run(**kwargs):
         if not claims_batch_df.empty:
             logger.info("Step 5: Merging OCR-completed data with adjudication data...")
             claims_batch_df_with_ocr_results = pd.merge(
-                claims_batch_df, adjudication_data_df, on=["policy_id", "claim_id"], how="left"
+                claims_batch_df,
+                adjudication_data_df,
+                on=["policy_id", "claim_id"],
+                how="left",
             )
             logger.info(
                 f"Merge complete. claims_batch_df_with_ocr_results now has {len(claims_batch_df_with_ocr_results)} rows."
@@ -250,20 +275,22 @@ def run(**kwargs):
         elif claims_batch_df.empty:
             logger.warning("Skipping merge with adjudication data as claims_batch_df_with_ocr_results is empty.")
             claims_batch_df_with_ocr_results = pd.DataFrame(
-                columns=claims_batch_df.columns.tolist() + ["adjudication_decision", "adjudication_data"]
-                if not claims_batch_df.empty
-                else [
-                    "policy_id",
-                    "claim_id",
-                    "number_of_documents_in_claim",
-                    "did_claim_complete_ocr",
-                    "gt_decision",
-                    "gt_status",
-                    "gt_status_reason",
-                    "gt_in_data_set",
-                    "adjudication_decision",
-                    "adjudication_data",
-                ]
+                columns=(
+                    claims_batch_df.columns.tolist() + ["adjudication_decision", "adjudication_data"]
+                    if not claims_batch_df.empty
+                    else [
+                        "policy_id",
+                        "claim_id",
+                        "number_of_documents_in_claim",
+                        "did_claim_complete_ocr",
+                        "gt_decision",
+                        "gt_status",
+                        "gt_status_reason",
+                        "gt_in_data_set",
+                        "adjudication_decision",
+                        "adjudication_data",
+                    ]
+                )
             )
 
         logger.info("Step 6: Calculating adjudication metrics...")
@@ -369,21 +396,25 @@ def run(**kwargs):
                 "ground_truth_file": str(ground_truth_file),
             },
             "data_summary": {
-                "initial_ocr_claims_count": len(ocr_files) if "ocr_files" in locals() else 0,
-                "loaded_ocr_claims_df_rows": len(claims_batch_df) if not claims_batch_df.empty else 0,
-                "ground_truth_rows_before_dedup": len(gt_df) if "gt_df" in locals() else 0,
-                "ground_truth_rows_after_dedup": len(gt_df_deduplicated) if "gt_df_deduplicated" in locals() else 0,
-                "claims_completed_ocr_count": len(claims_batch_df_with_ocr_results)
-                if not claims_batch_df_with_ocr_results.empty
-                and "adjudication_decision" not in claims_batch_df_with_ocr_results
-                else (
-                    len(claims_batch_df[claims_batch_df["did_claim_complete_ocr"] == True])
-                    if "claims_batch_df" in locals() and not claims_batch_df.empty
-                    else 0
+                "initial_ocr_claims_count": (len(ocr_files) if "ocr_files" in locals() else 0),
+                "loaded_ocr_claims_df_rows": (len(claims_batch_df) if not claims_batch_df.empty else 0),
+                "ground_truth_rows_before_dedup": (len(gt_df) if "gt_df" in locals() else 0),
+                "ground_truth_rows_after_dedup": (len(gt_df_deduplicated) if "gt_df_deduplicated" in locals() else 0),
+                "claims_completed_ocr_count": (
+                    len(claims_batch_df_with_ocr_results)
+                    if not claims_batch_df_with_ocr_results.empty
+                    and "adjudication_decision" not in claims_batch_df_with_ocr_results
+                    else (
+                        len(claims_batch_df[claims_batch_df["did_claim_complete_ocr"] == True])
+                        if "claims_batch_df" in locals() and not claims_batch_df.empty
+                        else 0
+                    )
                 ),
-                "claims_after_refer_filter": len(metrics_df) + removed_rows_count
-                if not metrics_df.empty
-                else (len(claims_batch_df_with_ocr_results) if not claims_batch_df_with_ocr_results.empty else 0),
+                "claims_after_refer_filter": (
+                    len(metrics_df) + removed_rows_count
+                    if not metrics_df.empty
+                    else (len(claims_batch_df_with_ocr_results) if not claims_batch_df_with_ocr_results.empty else 0)
+                ),
             },
             "metrics_calculation_summary": {
                 "true_column": true_column,
@@ -581,7 +612,8 @@ def run(**kwargs):
                 else:
                     logger.warning(f"Column '{col_name}' not found for detailed table, will be empty/NA.")
                     temp_table_data[col_name] = pd.Series(
-                        [pd.NA] * len(df_for_markdown_table_source), index=df_for_markdown_table_source.index
+                        [pd.NA] * len(df_for_markdown_table_source),
+                        index=df_for_markdown_table_source.index,
                     )
 
             df_for_markdown_table = pd.DataFrame(temp_table_data, columns=columns_to_dump)
