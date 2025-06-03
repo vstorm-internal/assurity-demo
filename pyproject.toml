@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "assurity-demo"
 version = "0.1.0"
-description = "An automated pipeline for OCR processing of insurance claims documents"
+description = "Demo of Assurity's OCR and adjudication pipeline"
 authors = ["bartosz.roguski@bluelabellabs.com"]
 readme = "README.md"
 packages = [{include = "assurity_demo", from = "src"}]

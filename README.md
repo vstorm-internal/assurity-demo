@@ -1,233 +1,81 @@
-# Insurance Claims OCR Pipeline
+# Insurance Claims Adjudication – Streamlit App
 
-A Python package for extracting and structuring information from insurance claim forms using OCR and LLMs.
+A modern Streamlit app for browsing, adjudicating, and managing insurance claims using OCR and LLMs. Designed for speed, usability, and robust claim processing.
+
+---
 
 ## Features
 
-- Extracts text from insurance claim form images using LlamaParse with GPT-4 Vision
-- Structures extracted data into standardized formats for UB04 and HCFA1500 claims
-- Uses LangChain with GPT-4 for intelligent text analysis and data extraction
-- Handles patient info, provider details, claim information, and insurance data
-- Robust error handling and validation
+- **Browse & Select Claims:** Instantly view and select from pre-processed claims with existing OCR results.
+- **Visual PDF Preview:** See the first page of each claim as an image, directly in the browser.
+- **Model Selection:** Choose OCR and claim adjudication models from the sidebar before running the pipeline.
+- **Upload New Claims:** Upload new PDF claim forms and run OCR (LlamaParse) on demand.
+- **Run Full Pipeline:** Process selected claims through a multi-phase adjudication pipeline with a single click.
+- **Session State & History:** Track processing history and manage state for a seamless user experience.
+- **Robust Error Handling:** Clear feedback and validation for all user actions.
 
-## Prerequisites
+---
 
-- Python 3.11 or higher
-- Poetry for dependency management
-- OpenAI API key
-- LlamaParse API key
+## Quickstart
 
-## Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-org/assurity-poc.git
+   cd assurity-poc
+   ```
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-org/assurity-poc.git
-cd assurity-poc
-```
+2. **Install dependencies (using Poetry):**
+   ```bash
+   poetry install
+   ```
 
-2. Install dependencies using Poetry:
-```bash
-poetry install
-```
-
-3. Set up environment variables:
+3. **Set up environment variables:**
    - Copy `.env.example` to `.env`
    - Add your OpenAI API key and LlamaParse API key to the `.env` file
 
-## Usage
+4. **Run the Streamlit app:**
+   ```bash
+   poetry run streamlit run streamlit_app.py
+   ```
 
-1. Activate the Poetry environment:
-```bash
-poetry shell
-```
+5. **Open your browser:**
+   - Go to the URL shown in the terminal (usually http://localhost:8501)
 
-2. Run specific pipeline commands using the `batch_processor` script. The general format is:
-```bash
-poetry run python -m src.assurity_demo.scripts.batch_processor <command_name> [options]
-```
-   See the "Running Pipeline Stages" section below for detailed commands and their options.
+---
 
-## Running Pipeline Stages
+## Prerequisites
 
-This section describes how to run the different stages of the insurance claims processing pipeline: OCR, Adjudication, and Metrics Calculation. All commands are executed via the `src.assurity_demo.scripts.batch_processor` module.
+- Python 3.11+
+- Poetry
+- OpenAI API key
+- Gemini API key
+- LlamaParse API key
 
-### 1. Running the OCR Pipeline
-
-This command processes raw policy documents (e.g., images of claim forms) from a specified directory. It uses LlamaParse with GPT-4 Vision for Optical Character Recognition (OCR) to extract text and initial structure from these documents.
-
-**Command:**
-```bash
-poetry run python -m src.assurity_demo.scripts.batch_processor run_ocr_pipeline \
-    --policy_directory=<PATH_TO_POLICY_FOLDERS> \
-    --output_dir=<PATH_TO_OCR_OUTPUTS> \
-    --number_of_policies_to_process=<NUMBER>
-```
-
-**Input Parameters:**
-*   `--policy_directory` (Required): Path to the root directory. This directory should contain sub-directories, where each sub-directory represents a unique policy and holds its associated claim document images.
-*   `--output_dir` (Required): Path to the directory where the OCR output JSON files will be saved. Each processed claim will have its own JSON file.
-*   `--number_of_policies_to_process` (Optional, default: 100): The maximum number of policy folders to process from the `policy_directory`.
-
-**Outputs:**
-*   **Location:** JSON files are generated in the directory specified by `--output_dir`.
-*   **Content:** Each JSON file corresponds to a single claim identified within a policy. These files contain:
-    *   Extracted text from the claim documents.
-    *   Metadata about the documents.
-    *   A preliminary structured representation of the claim data.
-*   **Purpose:** This output serves as the direct input for the subsequent adjudication pipeline stage.
-
-### 2. Running the Adjudication Pipeline
-
-This command takes the structured JSON outputs from the OCR pipeline and applies adjudication logic. It uses LangChain with GPT-4 to analyze the claim information and make an adjudication decision (e.g., PAY, DENY, or REFER for manual review).
-
-**Command:**
-```bash
-poetry run python -m src.assurity_demo.scripts.batch_processor run_adjudication_pipeline \
-    --ocr_output_dir=<PATH_TO_OCR_OUTPUTS> \
-    --adjudication_output_dir=<PATH_TO_ADJUDICATION_OUTPUTS> \
-    --number_of_claims_to_process=<NUMBER>
-```
-
-**Input Parameters:**
-*   `--ocr_output_dir` (Required): Path to the directory containing the JSON files generated by the `run_ocr_pipeline` command.
-*   `--adjudication_output_dir` (Required): Path to the directory where the adjudication output JSON files will be saved.
-*   `--number_of_claims_to_process` (Optional, default: 100): The maximum number of claims (from the OCR outputs) to process for adjudication.
-
-**Outputs:**
-*   **Location:** JSON files are generated in the directory specified by `--adjudication_output_dir`.
-*   **Content:** Each JSON file corresponds to a single adjudicated claim. These files contain:
-    *   The final adjudication decision (e.g., status like "PAY", "DENY", "REFER").
-    *   Reasons and rules supporting the decision.
-    *   Relevant extracted data that influenced the adjudication.
-*   **Purpose:** This output provides the automated adjudication results and is used for performance evaluation in the metrics calculation stage.
-
-### 3. Calculating Adjudication Metrics
-
-This command evaluates the performance of the adjudication pipeline by comparing its decisions against a ground truth dataset. It calculates key metrics such as accuracy, precision, and recall.
-
-**Command:**
-```bash
-poetry run python -m src.assurity_demo.scripts.batch_processor calculate_adjudication_metrics \
-    --ocr_output_dir=<PATH_TO_OCR_OUTPUTS> \
-    --adjudication_output_dir=<PATH_TO_ADJUDICATION_OUTPUTS> \
-    --ground_truth_file=<PATH_TO_GROUND_TRUTH_CSV> \
-    --metrics_output_dir=<PATH_TO_METRICS_OUTPUTS>
-```
-
-**Input Parameters:**
-*   `--ocr_output_dir` (Required): Path to the directory containing the OCR output JSON files. This helps identify the set of claims that were processed by OCR.
-*   `--adjudication_output_dir` (Required): Path to the directory containing the JSON files generated by the `run_adjudication_pipeline` command.
-*   `--ground_truth_file` (Required): Path to a CSV file containing the ground truth data. This file must include columns for `policy_id`, `claim_id`, and the correct adjudication `decision` (e.g., "PAY", "DENY") for each claim.
-*   `--metrics_output_dir` (Required): Path to the directory where the metrics reports (both JSON and Markdown formats) will be saved.
-
-**Outputs:**
-*   **JSON Report (e.g., `adjudication_summary_statistics_YYYYMMDD_HHMMSS.json`):**
-    *   **Location:** Saved in the directory specified by `--metrics_output_dir`.
-    *   **Content:** A structured JSON file containing:
-        *   Timestamp of report generation and input parameters used.
-        *   Summary of data processing (e.g., number of OCR claims, adjudicated claims, claims used for metrics).
-        *   Overall accuracy of the adjudication model.
-        *   Precision and recall scores per class (e.g., for PAY and DENY decisions).
-        *   The full text of the classification report.
-*   **Markdown Report (e.g., `adjudication_summary_statistics_YYYYMMDD_HHMMSS.md`):**
-    *   **Location:** Saved in the directory specified by `--metrics_output_dir`.
-    *   **Content:** A human-readable report that includes:
-        *   Clear explanations of the calculated metrics (accuracy, precision, recall) and their significance.
-        *   The classification report table.
-        *   A detailed table listing the individual claims included in the metrics calculation, showing their ground truth decision versus the pipeline's predicted decision, and other relevant claim attributes.
-        *   Interpretation notes for the metrics.
+---
 
 ## Project Structure
 
-```sh
+```
 .
-├── src/insurance_claims_ocr/   # Source code
-├── res/                        # Sample data and test images
-├── benchmarks/                 # Benchmarking scripts
-├── notebooks/                  # Jupyter notebooks for development
-├── pyproject.toml              # Project dependencies and configuration
-├── poetry.lock                 # Locked dependencies
-└── .env                        # Environment variables
+├── src/assurity_demo/        # Core business logic, models, pipeline
+├── res/                     # Pre-processed claims, OCR outputs, sample data
+├── streamlit_app.py         # Main Streamlit app entry point
+├── .env.example             # Environment variable template
+├── pyproject.toml           # Dependencies & config
+└── README.md
 ```
 
-## File Conversion Utilities
-
-### Converting TIFF Files to PDF (`convert_and_prepare_files`)
-
-This utility command recursively scans a specified input directory for TIFF (`.tif`) image files and converts them to PDF format. It offers several options to control the output location and handling of original files.
-
-**Command:**
-```bash
-poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
-    --input_directory=<PATH_TO_SOURCE_TIFF_FILES> \
-    [--output_directory=<PATH_TO_SAVE_PDFS>] \
-    [--delete_original_files=<True|False>] \
-    [--skip_existing_files=<True|False>]
-```
-
-**Input Parameters:**
-
-*   `--input_directory` (Required):
-    *   **Description:** The path to the root directory containing the TIFF files you want to convert. The script will search this directory and all its subdirectories for `.tif` files.
-    *   **Example:** `/data/raw_claim_images/`
-
-*   `--output_directory` (Optional):
-    *   **Description:** The path to the directory where the converted PDF files will be saved.
-        *   If provided, the script will replicate the subdirectory structure from the `input_directory` within this `output_directory` for the converted PDFs.
-        *   If not provided, the PDF files will be saved in the same directory as their original TIFF source files (i.e., "in-line" conversion).
-    *   **Example:** `/data/converted_claim_pdfs/`
-
-*   `--delete_original_files` (Optional, default: `False`):
-    *   **Description:** A boolean flag (`True` or `False`) that determines whether the original `.tif` files should be deleted after successful conversion to PDF.
-    *   **Behavior:**
-        *   `True`: The original TIFF file is deleted if its conversion to PDF is successful.
-        *   `False` (default): The original TIFF file is kept.
-    *   **Example:** `--delete_original_files=True`
-
-*   `--skip_existing_files` (Optional, default: `True`):
-    *   **Description:** A boolean flag (`True` or `False`) that determines whether the script should skip conversion if a PDF file with the same name already exists in the target output location.
-    *   **Behavior:**
-        *   `True` (default): If `output_file.pdf` already exists, `input_file.tif` will not be processed, and the script will move to the next TIFF file.
-        *   `False`: The script will attempt to convert `input_file.tif` and overwrite `output_file.pdf` if it already exists.
-    *   **Example:** `--skip_existing_files=False`
-
-**Outputs:**
-*   **PDF Files:** Converted PDF documents.
-    *   **Location:** Either in the specified `--output_directory` (maintaining relative subfolder structure) or alongside the original `.tif` files if `--output_directory` is not provided.
-*   **Console Logs:** Detailed logs about the conversion process, including files found, converted, skipped, failed, and deleted (if applicable).
-
-**Example Usage:**
-
-1.  **Convert TIFFs in `source_tiffs/` and save PDFs to `converted_pdfs/`, keeping original TIFFs:**
-    ```bash
-    poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
-        --input_directory=./res/source_tiffs \
-        --output_directory=./res/converted_pdfs
-    ```
-
-2.  **Convert TIFFs in `source_tiffs/`, save PDFs in the same location, and delete original TIFFs after conversion:**
-    ```bash
-    poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
-        --input_directory=./res/source_tiffs \
-        --delete_original_files=True
-    ```
-
-3.  **Convert TIFFs and overwrite any existing PDFs in the output:**
-    ```bash
-    poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
-        --input_directory=./res/source_tiffs \
-        --output_directory=./res/converted_pdfs \
-        --skip_existing_files=False
-    ```
+---
 
 ## Development
 
-- Install development dependencies:
-```bash
-poetry install --with dev
-```
-
+- Install dev dependencies:
+  ```bash
+  poetry install --with dev
+  ```
 - Run pre-commit hooks:
-```bash
-pre-commit install
-```
+  ```bash
+  pre-commit install
+  ```
+
+---
