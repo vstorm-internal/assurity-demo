@@ -8,7 +8,7 @@ from PyPDF2 import PdfReader, PdfWriter
 from logzero import logger
 from pdf2image import convert_from_path
 
-from assurity_poc.config import get_settings
+from assurity_demo.config import get_settings
 
 settings = get_settings()
 

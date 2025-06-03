@@ -4,47 +4,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from logzero import logger
-
-from assurity_poc.config import get_settings
-from assurity_poc.models.claim import ClaimDocument
-from assurity_poc.models.policy import Policy
-from assurity_poc.processors.image_matching import ImageMatcher
+from assurity_demo.config import get_settings
+from assurity_demo.models.claim import ClaimDocument
+from assurity_demo.models.policy import Policy
 
 settings = get_settings()
-
-UB04_BLANK_PATH = Path("./res/image_match/blanks/UB04_blank.png")
-HCFA1500_BLANK_PATH = Path("./res/image_match/blanks/HCFA1500_blank.png")
-
-
-def is_ub04(file_path: Path) -> bool:
-    image_matcher = ImageMatcher()
-    ub04_similarity = image_matcher(str(file_path), str(UB04_BLANK_PATH))
-
-    return ub04_similarity["hash_diff"] <= settings.hash_threshold
-
-
-def is_hcfa1500(file_path: Path) -> bool:
-    image_matcher = ImageMatcher()
-    hcfa1500_similarity = image_matcher(str(file_path), str(HCFA1500_BLANK_PATH))
-
-    return hcfa1500_similarity["hash_diff"] <= settings.hash_threshold
-
-
-def check_claim_type(file_path: Path) -> tuple[bool, bool]:
-    is_file_ub04 = is_ub04(file_path)
-    is_file_hcfa1500 = is_hcfa1500(file_path)
-
-    if not (is_file_ub04 or is_file_hcfa1500):
-        logger.warning("Unknown claim type")
-        return False, False
-
-    if is_file_ub04:
-        logger.info("UB04")
-    elif is_file_hcfa1500:
-        logger.info("HCFA1500")
-
-    return is_file_ub04, is_file_hcfa1500
 
 
 def check_text_readability(similarity_score: float) -> bool:

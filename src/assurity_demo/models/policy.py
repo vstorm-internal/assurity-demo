@@ -2,7 +2,7 @@ from datetime import date
 
 from pydantic import Field, BaseModel
 
-from assurity_poc.models.common import Person
+from assurity_demo.models.common import Person
 
 
 class Exclusion(BaseModel):

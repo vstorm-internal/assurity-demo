@@ -5,8 +5,8 @@ from pathlib import Path
 
 from pydantic import Field, BaseModel
 
-from assurity_poc.models.common import Document
-from assurity_poc.models.benefits import (
+from assurity_demo.models.common import Document
+from assurity_demo.models.benefits import (
     BenefitPaymentOutput,
     EnhancedBenefitMappingOutput,
 )
@@ -100,7 +100,8 @@ class RecommendationOutput(BaseModel):
         description="Decision recommendation on the claim"
     )
     decision_justification: str = Field(
-        description="Concise, clear explanation for the decision recommendation, referencing specific input data and evidence."
+        description="Concise, clear explanation for the decision recommendation, referencing specific input data and evidence.",
+        max_length=1000,
     )
 
 
@@ -112,7 +113,8 @@ class ClaimRecommendation(BaseModel):
         description="Decision recommendation on the claim"
     )
     decision_justification: str = Field(
-        description="Concise, clear explanation for the decision recommendation, referencing specific input data and evidence."
+        description="Concise, clear explanation for the decision recommendation, referencing specific input data and evidence.",
+        max_length=1000,
     )
     recommended_benefit_payment_amount: float | int = Field(description="Recommended benefit payment amount")
 

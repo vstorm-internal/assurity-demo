@@ -3,14 +3,13 @@ import json
 
 from typing import Any
 from pathlib import Path
-from datetime import datetime
 
 import pandas as pd
 
-from logzero import logger, logfile
+from logzero import logger
 
-from assurity_poc.config import Prompts, get_settings
-from assurity_poc.models import (
+from assurity_demo.config import Prompts, AllowedModelsOCR, AllowedModelsClaim, get_settings
+from assurity_demo.models import (
     Claim,
     Input,
     Benefit,
@@ -25,26 +24,19 @@ from assurity_poc.models import (
     BenefitPaymentOutput,
     RecommendationOutput,
 )
-from assurity_poc.utils.file import iterate_over_files
-from assurity_poc.utils.helpers import get_benefits, check_text_readability
-from assurity_poc.models.benefits import EnhancedBenefitMappingOutput
-from assurity_poc.processors.ocr_processor import OCRProcessor
-from assurity_poc.processors.claim_processor import ClaimProcessor
+from assurity_demo.utils.file import iterate_over_files
+from assurity_demo.utils.helpers import get_benefits, check_text_readability
+from assurity_demo.models.benefits import EnhancedBenefitMappingOutput
+from assurity_demo.processors.ocr_processor import OCRProcessor
+from assurity_demo.processors.claim_processor import ClaimProcessor
 
 settings = get_settings()
 
-Path("./logs").mkdir(parents=True, exist_ok=True)
-logfile(
-    f"./logs/pipeline_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log",
-    maxBytes=10_000_000,
-    backupCount=5,
-)
-
 
 class Pipeline:
-    def __init__(self) -> None:
+    def __init__(self, ocr_model: AllowedModelsOCR = None, claim_model: AllowedModelsClaim = None) -> None:
         self.ocr_processor = OCRProcessor()
-        self.claim_processor = ClaimProcessor()
+        self.claim_processor = ClaimProcessor(claim_model) if claim_model else ClaimProcessor()
         self.benefits = self._get_benefits(
             settings.individual_benefits_csv,
             settings.group_benefits_csv,

@@ -18,10 +18,17 @@ class Prompts(Enum):
     CLAIM_RECOMMENDATION = "claim_recommendation"
 
 
-class AllowedModels(str, Enum):
-    GPT = "gpt-4o"
-    GEMINI = "gemini"
-    AZURE_OPENAI = "azure-openai"
+class AllowedModelsOCR(str, Enum):
+    GPT_4O = "openai-gpt4o"
+    GPT_41 = "openai-gpt-4-1"
+    GEMINI_2_0_FLASH = "gemini-2.0-flash-001"
+
+
+class AllowedModelsClaim(str, Enum):
+    GPT_4O = "gpt-4o"
+    GPT_41 = "gpt-4.1"
+    GEMINI_2_0_FLASH = "gemini-2.0-flash"
+    GEMINI_2_5_FLASH_PREVIEW_05_20 = "gemini-2.5-flash-preview-05-20"
 
 
 RES_DIR = Path("res")
@@ -36,11 +43,7 @@ class Settings(BaseSettings):
 
     llamaparse_api_key: str = Field(description="API key for LlamaParse")
     promptlayer_api_key: str = Field(description="API key for PromptLayer")
-    azure_openai_api_key: str = Field(description="API key for Azure OpenAI")
-    azure_openai_endpoint: str = Field(description="Endpoint for Azure OpenAI")
-    azure_openai_deployment_name: str = Field(description="Deployment name for Azure OpenAI")
-    azure_openai_api_version: str = Field(description="API version for Azure OpenAI")
-
+    openai_api_key: str = Field(description="API key for OpenAI")
     gemini_api_key: str = Field(description="API key for Gemini")
 
     # OCR
@@ -59,18 +62,12 @@ def get_settings() -> Settings:
 
     llamaparse_api_key = os.getenv("LLAMAPARSE_API_KEY")
     gemini_api_key = os.getenv("GEMINI_API_KEY")
-    azure_openai_api_key = os.getenv("AZURE_OPENAI_API_KEY")
-    azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-    azure_openai_deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
-    azure_openai_api_version = os.getenv("AZURE_OPENAI_API_VERSION")
+    openai_api_key = os.getenv("OPENAI_API_KEY")
     promptlayer_api_key = os.getenv("PROMPTLAYER_API_KEY")
 
     return Settings(
         llamaparse_api_key=llamaparse_api_key,
-        azure_openai_api_key=azure_openai_api_key,
-        azure_openai_endpoint=azure_openai_endpoint,
-        azure_openai_deployment_name=azure_openai_deployment_name,
-        azure_openai_api_version=azure_openai_api_version,
+        openai_api_key=openai_api_key,
         gemini_api_key=gemini_api_key,
         promptlayer_api_key=promptlayer_api_key,
     )

@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "assurity-poc"
+name = "assurity-demo"
 version = "0.1.0"
 description = "An automated pipeline for OCR processing of insurance claims documents"
-authors = ["bartosz.roguski@bluelabellabs.com, bobby.gill@bluelabellabs.com"]
+authors = ["bartosz.roguski@bluelabellabs.com"]
 readme = "README.md"
-packages = [{include = "assurity_poc", from = "src"}]
+packages = [{include = "assurity_demo", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -18,9 +18,8 @@ langchain-openai = "^0.3.12"
 dynaconf = "^3.2.10"
 pydantic-settings = "^2.8.1"
 levenshtein = "^0.27.1"
-sentence-transformers = "^4.0.2"
+sentence-transformers = ">=3.0.0"
 scikit-learn = "^1.6.1"
-torch = "^2.6.0"
 fire = "^0.7.0"
 logzero = "^1.7.0"
 scikit-image = "^0.25.2"
@@ -34,6 +33,7 @@ promptlayer = "^1.0.48"
 langchain-community = "^0.3.23"
 tabulate = "^0.9.0"
 pypdf = "^5.5.0"
+transformers = ">=4.45.0"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^9.0.2"

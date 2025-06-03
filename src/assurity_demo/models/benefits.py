@@ -2,7 +2,7 @@ from typing import Literal
 
 from pydantic import Field, BaseModel
 
-from assurity_poc.models.common import Document
+from assurity_demo.models.common import Document
 
 
 class MedicalProcedure(BaseModel):

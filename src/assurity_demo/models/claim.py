@@ -3,7 +3,7 @@ from datetime import date
 
 from pydantic import Field, BaseModel
 
-from assurity_poc.models.common import Person, Address
+from assurity_demo.models.common import Person, Address
 
 
 class ClaimDocumentType(str, Enum):

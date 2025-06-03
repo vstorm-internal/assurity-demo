@@ -1,7 +1,9 @@
+from .common import (
+    Document,
+)
 from .output import (
     Claim,
     Input,
-    Document,
     DatesOutput,
     ExclusionsOutput,
     AdjudicationOutput,

@@ -4,39 +4,35 @@ from datetime import datetime
 from logzero import logger
 from pydantic import BaseModel
 from promptlayer import PromptLayer
-from langchain_openai import AzureChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.output_parsers import OutputFixingParser
 from langchain_core.output_parsers import PydanticOutputParser
 from langchain_core.language_models import BaseChatModel
 
-from assurity_poc.config import AllowedModels, get_settings
-from assurity_poc.callbacks.promptlayer_callback import PromptLayerCallbackHandler
+from assurity_demo.config import AllowedModelsClaim, get_settings
+from assurity_demo.callbacks.promptlayer_callback import PromptLayerCallbackHandler
 
 settings = get_settings()
 
 
 class ClaimProcessor:
-    def __init__(self, llm_name: AllowedModels = AllowedModels.AZURE_OPENAI):
+    def __init__(self, llm_name: AllowedModelsClaim = AllowedModelsClaim.GPT_41):
         if isinstance(llm_name, str):
-            llm_name = AllowedModels(llm_name)
+            llm_name = AllowedModelsClaim(llm_name)
         self.llm = self._create_llm(llm_name)
-        # self.output_parser = PydanticOutputParser(pydantic_object=Output)
         self.pl_client = PromptLayer(api_key=settings.promptlayer_api_key, enable_tracing=True)
         self._current_prompt_name = None
 
-    def _create_llm(self, llm_name: AllowedModels) -> BaseChatModel:
+    def _create_llm(self, llm_name: AllowedModelsClaim) -> BaseChatModel:
         match llm_name:
-            case AllowedModels.AZURE_OPENAI:
-                return AzureChatOpenAI(
+            case AllowedModelsClaim.GPT_4O | AllowedModelsClaim.GPT_41:
+                return ChatOpenAI(
                     model=llm_name.value,
-                    api_key=settings.azure_openai_api_key,
-                    azure_endpoint=settings.azure_openai_endpoint,
-                    azure_deployment=settings.azure_openai_deployment_name,
-                    api_version=settings.azure_openai_api_version,
+                    api_key=settings.openai_api_key,
                     callbacks=[PromptLayerCallbackHandler(pl_id_callback=self._pl_id_callback)],
                 )
-            case AllowedModels.GEMINI:
+            case AllowedModelsClaim.GEMINI_2_0_FLASH | AllowedModelsClaim.GEMINI_2_5_FLASH_PREVIEW_05_20:
                 return ChatGoogleGenerativeAI(
                     model=llm_name.value,
                     google_api_key=settings.gemini_api_key,
@@ -44,7 +40,7 @@ class ClaimProcessor:
                 )
             case _:
                 raise ValueError(
-                    f"Unsupported LLM: {llm_name}. Supported values are {[m.value for m in AllowedModels]}"
+                    f"Unsupported LLM: {llm_name}. Supported values are {[m.value for m in AllowedModelsClaim]}"
                 )
 
     # Helper functions

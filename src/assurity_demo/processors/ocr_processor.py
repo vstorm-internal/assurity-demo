@@ -6,8 +6,8 @@ import nest_asyncio
 
 from llama_parse import LlamaParse
 
-from assurity_poc.config import get_settings
-from assurity_poc.utils.text import preprocess_text, compute_text_similarity
+from assurity_demo.config import AllowedModelsOCR, get_settings
+from assurity_demo.utils.text import preprocess_text, compute_text_similarity
 
 # Apply nest_asyncio for async operations
 nest_asyncio.apply()
@@ -26,7 +26,7 @@ class OCRProcessor:
             auto_mode_trigger_on_table_in_page=True,
             use_vendor_multimodal_model=True,
             vendor_multimodal_api_key=settings.gemini_api_key,
-            vendor_multimodal_model_name="gemini-2.0-flash-001",
+            vendor_multimodal_model_name=AllowedModelsOCR.GEMINI_2_0_FLASH.value,
         )
 
         self.gpt_parser = LlamaParse(
@@ -37,10 +37,8 @@ class OCRProcessor:
             take_screenshot=True,
             auto_mode_trigger_on_table_in_page=True,
             use_vendor_multimodal_model=True,
-            azure_openai_deployment_name=settings.azure_openai_deployment_name,
-            azure_openai_endpoint=settings.azure_openai_endpoint,
-            azure_openai_api_version=settings.azure_openai_api_version,
-            azure_openai_key=settings.azure_openai_api_key,
+            vendor_multimodal_api_key=settings.openai_api_key,
+            vendor_multimodal_model_name=AllowedModelsOCR.GPT_41.value,
         )
 
     # TODO: split pages

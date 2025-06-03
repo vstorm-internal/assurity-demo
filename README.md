@@ -43,13 +43,13 @@ poetry shell
 
 2. Run specific pipeline commands using the `batch_processor` script. The general format is:
 ```bash
-poetry run python -m src.assurity_poc.scripts.batch_processor <command_name> [options]
+poetry run python -m src.assurity_demo.scripts.batch_processor <command_name> [options]
 ```
    See the "Running Pipeline Stages" section below for detailed commands and their options.
 
 ## Running Pipeline Stages
 
-This section describes how to run the different stages of the insurance claims processing pipeline: OCR, Adjudication, and Metrics Calculation. All commands are executed via the `src.assurity_poc.scripts.batch_processor` module.
+This section describes how to run the different stages of the insurance claims processing pipeline: OCR, Adjudication, and Metrics Calculation. All commands are executed via the `src.assurity_demo.scripts.batch_processor` module.
 
 ### 1. Running the OCR Pipeline
 
@@ -57,7 +57,7 @@ This command processes raw policy documents (e.g., images of claim forms) from a
 
 **Command:**
 ```bash
-poetry run python -m src.assurity_poc.scripts.batch_processor run_ocr_pipeline \
+poetry run python -m src.assurity_demo.scripts.batch_processor run_ocr_pipeline \
     --policy_directory=<PATH_TO_POLICY_FOLDERS> \
     --output_dir=<PATH_TO_OCR_OUTPUTS> \
     --number_of_policies_to_process=<NUMBER>
@@ -82,7 +82,7 @@ This command takes the structured JSON outputs from the OCR pipeline and applies
 
 **Command:**
 ```bash
-poetry run python -m src.assurity_poc.scripts.batch_processor run_adjudication_pipeline \
+poetry run python -m src.assurity_demo.scripts.batch_processor run_adjudication_pipeline \
     --ocr_output_dir=<PATH_TO_OCR_OUTPUTS> \
     --adjudication_output_dir=<PATH_TO_ADJUDICATION_OUTPUTS> \
     --number_of_claims_to_process=<NUMBER>
@@ -107,7 +107,7 @@ This command evaluates the performance of the adjudication pipeline by comparing
 
 **Command:**
 ```bash
-poetry run python -m src.assurity_poc.scripts.batch_processor calculate_adjudication_metrics \
+poetry run python -m src.assurity_demo.scripts.batch_processor calculate_adjudication_metrics \
     --ocr_output_dir=<PATH_TO_OCR_OUTPUTS> \
     --adjudication_output_dir=<PATH_TO_ADJUDICATION_OUTPUTS> \
     --ground_truth_file=<PATH_TO_GROUND_TRUTH_CSV> \
@@ -158,7 +158,7 @@ This utility command recursively scans a specified input directory for TIFF (`.t
 
 **Command:**
 ```bash
-poetry run python -m src.assurity_poc.scripts.batch_processor convert_and_prepare_files \
+poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
     --input_directory=<PATH_TO_SOURCE_TIFF_FILES> \
     [--output_directory=<PATH_TO_SAVE_PDFS>] \
     [--delete_original_files=<True|False>] \
@@ -200,21 +200,21 @@ poetry run python -m src.assurity_poc.scripts.batch_processor convert_and_prepar
 
 1.  **Convert TIFFs in `source_tiffs/` and save PDFs to `converted_pdfs/`, keeping original TIFFs:**
     ```bash
-    poetry run python -m src.assurity_poc.scripts.batch_processor convert_and_prepare_files \
+    poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
         --input_directory=./res/source_tiffs \
         --output_directory=./res/converted_pdfs
     ```
 
 2.  **Convert TIFFs in `source_tiffs/`, save PDFs in the same location, and delete original TIFFs after conversion:**
     ```bash
-    poetry run python -m src.assurity_poc.scripts.batch_processor convert_and_prepare_files \
+    poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
         --input_directory=./res/source_tiffs \
         --delete_original_files=True
     ```
 
 3.  **Convert TIFFs and overwrite any existing PDFs in the output:**
     ```bash
-    poetry run python -m src.assurity_poc.scripts.batch_processor convert_and_prepare_files \
+    poetry run python -m src.assurity_demo.scripts.batch_processor convert_and_prepare_files \
         --input_directory=./res/source_tiffs \
         --output_directory=./res/converted_pdfs \
         --skip_existing_files=False
