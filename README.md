@@ -9,7 +9,6 @@ A modern Streamlit app for browsing, adjudicating, and managing insurance claims
 - **Browse & Select Claims:** Instantly view and select from pre-processed claims with existing OCR results.
 - **Visual PDF Preview:** See the first page of each claim as an image, directly in the browser.
 - **Model Selection:** Choose OCR and claim adjudication models from the sidebar before running the pipeline.
-- **Upload New Claims:** Upload new PDF claim forms and run OCR (LlamaParse) on demand.
 - **Run Full Pipeline:** Process selected claims through a multi-phase adjudication pipeline with a single click.
 - **Session State & History:** Track processing history and manage state for a seamless user experience.
 - **Robust Error Handling:** Clear feedback and validation for all user actions.
