@@ -1,0 +1,47 @@
+[
+  {
+    "companyCode": "01",
+    "policyNumber": "4151519875",
+    "id": 202501250026,
+    "status": "Closed",
+    "statusReason": "DeniedAccidentOnlyPolicy",
+    "enhancedStatus": {
+      "enhancedStatus": "Claim completed",
+      "enhancedStatusDescription": null
+    },
+    "diagnosisCode": "Z370",
+    "blockId": "SpecialMedical",
+    "blockType": "StandardMedical",
+    "claimant": {
+      "relationshipToInsured": "Self",
+      "name": {
+        "id": 3685368,
+        "type": "Person",
+        "first": "VANESSA",
+        "middle": "C",
+        "last": "TAYLOR",
+        "fullName": "VANESSA C TAYLOR"
+      },
+      "dateOfBirth": "1993-05-06T00:00:00",
+      "emails": null
+    },
+    "insured": {
+      "name": {
+        "id": 3685368,
+        "type": "Person",
+        "first": "VANESSA",
+        "middle": "C",
+        "last": "TAYLOR",
+        "fullName": "VANESSA C TAYLOR"
+      },
+      "dateOfBirth": "1993-05-06T00:00:00",
+      "emails": null
+    },
+    "incurredDate": "2024-12-27T00:00:00",
+    "reportedDate": "2025-01-16T00:00:00",
+    "eliminationFromDate": null,
+    "eliminationToDate": null,
+    "updatedDate": "2025-01-25T00:00:00",
+    "claimDetails": null
+  }
+]

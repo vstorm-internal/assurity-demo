@@ -1,0 +1,47 @@
+[
+  {
+    "companyCode": "01",
+    "policyNumber": "4151582003",
+    "id": 202502060010,
+    "status": "Closed",
+    "statusReason": "ServiceNotCovered",
+    "enhancedStatus": {
+      "enhancedStatus": "Claim completed",
+      "enhancedStatusDescription": null
+    },
+    "diagnosisCode": "M9903",
+    "blockId": "SpecialMedical",
+    "blockType": "StandardMedical",
+    "claimant": {
+      "relationshipToInsured": "Spouse",
+      "name": {
+        "id": 3819396,
+        "type": "Person",
+        "first": "JENNIFER",
+        "middle": "",
+        "last": "WOOLSTENHULME",
+        "fullName": "JENNIFER WOOLSTENHULME"
+      },
+      "dateOfBirth": "1994-07-31T00:00:00",
+      "emails": null
+    },
+    "insured": {
+      "name": {
+        "id": 3819375,
+        "type": "Person",
+        "first": "DONALD",
+        "middle": "M",
+        "last": "WOOLSTENHULME",
+        "fullName": "DONALD M WOOLSTENHULME"
+      },
+      "dateOfBirth": "1978-07-03T00:00:00",
+      "emails": null
+    },
+    "incurredDate": "2024-11-22T00:00:00",
+    "reportedDate": "2025-01-24T00:00:00",
+    "eliminationFromDate": null,
+    "eliminationToDate": null,
+    "updatedDate": "2025-02-06T00:00:00",
+    "claimDetails": null
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "companyCode": "01",
+    "policyNumber": "4151474402",
+    "id": 202408200011,
+    "status": "Closed",
+    "statusReason": "NotEligibleForBenefit",
+    "enhancedStatus": {
+      "enhancedStatus": null,
+      "enhancedStatusDescription": null
+    },
+    "diagnosisCode": "L03116",
+    "blockId": "SpecialMedical",
+    "blockType": "StandardMedical",
+    "claimant": {
+      "relationshipToInsured": "Child",
+      "name": {
+        "id": 3587110,
+        "type": "Person",
+        "first": "NOAH",
+        "middle": "",
+        "last": "CARTER",
+        "fullName": "NOAH CARTER"
+      },
+      "dateOfBirth": "2012-04-20T00:00:00",
+      "emails": null
+    },
+    "insured": {
+      "name": {
+        "id": 3587103,
+        "type": "Person",
+        "first": "KESHIA",
+        "middle": "",
+        "last": "CHITWOOD",
+        "fullName": "KESHIA CHITWOOD"
+      },
+      "dateOfBirth": "1991-09-18T00:00:00",
+      "emails": null
+    },
+    "incurredDate": "2024-07-18T00:00:00",
+    "reportedDate": "2024-08-18T00:00:00",
+    "eliminationFromDate": null,
+    "eliminationToDate": null,
+    "updatedDate": "2024-08-20T00:00:00",
+    "claimDetails": null
+  }
+]

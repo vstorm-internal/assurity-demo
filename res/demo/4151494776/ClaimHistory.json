@@ -1,0 +1,47 @@
+[
+  {
+    "companyCode": "01",
+    "policyNumber": "4151494776",
+    "id": 202503150055,
+    "status": "Closed",
+    "statusReason": "NotEligibleForBenefit",
+    "enhancedStatus": {
+      "enhancedStatus": "Claim completed",
+      "enhancedStatusDescription": null
+    },
+    "diagnosisCode": "M9901",
+    "blockId": "SpecialMedical",
+    "blockType": "StandardMedical",
+    "claimant": {
+      "relationshipToInsured": "Self",
+      "name": {
+        "id": 3630270,
+        "type": "Person",
+        "first": "SIMEON",
+        "middle": "",
+        "last": "HERNANDEZ",
+        "fullName": "SIMEON HERNANDEZ"
+      },
+      "dateOfBirth": "1970-02-22T00:00:00",
+      "emails": null
+    },
+    "insured": {
+      "name": {
+        "id": 3630270,
+        "type": "Person",
+        "first": "SIMEON",
+        "middle": "",
+        "last": "HERNANDEZ",
+        "fullName": "SIMEON HERNANDEZ"
+      },
+      "dateOfBirth": "1970-02-22T00:00:00",
+      "emails": null
+    },
+    "incurredDate": "2025-01-02T00:00:00",
+    "reportedDate": "2025-03-06T00:00:00",
+    "eliminationFromDate": null,
+    "eliminationToDate": null,
+    "updatedDate": "2025-03-15T00:00:00",
+    "claimDetails": null
+  }
+]
